@@ -28,7 +28,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // require apis
-const InterncardRoutes = require("./routes/interncard");
 const authUserRoutes = require("./routes/auth");
 const AnnouncementRoutes = require("./routes/announcement")
 const studyRoutes = require("./routes/study");
