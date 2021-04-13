@@ -63,8 +63,8 @@ router.put("/users/:id", async (req, res) => {
       { _id: req.params.id },
       {
         $set: {
-          name = req.body.name,
-          email = req.body.email,
+          name : req.body.name,
+          email : req.body.email,
         },
       },
       { upsert: true }

@@ -309,8 +309,9 @@ export default {
         );
         if (response.success) {
           this.$cookies.set("jwt", response.token);
-          //this.$router.push("/Dashboard");
+          
           this.error = "";
+          //this.$router.push("/Dashboard");
           window.location.replace("/Dashboard");
         }
       } catch (err) {

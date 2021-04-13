@@ -68,14 +68,14 @@ router.put("/tenders/:id", async (req, res) => {
       { _id: req.params.id },
       {
         $set: {
-            contractor = req.body.contractor,
-            Budget = req.body.Budget,
-            timelineStart = req.body.timelineStart,
-            timelineEnd = req.body.timelineEnd,
-            materaial = req.body.materaial,
-            pic = req.body.pic,
-            doc = req.body.doc,
-            pastProjects = req.body.pastProjects,
+            contractor : req.body.contractor,
+            Budget : req.body.Budget,
+            timelineStart : req.body.timelineStart,
+            timelineEnd : req.body.timelineEnd,
+            materaial : req.body.materaial,
+            pic : req.body.pic,
+            doc : req.body.doc,
+            pastProjects : req.body.pastProjects,
         },
       },
       { upsert: true }

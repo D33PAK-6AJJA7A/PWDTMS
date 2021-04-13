@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
-//const multer = require("multer");
 
 dotenv.config();
 const app = express();
@@ -29,25 +28,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // require apis
 const authUserRoutes = require("./routes/auth");
-const AnnouncementRoutes = require("./routes/announcement")
-const studyRoutes = require("./routes/study");
-const userRoutes = require("./routes/user")
-const profileRoute = require("./routes/profile")
-const verifyRoute = require("./routes/verifytoken")
-const applyRoute = require("./routes/apply")
-const azureRoute = require("./routes/azure");
-const DashboardRoute = require("./routes/dashboardnums");
+const userRoutes = require("./routes/user");
+const confirmationRoute = require("./routes/confirmation");
+const projectRoutes = require("./routes/project");
+const tenderRoutes = require("./routes/tender");
 
-app.use("/api", InterncardRoutes);
 app.use("/api", authUserRoutes);
-app.use("/api", AnnouncementRoutes);
-app.use("/api", studyRoutes);
 app.use("/api",userRoutes);
-app.use("/api",profileRoute);
-app.use("/api",verifyRoute);
-app.use("/api",applyRoute);
-app.use("/api",azureRoute);
-app.use("/api",DashboardRoute);
+app.use("/api",projectRoutes);
+app.use("/api",tenderRoutes);
+app.use("/api", confirmationRoute);
 
 app.listen(3000, (err) => {
   if (err) {

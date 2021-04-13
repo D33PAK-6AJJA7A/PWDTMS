@@ -117,7 +117,7 @@
                                         <v-spacer></v-spacer>
                                         <v-btn
                                           color="cyan darken-1"
-                                          @click="show = 2"
+                                          @click="onRegister"
                                           >Sign Up</v-btn
                                         >
                                       </v-card-actions>
@@ -324,24 +324,23 @@ export default {
     };
   },
   methods: {
-    async onLogin() {
+    async onRegister() {
       try {
         let data = {
+          name: this.name,
           email: this.email,
           password: this.password,
         };
         let response = await this.$axios.$post(
-          "http://localhost:3000/api/auth/login",
+          "http://localhost:3000/api/auth/signup",
           data
         );
         if (response.success) {
-          this.$cookies.set("jwt", response.token);
-          //this.$router.push("/Dashboard");
-          this.error = "";
-          window.location.replace("/Dashboard");
+          this.email = "";
+          this.password = "";
+          this.name = "";
         }
       } catch (err) {
-        this.error = "Wrong Credentials";
         console.log(err);
       }
     },
