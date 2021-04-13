@@ -32,6 +32,7 @@ const userRoutes = require("./routes/user");
 const confirmationRoute = require("./routes/confirmation");
 const projectRoutes = require("./routes/project");
 const tenderRoutes = require("./routes/tender");
+const verifyRoutes = require("./routes/verify")
 
 app.use("/api", authUserRoutes);
 app.use("/api",userRoutes);
