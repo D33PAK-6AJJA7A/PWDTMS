@@ -311,8 +311,14 @@ export default {
           this.$cookies.set("jwt", response.token);
           
           this.error = "";
+          if(response.role === "pwd")
+            this.$router.push("/pwdDashboard");
+          else if(response.role === "contractor")
+            this.$router.push("/contractorDashboard");
+          else if(response.role === "govt")
+            this.$router.push("/govtDashboard");
           //this.$router.push("/Dashboard");
-          window.location.replace("/Dashboard");
+          //window.location.replace("/Dashboard");
         }
       } catch (err) {
         this.error = "Wrong Credentials";

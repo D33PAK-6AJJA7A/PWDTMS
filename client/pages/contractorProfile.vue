@@ -42,7 +42,7 @@
                     color="white"
                     ><v-card
                       class="blue-grey darken-3 pa-2 elevation-0"
-                      href="/userDashboard"
+                      href="/contractorDashboard"
                     >
                       <v-icon large class="mr-5">mdi-apps</v-icon>
                       Dashboard</v-card
@@ -54,7 +54,7 @@
                     color="white"
                     ><v-card
                       class="yellow darken-3 pa-2 elevation-2"
-                      href="/userProfile"
+                      href="/contractorProfile"
                     >
                       <v-icon large class="mr-5">mdi-account</v-icon>
                       Profile</v-card
@@ -66,7 +66,7 @@
                     color="white"
                     ><v-card
                       class="blue-grey darken-3 pa-2 elevation-0"
-                      href="/userTender"
+                      href="/contractorTender"
                     >
                       <v-icon large class="mr-5">mdi-bookshelf</v-icon>
                       All Projects</v-card
@@ -78,7 +78,7 @@
                     color="white"
                     ><v-card
                       class="blue-grey darken-3 pa-2 elevation-0"
-                      href="/userMyTender"
+                      href="/contractorMyTender"
                     >
                       <v-icon large class="mr-5">mdi-clipboard</v-icon>
                       My Projects</v-card
@@ -627,7 +627,7 @@ export default {
             name: this.name,
           };
           let response = await this.$axios.$put(
-            `http://localhost:3000/api/userupdatepassword/${this.id}`,
+            `http://localhost:3000/api/contractorupdatepassword/${this.id}`,
             data
           );
           this.password_to_check = "";
@@ -661,8 +661,8 @@ export default {
         let response = await this.$axios.$get(
           `http://localhost:3000/api/profile/${cookie}`
         );
-        this.profile_url = response.user.profile;
-        this.resume_url = response.user.resume;
+        this.profile_url = response.contractor.profile;
+        this.resume_url = response.contractor.resume;
         // console.log(this.profile_url);
       } catch (err) {
         console.log(err);
@@ -697,7 +697,7 @@ export default {
           password: this.password,
         };
         let response = await this.$axios.$put(
-          `http://localhost:3000/api/users/${this.id}`,
+          `http://localhost:3000/api/contractors/${this.id}`,
           data
         );
         this.Saved = "Saved";
@@ -705,7 +705,7 @@ export default {
         console.log(err);
       }
     },
-    async getUser() {
+    async getcontractor() {
       try {
         let cookie = this.$cookies.get("jwt");
         if (cookie == null) {
@@ -721,22 +721,22 @@ export default {
         if (!response.success) {
           this.$router.push("/login");
         }
-        this.id = response.user._id;
-        this.name = response.user.name;
-        this.email = response.user.email;
-        this.sem = response.user.sem;
-        this.batch = response.user.batch;
-        this.section = response.user.section;
-        this.phone = response.user.phone;
-        this.bio = response.user.bio;
-        this.addr_line = response.user.addr_line;
-        this.city = response.user.city;
-        this.state = response.user.state;
-        this.country = response.user.country;
-        this.profile_url = response.user.profile;
-        this.password = response.user.password;
+        this.id = response.contractor._id;
+        this.name = response.contractor.name;
+        this.email = response.contractor.email;
+        this.sem = response.contractor.sem;
+        this.batch = response.contractor.batch;
+        this.section = response.contractor.section;
+        this.phone = response.contractor.phone;
+        this.bio = response.contractor.bio;
+        this.addr_line = response.contractor.addr_line;
+        this.city = response.contractor.city;
+        this.state = response.contractor.state;
+        this.country = response.contractor.country;
+        this.profile_url = response.contractor.profile;
+        this.password = response.contractor.password;
         console.log(this.profile_url);
-        this.resume_url = response.user.resume;
+        this.resume_url = response.contractor.resume;
       } catch (err) {
         console.log(err);
       }
@@ -744,7 +744,7 @@ export default {
   },
 
   beforeMount() {
-    this.getUser();
+    this.getcontractor();
   },
 };
 </script>

@@ -37,7 +37,7 @@
               color="white"
               ><v-card
                 class="blue-grey darken-3 pa-2 elevation-0"
-                href="/userDashboard"
+                href="/contractorDashboard"
               >
                 <v-icon large class="mr-5">mdi-apps</v-icon>
                 Dashboard</v-card
@@ -49,7 +49,7 @@
               color="white"
               ><v-card
                 class="blue-grey darken-3 pa-2 elevation-0"
-                href="/userProfile"
+                href="/contractorProfile"
               >
                 <v-icon large class="mr-5">mdi-account</v-icon>
                 Profile</v-card
@@ -61,7 +61,7 @@
               color="white"
               ><v-card
                 class="blue-grey darken-3 pa-2 elevation-0"
-                href="/userTender"
+                href="/contractorTender"
               >
                 <v-icon large class="mr-5">mdi-bookshelf</v-icon>
                 All Projects</v-card
@@ -73,7 +73,7 @@
               color="white"
               ><v-card
                 class="yellow darken-3 pa-2 elevation-2"
-                href="/userMyTender"
+                href="/contractorMyTender"
               >
                 <v-icon large class="mr-5">mdi-clipboard</v-icon>
                 My Projects</v-card
@@ -110,7 +110,7 @@
                     <v-data-table
                       light
                       :headers="headers"
-                      :items="users"
+                      :items="contractors"
                       :search="search"
                       hide-actions
                       class="grey lighten-2"
@@ -132,7 +132,7 @@
                           large
                           color="red"
                           @click="
-                            deleteItem(users[users.indexOf(item)]._id, item)
+                            deleteItem(contractors[contractors.indexOf(item)]._id, item)
                           "
                         >
                           mdi-delete
@@ -359,10 +359,10 @@
 export default {
   async asyncData({ $axios }) {
     try {
-      let response = await $axios.$get("http://localhost:3000/api/users");
-      console.log(response.users);
+      let response = await $axios.$get("http://localhost:3000/api/contractors");
+      console.log(response.contractors);
       return {
-        users: response.users,
+        contractors: response.contractors,
       };
     } catch (err) {}
   },
@@ -452,57 +452,57 @@ export default {
   methods: {
     editItem(item) {
       this.edt = 1;
-      this.name = this.users[this.users.indexOf(item)].name;
-      this.email = this.users[this.users.indexOf(item)].email;
-      this.ind = this.users.indexOf(item);
+      this.name = this.contractors[this.contractors.indexOf(item)].name;
+      this.email = this.contractors[this.contractors.indexOf(item)].email;
+      this.ind = this.contractors.indexOf(item);
       this.dialog = true;
     },
     expItem(item) {
-      this.name1 = this.users[this.users.indexOf(item)].name;
-      this.email1 = this.users[this.users.indexOf(item)].email;
-      this.batch1 = this.users[this.users.indexOf(item)].batch;
-      this.sem1 = this.users[this.users.indexOf(item)].sem;
-      this.section1 = this.users[this.users.indexOf(item)].section;
-      this.phone1 = this.users[this.users.indexOf(item)].phone;
-      this.addr_line1 = this.users[this.users.indexOf(item)].addr_line;
-      this.city1 = this.users[this.users.indexOf(item)].city;
-      this.state1 = this.users[this.users.indexOf(item)].state;
-      this.country1 = this.users[this.users.indexOf(item)].country;
-      this.bio1 = this.users[this.users.indexOf(item)].bio;
-      this.profile_url1 = this.users[this.users.indexOf(item)].profile;
-      this.resume_url1 = this.users[this.users.indexOf(item)].resume;
-      this.password1 = this.users[this.users.indexOf(item)].password;
+      this.name1 = this.contractors[this.contractors.indexOf(item)].name;
+      this.email1 = this.contractors[this.contractors.indexOf(item)].email;
+      this.batch1 = this.contractors[this.contractors.indexOf(item)].batch;
+      this.sem1 = this.contractors[this.contractors.indexOf(item)].sem;
+      this.section1 = this.contractors[this.contractors.indexOf(item)].section;
+      this.phone1 = this.contractors[this.contractors.indexOf(item)].phone;
+      this.addr_line1 = this.contractors[this.contractors.indexOf(item)].addr_line;
+      this.city1 = this.contractors[this.contractors.indexOf(item)].city;
+      this.state1 = this.contractors[this.contractors.indexOf(item)].state;
+      this.country1 = this.contractors[this.contractors.indexOf(item)].country;
+      this.bio1 = this.contractors[this.contractors.indexOf(item)].bio;
+      this.profile_url1 = this.contractors[this.contractors.indexOf(item)].profile;
+      this.resume_url1 = this.contractors[this.contractors.indexOf(item)].resume;
+      this.password1 = this.contractors[this.contractors.indexOf(item)].password;
     },
 
     async deleteItem(id, item) {
-      const index = this.users.indexOf(item);
+      const index = this.contractors.indexOf(item);
 
       //confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
       try {
         let response = await this.$axios.$delete(
-          `http://localhost:3000/api/users/${id}`
+          `http://localhost:3000/api/contractors/${id}`
         );
         console.log(response);
         if (response.status) {
-          this.users.splice(index, 1);
+          this.contractors.splice(index, 1);
         }
       } catch (err) {}
     },
 
     async onAddAnnouncement() {
       if (this.edt == 1) {
-        this.ide = this.users[this.ind]._id;
+        this.ide = this.contractors[this.ind]._id;
         let data = {
           name: this.name,
           email: this.email,
         };
         let result = await this.$axios.$put(
-          `http://localhost:3000/api/users/${this.ide}`,
+          `http://localhost:3000/api/contractors/${this.ide}`,
           data
         );
         this.dialog = false;
-        this.users[this.ind].name = this.name;
-        this.users[this.ind].email = this.email;
+        this.contractors[this.ind].name = this.name;
+        this.contractors[this.ind].email = this.email;
         this.edt = 0;
       } else {
         try {
@@ -514,17 +514,17 @@ export default {
             email: this.email,
           };
           let response = await this.$axios.$post(
-            "http://localhost:3000/api/users",
+            "http://localhost:3000/api/contractors",
             data
           );
-          this.users.push(data);
+          this.contractors.push(data);
           this.name = "";
           this.email = "";
         } catch (err) {
           console.log(err);
         }
       }
-      //this.users.push(data);
+      //this.contractors.push(data);
       //this.dialog=false;
       //this.$router.push("/Dashboard");
     },

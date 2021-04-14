@@ -111,6 +111,13 @@
                                             name="input-10-1"
                                             @click:append="show1 = !show1"
                                           ></v-text-field>
+                                          <v-select
+                                            :items="item1"
+                                            label="Role"
+                                            color="blue-grey"
+                                            light
+                                            v-model="role"
+                                          ></v-select>
                                         </v-form>
                                       </v-card-text>
                                       <v-card-actions>
@@ -127,27 +134,16 @@
                                       class="v-card__text text-center"
                                     >
                                       <v-card-text>
-                                        <v-form>
                                           <div>
-                                            Enter OTP sent at {{ email }}
+                                            Further instructions for account verification has been sent to {{ email }}
                                           </div>
-
-                                          <v-text-field
-                                            light
-                                            v-model="otp"
-                                            name="login"
-                                            type="text"
-                                            color="cyan darken-2"
-                                            outlined
-                                          ></v-text-field>
-                                        </v-form>
                                       </v-card-text>
                                       <v-card-actions>
                                         <v-spacer></v-spacer>
                                         <v-btn
                                           color="cyan darken-1"
-                                          @click="onRegister"
-                                          >Enter</v-btn
+                                          href="/login"
+                                          >Ok</v-btn
                                         >
                                       </v-card-actions>
                                     </div>
@@ -248,6 +244,8 @@ export default {
       fixed: false,
       email: "",
       password: "",
+      role: "",
+      item1: [ 'contractor', 'pwd','govt'],
       items: [
         {
           icon: "mdi-apps",
@@ -330,15 +328,17 @@ export default {
           name: this.name,
           email: this.email,
           password: this.password,
+          role: this.role,
         };
         let response = await this.$axios.$post(
           "http://localhost:3000/api/auth/signup",
           data
-        );
+        ); 
         if (response.success) {
-          this.email = "";
+          this.show=2;
           this.password = "";
           this.name = "";
+          this.role= "";
         }
       } catch (err) {
         console.log(err);

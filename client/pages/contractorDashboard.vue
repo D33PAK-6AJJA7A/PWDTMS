@@ -37,7 +37,7 @@
               color="white"
               ><v-card
                 class="yellow darken-3 pa-2 elevation-2"
-                href="/userDashboard"
+                href="/contractorDashboard"
               >
                 <v-icon large class="mr-5">mdi-apps</v-icon>
                 Dashboard</v-card
@@ -49,7 +49,7 @@
               color="white"
               ><v-card
                 class="blue-grey darken-3 pa-2 elevation-0"
-                href="/userProfile"
+                href="/contractorProfile"
               >
                 <v-icon large class="mr-5">mdi-account</v-icon>
                 Profile</v-card
@@ -61,7 +61,7 @@
               color="white"
               ><v-card
                 class="blue-grey darken-3 pa-2 elevation-0"
-                href="/userTender"
+                href="/contractorTender"
               >
                 <v-icon large class="mr-5">mdi-bookshelf</v-icon>
                 All Projects</v-card
@@ -73,7 +73,7 @@
               color="white"
               ><v-card
                 class="blue-grey darken-3 pa-2 elevation-0"
-                href="/userMyTender"
+                href="/contractorMyTender"
               >
                 <v-icon large class="mr-5">mdi-clipboard</v-icon>
                 My Projects</v-card
@@ -238,23 +238,23 @@ export default {
       {
         icon: "mdi-apps",
         title: "Dashboard",
-        to: "/userDashboard",
+        to: "/contractorDashboard",
       },
       {
         icon: "mdi-account",
         title: "Dashboard",
-        to: "/userProfile",
+        to: "/contractorProfile",
       },
 
       {
         icon: "mdi-bookshelf",
         title: "Projects and Tenders",
-        to: "/userTender",
+        to: "/contractorTender",
       },
       {
         icon: "mdi-bookshelf",
         title: "My Tenders",
-        to: "/userMyTender",
+        to: "/contractorMyTender",
       },
     ],
     search: "",

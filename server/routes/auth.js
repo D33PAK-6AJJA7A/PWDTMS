@@ -23,7 +23,7 @@ router.post('/auth/signup',async(req,res) => {
             newUser.name = req.body.name;
             newUser.email = req.body.email;
             newUser.password = req.body.password;
-            newUser.role = 'pwd'; //request has to send role (possible roles : 'pwd','contractor', 'govt'
+            newUser.role = req.body.role;   //request has to send role (possible roles : 'pwd','contractor', 'govt'
             newUser.confirmed = false;
             await newUser.save();
             let token = jwt.sign(newUser.toJSON(), process.env.SECRET, {
