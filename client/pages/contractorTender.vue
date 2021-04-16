@@ -8,79 +8,71 @@
         ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1">LogOut</div></v-card
       >
       <v-navigation-drawer
-        v-model="drawer"
         app
-        dark
-        width="15%"
+        v-model="drawer"
+        :mini-variant.sync="mini"
         permanent
         class="blue-grey darken-3"
       >
-        <v-flex justify-center>
-          <v-list-item>
-            <div
-              class="layout align-center justify-center"
-              style="max-width: 100px; max-height: 100"
-            >
-              <v-img
-                class="rounded-circle ml-14 mt-5 pa-4"
-                src="https://recruitment.iiita.ac.in/faculty_recruitment/IIIT_logo_transparent.gif"
-              ></v-img>
-            </div>
+        <v-list-item v-if="mini == false" class="px-2">
+          <div
+            class="layout align-center justify-center"
+            style="min-width: 100px; min-height: 100"
+          >
+            <v-img
+              color=""
+              src="https://rasput1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
+            ></v-img>
+          </div>
+          <div></div>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list flat class="blue-grey darken-3 pr-1 pl-1">
+          <v-list-item v-if="mini == false" @click.stop="mini = !mini">
+            <v-list-item-icon>
+              <v-icon x-large color="yellow darken-3">mdi-chevron-left</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title
+                class="text--white text-h6 mb-2 font-weight-light"
+                >Minimise</v-list-item-title
+              >
+            </v-list-item-content>
           </v-list-item>
+          <v-list-item v-if="mini == true">
+            <v-list-item-icon>
+              <v-icon>mdi-menu</v-icon>
+            </v-list-item-icon>
 
-          <v-list-item> </v-list-item>
-
-          <v-divider></v-divider>
-          <v-list nav dense>
-            <v-list-item-group
+            <v-list-item-content
               class="text--white text-h6 mb-2 font-weight-light"
-              color="white"
-              ><v-card
-                class="blue-grey darken-3 pa-2 elevation-0"
-                href="/contractorDashboard"
-              >
-                <v-icon large class="mr-5">mdi-apps</v-icon>
-                Dashboard</v-card
-              >
-            </v-list-item-group>
+            >
+              <v-list-item-title>Minimise</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            v-for="item in items12"
+            :key="item.title"
+            :to="item.to"
+            router
+            exact
+            active-class="yellow darken-3  rounded-lg"
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
 
-            <v-list-item-group
-              class="text--white text-h6 mb-2 font-weight-light"
-              color="white"
-              ><v-card
-                class="blue-grey darken-3 pa-2 elevation-0"
-                href="/contractorProfile"
+            <v-list-item-content>
+              <v-list-item-title
+                class="text--white text-h6 mb-2 font-weight-light"
+                >{{ item.title }}</v-list-item-title
               >
-                <v-icon large class="mr-5">mdi-account</v-icon>
-                Profile</v-card
-              >
-            </v-list-item-group>
-
-            <v-list-item-group
-              class="text--white text-h6 mb-2 font-weight-light"
-              color="white"
-              ><v-card
-                class="yellow darken-3 pa-2 elevation-2"
-                href="/contractorTender"
-              >
-                <v-icon large class="mr-5">mdi-bookshelf</v-icon>
-                All Projects</v-card
-              >
-            </v-list-item-group>
-
-            <v-list-item-group
-              class="text--white text-h6 mb-2 font-weight-light"
-              color="white"
-              ><v-card
-                class="blue-grey darken-3 pa-2 elevation-0"
-                href="/contractorMyTender"
-              >
-                <v-icon large class="mr-5">mdi-clipboard</v-icon>
-                My Projects</v-card
-              >
-            </v-list-item-group>
-          </v-list>
-        </v-flex>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
       </v-navigation-drawer>
 
       <v-main class="grey lighten-2">
@@ -335,69 +327,24 @@
 
 <script>
 export default {
-  async asyncData({ $axios }) {
-    try {
-      let response = await $axios.$get("http://localhost:3000/api/interncards");
-
-      return {
-        interncards: response.interncards,
-      };
-    } catch (err) {}
-  },
   data: () => ({
-    idee: "",
-    title: "",
-    ide: "",
-    text: "",
-    description: "",
-    ind: "",
-    learnMore: "",
-    updates: "",
-    cards: ["interncards"],
-    drawer: null,
-    links: [
-      ["mdi-inbox-arrow-down", "Inbox"],
-      ["mdi-send", "Send"],
-      ["mdi-delete", "Trash"],
-      ["mdi-alert-octagon", "Spam"],
-    ],
-    items: [
+    drawer: true,
+    items12: [
+      { title: "Dashboard", icon: "mdi-home-city", to: "/contractorDashboard" },
       {
-        icon: "mdi-apps",
-        title: "Dashboard",
-        to: "/AdminDashboard",
-      },
-      {
+        title: "Profile",
         icon: "mdi-account",
-        title: "Students",
-        to: "/AdminStudents",
+        to: "/contractorProfile",
       },
+      { title: "All Projects", icon: "mdi-bookshelf", to: "/contractorTender" },
       {
-        icon: "mdi-bookshelf",
-        title: "Study Material",
-        to: "/AdminMaterial",
-      },
-      {
-        icon: "mdi-file-document-multiple",
-        title: "Internships",
-        to: "/AdminInternships",
-      },
-      {
-        icon: "mdi-logout",
-        title: "Logout",
-        to: "/Logout",
+        title: "My Projects",
+        icon: "mdi-clipboard",
+        to: "/contractorMyTender",
       },
     ],
+    mini: false,
     search: "",
-    dialog: false,
-    edt: 0,
-
-    /*interncard.company = req.body.company;
-    interncard.role = req.body.role;
-    interncard.stipend = req.body.stipend;
-    interncard.duration = req.body.duration;
-    interncard.startDate = req.body.startDate;
-    interncard.applyBy = req.body.applyBy; */
     headers: [
       {
         text: "Role",
@@ -410,198 +357,7 @@ export default {
 
       { text: "Actions", value: "edit", sortable: false },
     ],
-    desserts: [],
-    editedIndex: -1,
-    editedItem: {
-      title: "",
-      description: 0,
-    },
-    defaultItem: {
-      company: "",
-      role: "",
-      stipend: "",
-      duration: "",
-      startDate: "",
-      applyBy: "",
-      learnMore: "",
-      updates: "",
-      appliedStudents: [],
-    },
-
-    company1: "N/A",
-    role1: "N/A",
-    stipend1: "N/A",
-    duration1: "N/A",
-    startDate1: "N/A",
-    applyBy1: "N/A",
-    learnMore1: "N/A",
-    updates1: "N/A",
-    appliedStudents1: [],
   }),
-  computed: {},
-  methods: {
-    expItem(item) {
-      this.idee = item._id;
-      this.company1 = item.company;
-      this.role1 = item.role;
-      this.stipend1 = item.stipend;
-      this.duration1 = item.duration;
-      this.startDate1 = item.startDate;
-      this.applyBy1 = item.applyBy;
-      this.learnMore1 = item.learnMore;
-      this.updates1 = item.updates;
-      this.appliedStudents1 = item.appliedStudents;
-    },
-    editItem(item) {
-      this.edt = 1;
-      this.company = this.interncards[this.interncards.indexOf(item)].company;
-      this.role = this.interncards[this.interncards.indexOf(item)].role;
-      this.stipend = this.interncards[this.interncards.indexOf(item)].stipend;
-      this.duration = this.interncards[this.interncards.indexOf(item)].duration;
-      this.startDate = this.interncards[
-        this.interncards.indexOf(item)
-      ].startDate;
-      this.applyBy = this.interncards[this.interncards.indexOf(item)].applyBy;
-      this.learnMore = this.interncards[
-        this.interncards.indexOf(item)
-      ].learnMore;
-      this.updates = this.interncards[this.interncards.indexOf(item)].updates;
-      this.appliedStudents = this.interncards[
-        this.interncards.indexOf(item)
-      ].appliedStudents;
-      this.ind = this.interncards.indexOf(item);
-      this.dialog = true;
-    },
-
-    async deleteItem(id, item) {
-      const index = this.interncards.indexOf(item);
-
-      //confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
-      try {
-        let response = await this.$axios.$delete(
-          `http://localhost:3000/api/interncards/${id}`
-        );
-        console.log(response);
-        if (response.status) {
-          this.interncards.splice(index, 1);
-        }
-      } catch (err) {}
-    },
-    async edit(ind3) {
-      this.appliedStudents1.splice(ind3, 1);
-
-      this.ide = this.idee;
-      let data = {
-        company: this.company1,
-        role: this.role1,
-        stipend: this.stipend1,
-        duration: this.duration1,
-        startDate: this.startDate1,
-        applyBy: this.applyBy1,
-        learnMore: this.learnMore1,
-        updates: this.updates1,
-        appliedStudents: this.appliedStudents1,
-      };
-
-      console.log(data);
-      let result = await this.$axios.$put(
-        `http://localhost:3000/api/interncards/${this.ide}`,
-        data
-      );
-    },
-    async onAddinterncard() {
-      if (this.edt == 1) {
-        this.ide = this.interncards[this.ind]._id;
-        let data = {
-          company: this.company,
-          role: this.role,
-          stipend: this.stipend,
-          duration: this.duration,
-          startDate: this.startDate,
-          applyBy: this.applyBy,
-          learnMore: this.learnMore,
-          updates: this.updates,
-          appliedStudents: this.appliedStudents,
-        };
-
-        console.log(data);
-        let result = await this.$axios.$put(
-          `http://localhost:3000/api/interncards/${this.ide}`,
-          data
-        );
-        this.dialog = false;
-
-        this.interncards[this.ind].company = this.company;
-        this.interncards[this.ind].role = this.role;
-        this.interncards[this.ind].stipend = this.stipend;
-        this.interncards[this.ind].duration = this.duration;
-        this.interncards[this.ind].startDate = this.startDate;
-        this.interncards[this.ind].applyBy = this.applyBy;
-        this.interncards[this.ind].learnMore = this.learnMore;
-        this.interncards[this.ind].updates = this.updates;
-        this.interncards[this.ind].updates = this.appliedStudents;
-
-        this.edt = 0;
-      } else {
-        try {
-          // console.log(this.company);
-          //console.log(this.);
-
-          let data = {
-            company: this.company,
-            role: this.role,
-            stipend: this.stipend,
-            duration: this.duration,
-            startDate: this.startDate,
-            applyBy: this.applyBy,
-            learnMore: this.learnMore,
-            updates: this.updates,
-          };
-
-          let response = await this.$axios.$post(
-            "http://localhost:3000/api/interncards",
-            data
-          );
-          this.interncards.push(data);
-          this.company = "";
-          this.role = "";
-          this.stipend = "";
-          this.duration = "";
-          this.startDate = "";
-          this.applyBy = "";
-          this.learnMore = "";
-          this.updates = "";
-        } catch (err) {
-          console.log(err);
-        }
-      }
-      //this.dialog=false;
-    },
-    async verify() {
-      try {
-        let cookie = this.$cookies.get("jwt");
-        if (cookie == null) {
-          this.$router.push("/AdminLogin");
-        }
-        let data = {
-          cookie: cookie,
-        };
-        let verify_response = await this.$axios.$post(
-          `http://localhost:3000/api/adminverify/`,
-          data
-        );
-        console.log(verify_response.success);
-        if (!verify_response.success) {
-          this.$router.push("/AdminLogin");
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    },
-  },
-  beforeMount() {
-    this.verify();
-  },
 };
 </script>
 

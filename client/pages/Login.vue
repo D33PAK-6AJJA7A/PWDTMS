@@ -221,74 +221,7 @@ export default {
       fixed: false,
       email: "",
       password: "",
-      items: [
-        {
-          icon: "mdi-apps",
-          title: "Home",
-          to: "/",
-        },
-        {
-          icon: "mdi-apps",
-          title: "Sign Up",
-          to: "/Register",
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "ABOUT US",
-          to: "/AboutUs",
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "Login",
-          to: "/Login",
-        },
-      ],
-      itemss: [
-        {
-          icon: "mdi-apps",
-          title: "Home",
-          to: "/",
-        },
-        {
-          icon: "mdi-apps",
-          title: "Sign Up",
-          to: "/Register",
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "ABOUT US",
-          to: "/AboutUs",
-        },
 
-        {
-          icon: "mdi-chart-bubble",
-          title: "Login",
-          to: "/Login",
-        },
-      ],
-      itemsss: [
-        {
-          icon: "mdi-apps",
-          title: "Placement Portal",
-          to: "https://placement.iiita.ac.in/",
-        },
-        {
-          icon: "mdi-apps",
-          title: "IIIT A",
-          to: "https://www.iiita.ac.in/",
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "Past Data",
-          to: "https://placement.iiita.ac.in/statistics.php",
-        },
-
-        {
-          icon: "mdi-chart-bubble",
-          title: "Login",
-          to: "/Login",
-        },
-      ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
@@ -309,13 +242,12 @@ export default {
         );
         if (response.success) {
           this.$cookies.set("jwt", response.token);
-          
+
           this.error = "";
-          if(response.role === "pwd")
-            this.$router.push("/pwdDashboard");
-          else if(response.role === "contractor")
+          if (response.role === "pwd") this.$router.push("/pwdDashboard");
+          else if (response.role === "contractor")
             this.$router.push("/contractorDashboard");
-          else if(response.role === "govt")
+          else if (response.role === "govt")
             this.$router.push("/govtDashboard");
           //this.$router.push("/Dashboard");
           //window.location.replace("/Dashboard");

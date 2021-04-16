@@ -13,79 +13,73 @@
               </div></v-card
             >
             <v-navigation-drawer
-              v-model="drawer"
               app
-              dark
-              width="15%"
+              v-model="drawer"
+              :mini-variant.sync="mini"
               permanent
               class="blue-grey darken-3"
             >
-              <v-flex justify-center>
-                <v-list-item>
-                  <div
-                    class="layout align-center justify-center"
-                    style="max-width: 100px; max-height: 100"
-                  >
-                    <v-img
-                      class="rounded-circle ml-14 mt-5 pa-4"
-                      src="https://recruitment.iiita.ac.in/faculty_recruitment/IIIT_logo_transparent.gif"
-                    ></v-img>
-                  </div>
+              <v-list-item v-if="mini == false" class="px-2">
+                <div
+                  class="layout align-center justify-center"
+                  style="min-width: 100px; min-height: 100"
+                >
+                  <v-img
+                    color=""
+                    src="https://rasput1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
+                  ></v-img>
+                </div>
+                <div></div>
+              </v-list-item>
+
+              <v-divider></v-divider>
+
+              <v-list flat class="blue-grey darken-3 pr-1 pl-1">
+                <v-list-item v-if="mini == false" @click.stop="mini = !mini">
+                  <v-list-item-icon>
+                    <v-icon x-large color="yellow darken-3"
+                      >mdi-chevron-left</v-icon
+                    >
+                  </v-list-item-icon>
+
+                  <v-list-item-content>
+                    <v-list-item-title
+                      class="text--white text-h6 mb-2 font-weight-light"
+                      >Minimise</v-list-item-title
+                    >
+                  </v-list-item-content>
                 </v-list-item>
+                <v-list-item v-if="mini == true">
+                  <v-list-item-icon>
+                    <v-icon>mdi-menu</v-icon>
+                  </v-list-item-icon>
 
-                <v-list-item> </v-list-item>
-
-                <v-divider></v-divider>
-                <v-list nav dense>
-                  <v-list-item-group
+                  <v-list-item-content
                     class="text--white text-h6 mb-2 font-weight-light"
-                    color="white"
-                    ><v-card
-                      class="blue-grey darken-3 pa-2 elevation-0"
-                      href="/contractorDashboard"
-                    >
-                      <v-icon large class="mr-5">mdi-apps</v-icon>
-                      Dashboard</v-card
-                    >
-                  </v-list-item-group>
+                  >
+                    <v-list-item-title>Minimise</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item
+                  v-for="item in items12"
+                  :key="item.title"
+                  :to="item.to"
+                  router
+                  exact
+                  active-class="yellow darken-3  rounded-lg"
+                >
+                  <v-list-item-icon>
+                    <v-icon>{{ item.icon }}</v-icon>
+                  </v-list-item-icon>
 
-                  <v-list-item-group
-                    class="text--white text-h6 mb-2 font-weight-light"
-                    color="white"
-                    ><v-card
-                      class="yellow darken-3 pa-2 elevation-2"
-                      href="/contractorProfile"
+                  <v-list-item-content>
+                    <v-list-item-title
+                      class="text--white text-h6 mb-2 font-weight-light"
+                      >{{ item.title }}</v-list-item-title
                     >
-                      <v-icon large class="mr-5">mdi-account</v-icon>
-                      Profile</v-card
-                    >
-                  </v-list-item-group>
-
-                  <v-list-item-group
-                    class="text--white text-h6 mb-2 font-weight-light"
-                    color="white"
-                    ><v-card
-                      class="blue-grey darken-3 pa-2 elevation-0"
-                      href="/contractorTender"
-                    >
-                      <v-icon large class="mr-5">mdi-bookshelf</v-icon>
-                      All Projects</v-card
-                    >
-                  </v-list-item-group>
-
-                  <v-list-item-group
-                    class="text--white text-h6 mb-2 font-weight-light"
-                    color="white"
-                    ><v-card
-                      class="blue-grey darken-3 pa-2 elevation-0"
-                      href="/contractorMyTender"
-                    >
-                      <v-icon large class="mr-5">mdi-clipboard</v-icon>
-                      My Projects</v-card
-                    >
-                  </v-list-item-group>
-                </v-list>
-              </v-flex>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
             </v-navigation-drawer>
 
             <v-main class="grey lighten-2">
@@ -483,268 +477,23 @@
 </style>
 <script>
 export default {
-  async asyncData({ $axios }) {
-    try {
-      let response = await $axios.$get(
-        "http://localhost:3000/api/announcementcards"
-      );
-      return {
-        announcementcards: response.announcementcards,
-      };
-    } catch (err) {
-      console.log(err);
-    }
-  },
-  data() {
-    return {
-      view: "password",
-      Saved: "",
-      Uploaded: "",
-      dialog1: "",
-      dialog2: "",
-      selectedFile: null,
-      selectedResume: null,
-      images: {
-        //sample: require("https://media.gettyimages.com/photos/moored-boats-at-the-sacred-prayag-bathing-ghat-picture-id151731894?s=2048x2048"),
+  data: () => ({
+    drawer: true,
+    items12: [
+      { title: "Dashboard", icon: "mdi-home-city", to: "/contractorDashboard" },
+      {
+        title: "Profile",
+        icon: "mdi-account",
+        to: "/contractorProfile",
       },
-      profile_url: "",
-      resume_url: "",
-      show1: false,
-      show2: false,
-      show3: false,
-      id: "",
-      email: "",
-      name: " ",
-      sem: " ",
-      batch: " ",
-      bio: " ",
-      section: " ",
-      phone: " ",
-      addr_line: " ",
-      city: " ",
-      state: " ",
-      country: " ",
-      password: "",
-      password_to_check: "",
-      password_new: "",
-      cards: ["Announcements"],
-      drawer: null,
-
-      items: [
-        {
-          icon: "mdi-apps",
-          title: "Dashboard",
-          to: "/Dashboard",
-        },
-        {
-          icon: "mdi-account",
-          title: "Profile",
-          to: "/Profile",
-        },
-        {
-          icon: "mdi-bookshelf",
-          title: "Study Material",
-          to: "/Material",
-        },
-        {
-          icon: "mdi-file-document-multiple",
-          title: "Internships",
-          to: "/Internships",
-        },
-        {
-          icon: "mdi-logout",
-          title: "Logout",
-          to: "/Logout",
-        },
-      ],
-      items3: [
-        { header: "Today" },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Brunch this weekend?",
-          subtitle: `<span class="text--primary">Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-        },
-        { divider: true, inset: true },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-          title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-          subtitle: `<span class="text--primary">to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend.`,
-        },
-        { divider: true, inset: true },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-          title: "Oui oui",
-          subtitle:
-            '<span class="text--primary">Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?',
-        },
-        { divider: true, inset: true },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
-          title: "Birthday gift",
-          subtitle:
-            '<span class="text--primary">Trevor Hansen</span> &mdash; Have any ideas about what we should get Heidi for her birthday?',
-        },
-        { divider: true, inset: true },
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/5.jpg",
-          title: "Recipe to try",
-          subtitle:
-            '<span class="text--primary">Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
-        },
-      ],
-    };
-  },
-  methods: {
-    enableEditing: function () {
-      this.tempValue = this.value;
-      this.editing = true;
-    },
-    disableEditing: function () {
-      this.tempValue = null;
-      this.editing = false;
-    },
-    saveEdit: function () {
-      // However we want to save it to the database
-      this.value = this.tempValue;
-      this.disableEditing();
-    },
-    async changePassword() {
-      try {
-        //let cookie = this.$cookies.get("jwt");
-        if (this.password_to_check === this.password) {
-          let data = {
-            sem: this.sem,
-            batch: this.batch,
-            section: this.section,
-            phone: this.phone,
-            bio: this.bio,
-            addr_line: this.addr_line,
-            city: this.city,
-            state: this.state,
-            country: this.country,
-            password: this.password_new,
-            email: this.email,
-            name: this.name,
-          };
-          let response = await this.$axios.$put(
-            `http://localhost:3000/api/contractorupdatepassword/${this.id}`,
-            data
-          );
-          this.password_to_check = "";
-          this.password_new = "";
-          console.log("Successfully updated password...:)");
-        } else {
-          console.log("Wrong old password !!");
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    onUpload() {
-      const formData = new FormData();
-      formData.append("profile", this.selectedFile);
-      formData.append("cookie", this.$cookies.get("jwt"));
-      this.$axios
-        .post("http://localhost:3000/api/upload/profile", formData)
-        .then((res) => {
-          // console.log(res)
-        });
-      this.getURL();
-      this.$router.go();
-    },
-    onFileChanged(event) {
-      this.selectedFile = event.target.files[0];
-    },
-    async getURL() {
-      try {
-        let cookie = this.$cookies.get("jwt");
-        let response = await this.$axios.$get(
-          `http://localhost:3000/api/profile/${cookie}`
-        );
-        this.profile_url = response.contractor.profile;
-        this.resume_url = response.contractor.resume;
-        // console.log(this.profile_url);
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    onUploadResume() {
-      const formData = new FormData();
-      formData.append("resume", this.selectedFile);
-      formData.append("cookie", this.$cookies.get("jwt"));
-      this.Uploaded = "Uploaded";
-      this.$axios
-        .post("http://localhost:3000/api/upload/resume", formData)
-        .then((res) => {
-          // console.log(res)
-        });
-      this.getURL();
-      // this.$router.go();
-    },
-    async onSaveProfile() {
-      try {
-        //let cookie = this.$cookies.get("jwt");
-        let data = {
-          sem: this.sem,
-          batch: this.batch,
-          section: this.section,
-          phone: this.phone,
-          bio: this.bio,
-          addr_line: this.addr_line,
-          city: this.city,
-          state: this.state,
-          country: this.country,
-          password: this.password,
-        };
-        let response = await this.$axios.$put(
-          `http://localhost:3000/api/contractors/${this.id}`,
-          data
-        );
-        this.Saved = "Saved";
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    async getcontractor() {
-      try {
-        let cookie = this.$cookies.get("jwt");
-        if (cookie == null) {
-          this.$router.push("/login");
-        }
-        let data = {
-          cookie: cookie,
-        };
-        let response = await this.$axios.$post(
-          `http://localhost:3000/api/profile/`,
-          data
-        );
-        if (!response.success) {
-          this.$router.push("/login");
-        }
-        this.id = response.contractor._id;
-        this.name = response.contractor.name;
-        this.email = response.contractor.email;
-        this.sem = response.contractor.sem;
-        this.batch = response.contractor.batch;
-        this.section = response.contractor.section;
-        this.phone = response.contractor.phone;
-        this.bio = response.contractor.bio;
-        this.addr_line = response.contractor.addr_line;
-        this.city = response.contractor.city;
-        this.state = response.contractor.state;
-        this.country = response.contractor.country;
-        this.profile_url = response.contractor.profile;
-        this.password = response.contractor.password;
-        console.log(this.profile_url);
-        this.resume_url = response.contractor.resume;
-      } catch (err) {
-        console.log(err);
-      }
-    },
-  },
-
-  beforeMount() {
-    this.getcontractor();
-  },
+      { title: "All Projects", icon: "mdi-bookshelf", to: "/contractorTender" },
+      {
+        title: "My Projects",
+        icon: "mdi-clipboard",
+        to: "/contractorMyTender",
+      },
+    ],
+    mini: false,
+  }),
 };
 </script>

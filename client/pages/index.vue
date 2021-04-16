@@ -41,6 +41,14 @@
                 <v-card class="mx-auto transparent" dark min-height="50" flat>
                 </v-card>
               </v-flex>
+              <v-flex xs12 md6>
+                <v-card class="mx-auto transparent ml-15" min-height="100" flat>
+                  <img
+                    height="770px"
+                    src="https://www.clipartmax.com/png/full/28-289335_construction-worker-clipart.png"
+                  />
+                </v-card>
+              </v-flex>
             </v-layout>
           </v-container>
         </v-content>
@@ -51,6 +59,10 @@
 
 
 <style scoped>
+body {
+  overflow: hidden;
+  height: 100vh;
+}
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }
@@ -106,98 +118,12 @@ export default {
   },
 
   data: () => ({
-    articles: [
-      {
-        src:
-          "https://images.unsplash.com/photo-1423784346385-c1d4dac9893a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
-        title: "Mobile first & Responsive",
-        text:
-          "Phasellus lorem enim, luctus ut velit eget, convallis egestas eros. Sed ornare ligula eget tortor tempor, quis porta tellus dictum.",
-      },
-      {
-        src:
-          "https://images.unsplash.com/photo-1475938476802-32a7e851dad1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
-        title: "Think outside the box",
-        text:
-          "Nam ut leo ipsum. Maecenas pretium aliquam feugiat. Aenean vel tempor est, vitae tincidunt risus. Sed sodales vestibulum nibh.",
-      },
-      {
-        src:
-          "https://images.unsplash.com/photo-1416339442236-8ceb164046f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1892&q=80",
-        title: "Small changes, big difference",
-        text:
-          "Vestibulum in dictum velit, in rhoncus nibh. Maecenas neque libero, interdum a dignissim in, aliquet vitae lectus. Phasellus lorem enim, luctus ut velit eget.",
-      },
-    ],
-    features: [
-      {
-        icon: "mdi-account-group-outline",
-        title: "Vibrant Community",
-        text:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto cupiditate sint possimus quidem atque harum excepturi nemo velit tempora! Enim inventore fuga, qui ipsum eveniet facilis obcaecati corrupti asperiores nam",
-      },
-      {
-        icon: "mdi-update",
-        title: "Frequent Updates",
-        text:
-          "Sed ut elementum justo. Suspendisse non justo enim. Vestibulum cursus mauris dui, a luctus ex blandit. Lorem ipsum dolor sit amet consectetur adipisicing elit. qui ipsum eveniet facilis obcaecati corrupti consectetur adipisicing elit.",
-      },
-      {
-        icon: "mdi-shield-outline",
-        title: "Long-term Support",
-        text:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto cupiditate sint possimus quidem atque harum excepturi nemo velit tempora! Enim inventore fuga, qui ipsum eveniet facilis obcaecati corrupti asperiores nam",
-      },
-    ],
-    stats: [
-      ["24k", "Github Stars"],
-      ["330+", "Releases"],
-      ["1m", "Downloads/mo"],
-      ["5m", "Total Downloads"],
-    ],
-
     dialog: true,
 
     clipped: false,
     drawer: true,
     fixed: false,
-    items: [
-      {
-        src: "https://www.iiita.ac.in/uploads/carousel/MBA146.jpg",
-      },
-      {
-        src: "https://www.iiita.ac.in/uploads/carousel/b218.jpg",
-      },
-      {
-        src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
-      },
-      {
-        src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
-      },
-    ],
-    itemss: [
-      {
-        icon: "mdi-apps",
-        title: "Home",
-        to: "/",
-      },
-      {
-        icon: "mdi-apps",
-        title: "Sign Up",
-        to: "/Register",
-      },
-      {
-        icon: "mdi-chart-bubble",
-        title: "ABOUT US",
-        to: "/AboutUs",
-      },
 
-      {
-        icon: "mdi-chart-bubble",
-        title: "Login",
-        to: "/Login",
-      },
-    ],
     itemsss: [
       {
         icon: "mdi-apps",
@@ -221,41 +147,8 @@ export default {
         to: "/Login",
       },
     ],
-    colors: [
-      "blue-grey",
-      "secondary",
-      "yellow darken-4",
-      "red lighten-2",
-      "orange darken-1",
-    ],
-    cycle: false,
-    slides: ["First", "Second", "Third", "Fourth", "Fifth"],
-    miniVariant: false,
-    right: true,
-    rightDrawer: false,
     title: "IIIT INTERNSHIP PORTAL",
   }),
-  methods: {
-    async verify() {
-      try {
-        let cookie = this.$cookies.get("jwt");
-        let data = {
-          cookie: cookie,
-        };
-        let verify_response = await this.$axios.$post(
-          `http://localhost:3000/api/verify/`,
-          data
-        );
-        if (verify_response.success) {
-          this.$router.push("/Dashboard");
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    },
-  },
-  beforeMount() {
-    this.verify();
-  },
+  methods: {},
 };
 </script>

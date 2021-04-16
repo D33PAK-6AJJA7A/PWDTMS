@@ -112,6 +112,7 @@
                                             @click:append="show1 = !show1"
                                           ></v-text-field>
                                           <v-select
+                                            prepend-icon="mdi-briefcase-account"
                                             :items="item1"
                                             label="Role"
                                             color="blue-grey"
@@ -134,9 +135,11 @@
                                       class="v-card__text text-center"
                                     >
                                       <v-card-text>
-                                          <div>
-                                            Further instructions for account verification has been sent to {{ email }}
-                                          </div>
+                                        <div>
+                                          Further instructions for account
+                                          verification has been sent to
+                                          {{ email }}
+                                        </div>
                                       </v-card-text>
                                       <v-card-actions>
                                         <v-spacer></v-spacer>
@@ -245,52 +248,8 @@ export default {
       email: "",
       password: "",
       role: "",
-      item1: [ 'contractor', 'pwd','govt'],
-      items: [
-        {
-          icon: "mdi-apps",
-          title: "Home",
-          to: "/",
-        },
-        {
-          icon: "mdi-apps",
-          title: "Sign Up",
-          to: "/Register",
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "ABOUT US",
-          to: "/AboutUs",
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "Login",
-          to: "/Login",
-        },
-      ],
-      itemss: [
-        {
-          icon: "mdi-apps",
-          title: "Home",
-          to: "/",
-        },
-        {
-          icon: "mdi-apps",
-          title: "Sign Up",
-          to: "/Register",
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "ABOUT US",
-          to: "/AboutUs",
-        },
+      item1: ["contractor", "pwd", "govt"],
 
-        {
-          icon: "mdi-chart-bubble",
-          title: "Login",
-          to: "/Login",
-        },
-      ],
       itemsss: [
         {
           icon: "mdi-apps",
@@ -333,12 +292,12 @@ export default {
         let response = await this.$axios.$post(
           "http://localhost:3000/api/auth/signup",
           data
-        ); 
+        );
         if (response.success) {
-          this.show=2;
+          this.show = 2;
           this.password = "";
           this.name = "";
-          this.role= "";
+          this.role = "";
         }
       } catch (err) {
         console.log(err);

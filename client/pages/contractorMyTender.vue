@@ -7,7 +7,7 @@
         height="50px"
         ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1">LogOut</div></v-card
       >
-      <v-navigation-drawer
+      <!-- <v-navigation-drawer
         v-model="drawer"
         app
         dark
@@ -81,6 +81,73 @@
             </v-list-item-group>
           </v-list>
         </v-flex>
+      </v-navigation-drawer> -->
+      <v-navigation-drawer
+        app
+        v-model="drawer"
+        :mini-variant.sync="mini"
+        permanent
+        class="blue-grey darken-3"
+      >
+        <v-list-item v-if="mini == false" class="px-2">
+          <div
+            class="layout align-center justify-center"
+            style="min-width: 100px; min-height: 100"
+          >
+            <v-img
+              color=""
+              src="https://rasput1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
+            ></v-img>
+          </div>
+          <div></div>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list flat class="blue-grey darken-3 pr-1 pl-1">
+          <v-list-item v-if="mini == false" @click.stop="mini = !mini">
+            <v-list-item-icon>
+              <v-icon x-large color="yellow darken-3">mdi-chevron-left</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title
+                class="text--white text-h6 mb-2 font-weight-light"
+                >Minimise</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item v-if="mini == true">
+            <v-list-item-icon>
+              <v-icon>mdi-menu</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content
+              class="text--white text-h6 mb-2 font-weight-light"
+            >
+              <v-list-item-title>Minimise</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            v-for="item in items12"
+            :key="item.title"
+            :to="item.to"
+            router
+            exact
+            active-class="yellow darken-3  rounded-lg"
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title
+                class="text--white text-h6 mb-2 font-weight-light"
+                >{{ item.title }}</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
       </v-navigation-drawer>
 
       <v-main class="grey lighten-2">
@@ -132,7 +199,10 @@
                           large
                           color="red"
                           @click="
-                            deleteItem(contractors[contractors.indexOf(item)]._id, item)
+                            deleteItem(
+                              contractors[contractors.indexOf(item)]._id,
+                              item
+                            )
                           "
                         >
                           mdi-delete
@@ -357,75 +427,25 @@
 
 <script>
 export default {
-  async asyncData({ $axios }) {
-    try {
-      let response = await $axios.$get("http://localhost:3000/api/contractors");
-      console.log(response.contractors);
-      return {
-        contractors: response.contractors,
-      };
-    } catch (err) {}
-  },
   data: () => ({
-    name1: "N/A",
-    sem1: "N/A",
-    section1: "N/A",
-    email1: "N/A",
-    batch1: "N/A",
-    section1: "N/A",
-    phone1: "N/A",
-    addr_line1: "N/A",
-    city1: "N/A",
-    state1: "N/A",
-    country1: "N/A",
-    bio1: "N/A",
-    password1: "",
-    name: "",
-    ide: "",
-    email: "",
-    ind: "",
-    profile_url1: "",
-    resume_url1: "",
-    section1: "",
-
-    cards: ["Announcements"],
-    drawer: null,
-
-    items: [
+    drawer: true,
+    items12: [
+      { title: "Dashboard", icon: "mdi-home-city", to: "/contractorDashboard" },
       {
-        icon: "mdi-apps",
-        title: "Dashboard",
-        to: "/AdminDashboard",
-      },
-      {
+        title: "Profile",
         icon: "mdi-account",
-        title: "Students",
-        to: "/AdminStudents",
+        to: "/contractorProfile",
       },
+      { title: "All Projects", icon: "mdi-bookshelf", to: "/contractorTender" },
       {
-        icon: "mdi-account",
-        title: "AuthStudents",
-        to: "/AdminAuthStudents",
-      },
-      {
-        icon: "mdi-bookshelf",
-        title: "Study Material",
-        to: "/AdminMaterial",
-      },
-      {
-        icon: "mdi-file-document-multiple",
-        title: "Internships",
-        to: "/AdminInternships",
-      },
-      {
-        icon: "mdi-logout",
-        title: "Logout",
-        to: "/Logout",
+        title: "My Projects",
+        icon: "mdi-clipboard",
+        to: "/contractorMyTender",
       },
     ],
+    mini: false,
+
     search: "",
-    dialog: false,
-    edt: 0,
     headers: [
       {
         text: "Name",
@@ -436,129 +456,6 @@ export default {
       { text: "Email", value: "email" },
       { text: "Actions", value: "edit", sortable: false },
     ],
-    desserts: [],
-    editedIndex: -1,
-    editedItem: {
-      name: "",
-      email: 0,
-    },
-    defaultItem: {
-      name: "",
-      email: 0,
-    },
   }),
-  computed: {},
-
-  methods: {
-    editItem(item) {
-      this.edt = 1;
-      this.name = this.contractors[this.contractors.indexOf(item)].name;
-      this.email = this.contractors[this.contractors.indexOf(item)].email;
-      this.ind = this.contractors.indexOf(item);
-      this.dialog = true;
-    },
-    expItem(item) {
-      this.name1 = this.contractors[this.contractors.indexOf(item)].name;
-      this.email1 = this.contractors[this.contractors.indexOf(item)].email;
-      this.batch1 = this.contractors[this.contractors.indexOf(item)].batch;
-      this.sem1 = this.contractors[this.contractors.indexOf(item)].sem;
-      this.section1 = this.contractors[this.contractors.indexOf(item)].section;
-      this.phone1 = this.contractors[this.contractors.indexOf(item)].phone;
-      this.addr_line1 = this.contractors[this.contractors.indexOf(item)].addr_line;
-      this.city1 = this.contractors[this.contractors.indexOf(item)].city;
-      this.state1 = this.contractors[this.contractors.indexOf(item)].state;
-      this.country1 = this.contractors[this.contractors.indexOf(item)].country;
-      this.bio1 = this.contractors[this.contractors.indexOf(item)].bio;
-      this.profile_url1 = this.contractors[this.contractors.indexOf(item)].profile;
-      this.resume_url1 = this.contractors[this.contractors.indexOf(item)].resume;
-      this.password1 = this.contractors[this.contractors.indexOf(item)].password;
-    },
-
-    async deleteItem(id, item) {
-      const index = this.contractors.indexOf(item);
-
-      //confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
-      try {
-        let response = await this.$axios.$delete(
-          `http://localhost:3000/api/contractors/${id}`
-        );
-        console.log(response);
-        if (response.status) {
-          this.contractors.splice(index, 1);
-        }
-      } catch (err) {}
-    },
-
-    async onAddAnnouncement() {
-      if (this.edt == 1) {
-        this.ide = this.contractors[this.ind]._id;
-        let data = {
-          name: this.name,
-          email: this.email,
-        };
-        let result = await this.$axios.$put(
-          `http://localhost:3000/api/contractors/${this.ide}`,
-          data
-        );
-        this.dialog = false;
-        this.contractors[this.ind].name = this.name;
-        this.contractors[this.ind].email = this.email;
-        this.edt = 0;
-      } else {
-        try {
-          console.log(this.name);
-          console.log(this.email);
-
-          let data = {
-            name: this.name,
-            email: this.email,
-          };
-          let response = await this.$axios.$post(
-            "http://localhost:3000/api/contractors",
-            data
-          );
-          this.contractors.push(data);
-          this.name = "";
-          this.email = "";
-        } catch (err) {
-          console.log(err);
-        }
-      }
-      //this.contractors.push(data);
-      //this.dialog=false;
-      //this.$router.push("/Dashboard");
-    },
-
-    async save2(id, item) {
-      //this.dialog2=false;
-      onAddAnnouncement();
-      // deleteItem (id,item);
-      //this.$router.push("/Dashboard");
-    },
-    async verify() {
-      try {
-        let cookie = this.$cookies.get("jwt");
-        if (cookie == null) {
-          this.$router.push("/AdminLogin");
-        }
-        let data = {
-          cookie: cookie,
-        };
-        let verify_response = await this.$axios.$post(
-          `http://localhost:3000/api/adminverify/`,
-          data
-        );
-        console.log(verify_response.success);
-        if (!verify_response.success) {
-          this.$router.push("/AdminLogin");
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    },
-  },
-  beforeMount() {
-    this.verify();
-  },
 };
 </script>

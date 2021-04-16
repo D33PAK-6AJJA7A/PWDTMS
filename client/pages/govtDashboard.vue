@@ -7,104 +7,77 @@
         height="50px"
         ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1">LogOut</div></v-card
       >
+
       <v-navigation-drawer
-        v-model="drawer"
         app
-        dark
-        width="15%"
+        v-model="drawer"
+        :mini-variant.sync="mini"
         permanent
         class="blue-grey darken-3"
       >
-        <v-flex justify-center>
-          <v-list-item>
-            <div
-              class="layout align-center justify-center"
-              style="max-width: 100px; max-height: 100"
-            >
-              <v-img
-                class="rounded-circle ml-14 mt-5 pa-4"
-                src="https://recruitment.iiita.ac.in/faculty_recruitment/IIIT_logo_transparent.gif"
-              ></v-img>
-            </div>
+        <v-list-item v-if="mini == false" class="px-2">
+          <div
+            class="layout align-center justify-center"
+            style="min-width: 100px; min-height: 100"
+          >
+            <v-img
+              color=""
+              src="https://rasput1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
+            ></v-img>
+          </div>
+          <div></div>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <v-list flat class="blue-grey darken-3 pr-1 pl-1">
+          <v-list-item v-if="mini == false" @click.stop="mini = !mini">
+            <v-list-item-icon>
+              <v-icon x-large color="yellow darken-3">mdi-chevron-left</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title
+                class="text--white text-h6 mb-2 font-weight-light"
+                >Minimise</v-list-item-title
+              >
+            </v-list-item-content>
           </v-list-item>
+          <v-list-item v-if="mini == true">
+            <v-list-item-icon>
+              <v-icon>mdi-menu</v-icon>
+            </v-list-item-icon>
 
-          <v-list-item> </v-list-item>
-
-          <v-divider></v-divider>
-          <v-list nav dense>
-            <v-list-item-group
+            <v-list-item-content
               class="text--white text-h6 mb-2 font-weight-light"
-              color="white"
-              ><v-card
-                class="yellow darken-3 pa-2 elevation-2"
-                href="/govtDashboard"
-              >
-                <v-icon large class="mr-5">mdi-apps</v-icon>
-                Dashboard</v-card
-              >
-            </v-list-item-group>
+            >
+              <v-list-item-title>Minimise</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            v-for="item in items12"
+            :key="item.title"
+            :to="item.to"
+            router
+            exact
+            active-class="yellow darken-3  rounded-lg"
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
 
-            <v-list-item-group
-              class="text--white text-h6 mb-2 font-weight-light"
-              color="white"
-              ><v-card
-                class="blue-grey darken-3 pa-2 elevation-0"
-                href="/govtContracterDatabase"
+            <v-list-item-content>
+              <v-list-item-title
+                class="text--white text-h6 mb-2 font-weight-light"
+                >{{ item.title }}</v-list-item-title
               >
-                <v-icon large class="mr-5">mdi-account</v-icon>
-                Contracter</v-card
-              >
-            </v-list-item-group>
-
-            <v-list-item-group
-              class="text--white text-h6 mb-2 font-weight-light"
-              color="white"
-              ><v-card
-                class="blue-grey darken-3 pa-2 elevation-0"
-                href="govtProjects"
-              >
-                <v-icon large class="mr-5">mdi-bookshelf</v-icon>
-                Projects</v-card
-              >
-            </v-list-item-group>
-          </v-list>
-        </v-flex>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
       </v-navigation-drawer>
 
       <v-main class="grey lighten-2 ml-4">
         <v-row class="mt-0">
-          <v-col cols="4"
-            ><v-row>
-              <v-col cols="12"> </v-col>
-              <v-col cols="12">
-                <v-btn
-                  color="blue-grey"
-                  dark
-                  class="mb-2"
-                  @click="putDashboardnums"
-                  >Save<v-icon>mdi-content-save</v-icon></v-btn
-                >
-                <v-card class="mx-auto pa-10" elevation="12" light>
-                  <p class="text-h5 text-center">Companies Registered</p>
-                  <p class="text-h2 text-center font-weight-bold">
-                    <v-text-field outlined filled v-model="cr"> </v-text-field>
-                  </p>
-
-                  <p class="text-h5 text-center">Total Internships</p>
-                  <p class="text-h2 text-center font-weight-bold">
-                    <v-text-field outlined filled v-model="ti"> </v-text-field>
-                  </p>
-                  <p class="text-h5 text-center">Students Registered</p>
-                  <p class="text-h2 text-center font-weight-bold">
-                    <v-text-field outlined filled v-model="sr"> </v-text-field>
-                  </p>
-                  <p class="text-h5 text-center">Students Placed</p>
-                  <p class="text-h2 text-center font-weight-bold">
-                    <v-text-field outlined filled v-model="sp"> </v-text-field>
-                  </p>
-                </v-card>
-              </v-col> </v-row
-          ></v-col>
           <v-col cols="8">
             <v-container class="grey lighten-2">
               <v-card class="grey lighten-3 rounded-ls" elevation="0">
@@ -242,196 +215,17 @@ export default {
     } catch (err) {}
   },
   data: () => ({
-    cr: "",
-    sp: "",
-    sr: "",
-    ti: "",
-    title: "",
-    ide: "",
-    description: "",
-    ind: "",
-    cards: ["Announcements"],
-    drawer: null,
-    links: [
-      ["mdi-inbox-arrow-down", "Inbox"],
-      ["mdi-send", "Send"],
-      ["mdi-delete", "Trash"],
-      ["mdi-alert-octagon", "Spam"],
-    ],
-    items: [
+    drawer: true,
+    items12: [
+      { title: "Dashboard", icon: "mdi-home-city", to: "/govtDashboard" },
       {
-        icon: "mdi-apps",
-        title: "Dashboard",
-        to: "/AdminDashboard",
-      },
-      {
+        title: "Contractor",
         icon: "mdi-account",
-        title: "Students",
-        to: "/AdminStudents",
+        to: "/govtContracterDatabase",
       },
-      {
-        icon: "mdi-bookshelf",
-        title: "Study Material",
-        to: "/AdminMaterial",
-      },
-      {
-        icon: "mdi-file-document-multiple",
-        title: "Internships",
-        to: "/AdminInternships",
-      },
-      {
-        icon: "mdi-logout",
-        title: "Logout",
-        to: "/Logout",
-      },
+      { title: "Projects", icon: "mdi-bookshelf", to: "/govtProjects" },
     ],
-    search: "",
-    dialog: false,
-    edt: 0,
-    headers: [
-      {
-        text: "Title",
-        align: "left",
-        sortable: true,
-        value: "title",
-      },
-      { text: "Description", value: "description", align: "left" },
-      { text: "Actions", value: "edit", sortable: false, align: "left" },
-    ],
-    desserts: [],
-    editedIndex: -1,
-    editedItem: {
-      title: "",
-      description: 0,
-    },
-    defaultItem: {
-      title: "",
-      description: 0,
-    },
+    mini: false,
   }),
-  computed: {},
-
-  methods: {
-    async getDashboardnums() {
-      try {
-        let response = await this.$axios.$get(
-          "http://localhost:3000/api/dashboardcards/60670965a42f7954707fcd99"
-        );
-        //return {
-        this.cr = response.dashboardcard.companiesRegistered;
-        this.ti = response.dashboardcard.totalInternships;
-        this.sr = response.dashboardcard.studentsRegistered;
-        this.sp = response.dashboardcard.studentsPlaced;
-        // };
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    async putDashboardnums() {
-      try {
-        let data = {
-          companiesRegistered: this.cr,
-          totalInternships: this.ti,
-          studentsRegistered: this.sr,
-          studentsPlaced: this.sp,
-        };
-        let response = await this.$axios.$put(
-          "http://localhost:3000/api/dashboardcards/60670965a42f7954707fcd99",
-          data
-        );
-      } catch (err) {
-        console.log(err);
-      }
-    },
-    editItem(item) {
-      this.edt = 1;
-      this.title = this.announcementcards[
-        this.announcementcards.indexOf(item)
-      ].title;
-      this.description = this.announcementcards[
-        this.announcementcards.indexOf(item)
-      ].description;
-      this.ind = this.announcementcards.indexOf(item);
-      this.dialog = true;
-    },
-
-    async deleteItem(id, item) {
-      const index = this.announcementcards.indexOf(item);
-
-      //confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
-      try {
-        let response = await this.$axios.$delete(
-          `http://localhost:3000/api/announcementcards/${id}`
-        );
-        console.log(response);
-        if (response.status) {
-          this.announcementcards.splice(index, 1);
-        }
-      } catch (err) {}
-    },
-
-    async onAddAnnouncement() {
-      if (this.edt === 1) {
-        this.ide = this.announcementcards[this.ind]._id;
-        let data = {
-          title: this.title,
-          description: this.description,
-        };
-        let result = await this.$axios.$put(
-          `http://localhost:3000/api/announcementcards/${this.ide}`,
-          data
-        );
-        this.dialog = false;
-        this.announcementcards[this.ind].title = this.title;
-        this.announcementcards[this.ind].description = this.description;
-        this.edt = 0;
-      } else {
-        try {
-          console.log(this.title);
-          console.log(this.description);
-
-          let data = {
-            title: this.title,
-            description: this.description,
-          };
-          let response = await this.$axios.$post(
-            "http://localhost:3000/api/announcementcards",
-            data
-          );
-          this.announcementcards.push(data);
-          this.title = "";
-          this.description = "";
-        } catch (err) {
-          console.log(err);
-        }
-      }
-      //this.dialog=false;
-    },
-    async verify() {
-      try {
-        let cookie = this.$cookies.get("jwt");
-        if (cookie == null) {
-          this.$router.push("/AdminLogin");
-        }
-        let data = {
-          cookie: cookie,
-        };
-        let verify_response = await this.$axios.$post(
-          `http://localhost:3000/api/adminverify/`,
-          data
-        );
-        console.log(verify_response);
-        if (!verify_response.success) {
-          this.$router.push("/AdminLogin");
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    },
-  },
-  beforeMount() {
-    this.verify();
-    this.getDashboardnums();
-  },
 };
 </script>
