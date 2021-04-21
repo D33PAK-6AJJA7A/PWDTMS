@@ -161,11 +161,6 @@
                                 </v-card>
                               </v-dialog>
                               <v-card class="transparent" height="50px" flat>
-                                <!--                        <v-file-input-->
-                                <!--                          hide-input-->
-                                <!--                          prepend-icon="mdi-camera"-->
-                                <!--                          @change="onFileChanged"-->
-                                <!--                        ></v-file-input>-->
                               </v-card>
                               <v-row>
                                 <v-col cols="2">
@@ -283,55 +278,46 @@
                         <v-container fluid>
                           <v-row>
                             <v-col cols="2">
-                              <v-subheader>Semester</v-subheader>
+                              <v-subheader>Company</v-subheader>
                             </v-col>
                             <v-col cols="2">
                               <v-text-field
                                 outlined
-                                v-model="sem"
+                                v-model="company"
                               ></v-text-field>
                             </v-col>
 
                             <v-col cols="2">
-                              <v-subheader>Batch</v-subheader>
+                              <v-subheader>Industry</v-subheader>
                             </v-col>
                             <v-col cols="2">
                               <v-text-field
                                 outlined
-                                v-model="batch"
+                                v-model= "industry"
                               ></v-text-field>
                             </v-col>
 
-                            <v-col cols="2">
-                              <v-subheader>Section</v-subheader>
-                            </v-col>
-                            <v-col cols="2">
-                              <v-text-field
-                                outlined
-                                v-model="section"
-                              ></v-text-field>
-                            </v-col>
                             <v-col cols="2">
                               <v-subheader>Phone</v-subheader>
                             </v-col>
-                            <v-col cols="4">
+                            <v-col cols="2">
                               <v-text-field
-                                v-model="phone"
                                 outlined
-                                color="blue-grey"
+                                v-model="contact_info"
                               ></v-text-field>
                             </v-col>
+                            
                             <v-col cols="12">
-                              <v-subheader>BIO</v-subheader>
+                              <v-subheader>Past Projects</v-subheader>
                               <v-textarea
                                 outlined
-                                v-model="bio"
+                                v-model="past_projects"
                                 color="blue-grey"
                               >
                               </v-textarea>
                             </v-col>
                           </v-row>
-                          <v-subheader class="text-h5">Address</v-subheader>
+                          <v-subheader class="text-h5">Company Address</v-subheader>
 
                           <v-row>
                             <v-col cols="2">
@@ -340,7 +326,7 @@
                             <v-col cols="4">
                               <v-text-field
                                 outlined
-                                v-model="addr_line"
+                                v-model="branch_addr_line"
                               ></v-text-field>
                             </v-col>
 
@@ -376,18 +362,18 @@
 
                             <v-col cols="2"> </v-col>
                             <v-col cols="12"
-                              ><v-subheader class="text-h5">Resume</v-subheader>
+                              ><v-subheader class="text-h5">Annual Report</v-subheader>
                             </v-col>
                             <v-row>
                               <v-col class="ml-8" cols="3">
                                 <v-btn large class="blue-grey">
                                   <a
-                                    v-bind:href="resume_url"
+                                    v-bind:href="annual_report_url"
                                     target="_blank"
                                     class="black--text"
                                     style="text-decoration: none"
                                   >
-                                    View Resume<v-icon>mdi-eye</v-icon>
+                                    View Report<v-icon>mdi-eye</v-icon>
                                   </a></v-btn
                                 ></v-col
                               >
@@ -407,7 +393,7 @@
                                       v-bind="attrs"
                                       v-on="on"
                                     >
-                                      Upload Resume
+                                      Upload Report
                                       <v-icon
                                         >mdi-file-document-multiple</v-icon
                                       >
@@ -416,7 +402,7 @@
                                   </template>
                                   <v-card>
                                     <v-card-title class="headline">
-                                      Upload Resume
+                                      Upload Report
                                     </v-card-title>
                                     <v-card-text>
                                       <input
@@ -426,8 +412,8 @@
                                       <v-btn
                                         large
                                         class="mt-4 blue-grey"
-                                        @click="onUploadResume"
-                                        >Upload Resume</v-btn
+                                        @click="onUploadReport"
+                                        >Upload Report</v-btn
                                       >
                                     </v-card-text>
                                     <v-card-actions>
@@ -478,6 +464,28 @@
 <script>
 export default {
   data: () => ({
+    profile_url: "",
+    annual_report_url: "",
+    show1: false,
+    show2: false,
+    show3: false,
+    uploaded: "",
+    id: "",
+    email: "",
+    name: " ",
+    company: " ",
+    industry: " ",
+    past_projects: " ",
+    contact_info: " ",
+    branch_addr_line: " ",
+    city: " ",
+    state: " ",
+    country: " ",
+    password: "",
+    password_to_check: "",
+    password_new: "",
+    role: "",
+    confirmed: false,
     drawer: true,
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/contractorDashboard" },
@@ -495,5 +503,156 @@ export default {
     ],
     mini: false,
   }),
+  methods: {
+    async changePassword() {
+      try {
+        //let cookie = this.$cookies.get("jwt");
+        if (this.password_to_check === this.password) {
+          let data = {
+            company: this.company,
+            industry: this.industry,
+            past_projects: this.past_projects,
+            contact_info: this.contact_info,
+            branch_addr_line: this.branch_addr_line,
+            city: this.city,
+            state: this.state,
+            country: this.country,
+            password: this.password_new,
+            email: this.email,
+            name: this.name,
+            role: this.role,
+            confirmed: this.confirmed,
+          };
+          let response = await this.$axios.$put(
+            `http://localhost:3000/api/userupdatepassword/${this.id}`,
+            data
+          );
+          this.password_to_check = "";
+          this.password_new = "";
+          console.log("Successfully updated password...:)");
+        } else {
+          console.log("Wrong old password !!");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    onUpload() {
+      const formData = new FormData();
+      formData.append("profile", this.selectedFile);
+      formData.append("cookie", this.$cookies.get("jwt"));
+      this.$axios
+        .post("http://localhost:3000/api/upload/profile", formData)
+        .then((res) => {
+          // console.log(res)
+        });
+      this.getURL();
+      this.$router.go();
+    },
+    
+    onFileChanged(event) {
+      this.selectedFile = event.target.files[0];
+    },
+    async getURL() {
+      try {
+        let cookies = this.$cookies.get("jwt");
+        let data ={
+          cookie : cookies
+        }
+        let response = await this.$axios.$post(
+          `http://localhost:3000/api/profile/`, data
+        );
+        this.profile_url = response.user.photo;
+        this.annual_report_url = response.user.annual_report;
+        console.log(this.profile_url);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    onUploadReport() {
+      const formData = new FormData();
+      formData.append("annual_report", this.selectedFile);
+      formData.append("cookie", this.$cookies.get("jwt"));
+      this.Uploaded = "Uploaded";
+      this.$axios
+        .post("http://localhost:3000/api/upload/report", formData)
+        .then((res) => {
+          // console.log(res)
+        });
+      this.getURL();
+      // this.$router.go(); 
+    },
+    async onSaveProfile() {
+      try {
+        //let cookie = this.$cookies.get("jwt");
+        let data = {
+          company: this.company,
+          industry: this.industry,
+          past_projects: this.past_projects,
+          contact_info: this.contact_info,
+          branch_addr_line: this.branch_addr_line,
+          city: this.city,
+          state: this.state,
+          country: this.country,
+          password: this.password,
+          role: this.role,
+          confirmed: this.confirmed, 
+        };
+        let response = await this.$axios.$put(
+          `http://localhost:3000/api/users/${this.id}`,
+          data
+        );
+        this.Saved = "Saved";
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getUser() {
+      try {
+        let cookie = this.$cookies.get("jwt");
+        if (cookie == null) {
+          this.$router.push("/login");
+        } 
+        let data = {
+          cookie: cookie,
+        };
+        let response = await this.$axios.$post(
+          `http://localhost:3000/api/profile/`,
+          data
+        );
+        if (!response.success) {
+          this.$router.push("/login");
+        }
+        else if(response.user.role !== 'contractor')
+        {
+          this.$cookies.set("jwt", null);
+          this.$router.push("/Login");
+        }
+        this.id = response.user._id;
+        this.name = response.user.name;
+        this.email = response.user.email;
+        this.company = response.user.company;
+        this.industry = response.user.industry;
+        this.contact_info = response.user.contact_info;
+        this.past_projects = response.user.past_projects;
+        this.branch_addr_line = response.user.branch_addr_line;
+        this.city = response.user.city;
+        this.state = response.user.state;
+        this.country = response.user.country;
+        this.profile_url = response.user.photo;
+        this.password = response.user.password;
+        this.role = response.user.role;
+        this.confirmed = response.user.confirmed;
+        console.log(this.profile_url);
+        this.annual_report_url = response.user.annual_report;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+
+  beforeMount() {
+    this.getUser();
+  },
 };
 </script>

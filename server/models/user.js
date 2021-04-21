@@ -9,7 +9,20 @@ const UserSchema = new Schema({
     confirmed: {
         type: Boolean,
     },
-    arr: [{type: String}],
+    
+    //for contractor profile 
+    company: String,
+    industry: String, 
+    contact_info: String,
+    past_projects: String,  // in place of bio
+    branch_addr_line: String, //in place of address
+    city: String,
+    state: String,
+    country: String,
+    annual_report: String, //In place of resume 
+    photo: String, 
+
+
 });
 
 module.exports = mongoose.model("User", UserSchema);

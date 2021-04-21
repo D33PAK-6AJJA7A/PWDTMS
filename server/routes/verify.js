@@ -54,12 +54,13 @@ router.post("/verify/govt", verifyToken, async (req, res) => {
 
 router.post("/verify/contractor", verifyToken, async (req, res) => {
     try {
+        console.log(req.decoded._id);
         let user = await User.findOne({ _id: req.decoded._id }).populate(
             "adress"
         );
         if(user.role === "contractor")
         {
-            res.json({
+            res.json({ 
                 success: true,
             });
         }
