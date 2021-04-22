@@ -122,9 +122,10 @@
                               >
                                 <template v-slot:activator="{ on, attrs }">
                                   <v-btn
-                                    color="transparent"
+                                    color="blue-grey"
                                     flat
                                     elevation="0"
+                                    fab
                                     v-bind="attrs"
                                     v-on="on"
                                   >
@@ -293,7 +294,7 @@
                             <v-col cols="2">
                               <v-text-field
                                 outlined
-                                v-model= "industry"
+                                v-model="industry"
                               ></v-text-field>
                             </v-col>
 
@@ -306,7 +307,7 @@
                                 v-model="contact_info"
                               ></v-text-field>
                             </v-col>
-                            
+
                             <v-col cols="12">
                               <v-subheader>Past Projects</v-subheader>
                               <v-textarea
@@ -317,7 +318,9 @@
                               </v-textarea>
                             </v-col>
                           </v-row>
-                          <v-subheader class="text-h5">Company Address</v-subheader>
+                          <v-subheader class="text-h5"
+                            >Company Address</v-subheader
+                          >
 
                           <v-row>
                             <v-col cols="2">
@@ -362,7 +365,9 @@
 
                             <v-col cols="2"> </v-col>
                             <v-col cols="12"
-                              ><v-subheader class="text-h5">Annual Report</v-subheader>
+                              ><v-subheader class="text-h5"
+                                >Annual Report</v-subheader
+                              >
                             </v-col>
                             <v-row>
                               <v-col class="ml-8" cols="3">
@@ -471,6 +476,8 @@ export default {
     show3: false,
     uploaded: "",
     id: "",
+    dialog2: false,
+    dialog1: false,
     email: "",
     name: " ",
     company: " ",
@@ -547,20 +554,23 @@ export default {
           // console.log(res)
         });
       this.getURL();
-      this.$router.go();
+      location.reload();
+      // this.$router.go();
     },
-    
+
     onFileChanged(event) {
       this.selectedFile = event.target.files[0];
+      this.$router.push("/contractorProfile");
     },
     async getURL() {
       try {
         let cookies = this.$cookies.get("jwt");
-        let data ={
-          cookie : cookies
-        }
+        let data = {
+          cookie: cookies,
+        };
         let response = await this.$axios.$post(
-          `http://localhost:3000/api/profile/`, data
+          `http://localhost:3000/api/profile/`,
+          data
         );
         this.profile_url = response.user.photo;
         this.annual_report_url = response.user.annual_report;
@@ -580,7 +590,8 @@ export default {
           // console.log(res)
         });
       this.getURL();
-      // this.$router.go(); 
+      this.$router.push("/contractorProfile");
+      // this.$router.go();
     },
     async onSaveProfile() {
       try {
@@ -596,7 +607,7 @@ export default {
           country: this.country,
           password: this.password,
           role: this.role,
-          confirmed: this.confirmed, 
+          confirmed: this.confirmed,
         };
         let response = await this.$axios.$put(
           `http://localhost:3000/api/users/${this.id}`,
@@ -612,7 +623,7 @@ export default {
         let cookie = this.$cookies.get("jwt");
         if (cookie == null) {
           this.$router.push("/login");
-        } 
+        }
         let data = {
           cookie: cookie,
         };
@@ -622,9 +633,7 @@ export default {
         );
         if (!response.success) {
           this.$router.push("/login");
-        }
-        else if(response.user.role !== 'contractor')
-        {
+        } else if (response.user.role !== "contractor") {
           this.$cookies.set("jwt", null);
           this.$router.push("/Login");
         }
