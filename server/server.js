@@ -35,6 +35,7 @@ const tenderRoutes = require("./routes/tender");
 const verifyRoutes = require("./routes/verify");
 const profileRoute = require("./routes/profile");
 const azureRoute = require("./routes/azure");
+const AnnouncementRoutes = require("./routes/announcement")
 
 app.use("/api", authUserRoutes);
 app.use("/api",userRoutes);
@@ -44,6 +45,7 @@ app.use("/api", confirmationRoute);
 app.use("/api", verifyRoutes);
 app.use("/api", profileRoute);
 app.use("/api", azureRoute);
+app.use("/api", AnnouncementRoutes);
 
 app.listen(3000, (err) => {
   if (err) {

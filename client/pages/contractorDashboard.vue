@@ -203,8 +203,21 @@
 
 <script>
 export default {
+  async asyncData({ $axios }) {
+    try {
+      let response = await $axios.$get(
+        "http://localhost:3000/api/announcementcards"
+      );
+      return {
+        announcementcards: response.announcementcards,
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  },
   data: () => ({
     drawer: true,
+    cards: ["Announcements"],
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/contractorDashboard" },
       {
