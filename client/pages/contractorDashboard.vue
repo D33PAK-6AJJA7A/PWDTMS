@@ -241,13 +241,13 @@ export default {
         if (cookie == null) {
           this.$router.push("/Login");
         }
-        let data = { 
+        let data = {
           cookie: cookie,
         };
         let verify_response = await this.$axios.$post(
           `http://localhost:3000/api/verify/contractor`,
           data
-        ); 
+        );
         if (!verify_response.success) {
           this.$cookies.set("jwt", null);
           this.$router.push("/Login");
@@ -258,7 +258,7 @@ export default {
     },
   },
   beforeMount() {
-    this.verify();
+    // this.verify();
   },
   computed: {},
 };

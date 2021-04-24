@@ -4,8 +4,8 @@
       <v-card
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
         align="right"
-        height="50px" 
-        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" >LogOut</div></v-card
+        height="50px"
+        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1">LogOut</div></v-card
       >
       <v-navigation-drawer
         app
@@ -415,12 +415,12 @@ export default {
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/pwdDashboard" },
       {
-        title: "Approve Profile",
+        title: "Contractor Profile",
         icon: "mdi-account",
         to: "/pwdContracterDatabase",
       },
       {
-        title: "Contractor Profile",
+        title: "Approve Profile",
         icon: "mdi-lock",
         to: "/pwdApprove",
       },
@@ -455,13 +455,13 @@ export default {
         if (cookie == null) {
           this.$router.push("/Login");
         }
-        let data = { 
+        let data = {
           cookie: cookie,
         };
         let verify_response = await this.$axios.$post(
           `http://localhost:3000/api/verify/pwd`,
           data
-        ); 
+        );
         if (!verify_response.success) {
           this.$cookies.set("jwt", null);
           this.$router.push("/Login");

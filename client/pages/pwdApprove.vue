@@ -4,7 +4,7 @@
       <v-card
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
         align="right"
-        height="50px" 
+        height="50px"
         ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1">LogOut</div></v-card
       >
       <v-navigation-drawer
@@ -16,7 +16,7 @@
       >
         <v-list-item v-if="mini == false" class="px-2">
           <div
-            class="layout align-center justify-center" 
+            class="layout align-center justify-center"
             style="min-width: 100px; min-height: 100"
           >
             <v-img
@@ -77,7 +77,7 @@
 
       <v-main class="grey lighten-2">
         <div class="text-h3 blue-grey--text text-center mt-10 mb-5">
-          Contractor Database
+          Approve Contractor
         </div>
         <v-card class="blue-grey" width="100%" height="10px"></v-card>
         <v-row>
@@ -459,7 +459,7 @@ export default {
           `http://localhost:3000/api/verify/pwd`,
           data
         );
-        console.log(verify_response.success);  
+        console.log(verify_response.success);
         if (!verify_response.success) {
           this.$cookies.set("jwt", null);
           this.$router.push("/Login");
