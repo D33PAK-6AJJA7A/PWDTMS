@@ -104,7 +104,7 @@
                     <v-data-table
                       light
                       :headers="headers"
-                      :items="interncards"
+                      :items="projects"
                       :search="search"
                       hide-actions
                       class="grey lighten-2"
@@ -113,7 +113,7 @@
                         <v-icon x-large color="blue" @click="expItem(item)">
                           mdi-account-box
                         </v-icon>
-                        <v-icon
+                        <!-- <v-icon
                           x-large
                           class="mr-2"
                           color="blue-grey"
@@ -127,13 +127,13 @@
                           color="red"
                           @click="
                             deleteItem(
-                              interncards[interncards.indexOf(item)]._id,
+                              projects[projects.indexOf(item)]._id,
                               item
                             )
                           "
                         >
                           mdi-delete
-                        </v-icon>
+                        </v-icon> -->
                       </template>
                     </v-data-table>
                   </v-container>
@@ -156,75 +156,83 @@
                 <v-col cols="4"></v-col>
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
-                    Company :
+                    Name
                   </div></v-col
                 >
                 <v-col cols="2"
-                  ><div class="text--black">{{ company1 }}</div></v-col
+                  ><div class="text--black">{{ name }}</div></v-col
                 >
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
-                    Role :
+                    Project Start Date :
                   </div></v-col
                 >
                 <v-col cols="2"
-                  ><div class="text--black">{{ role1 }}</div></v-col
+                  ><div class="text--black">{{ prjStartDate }}</div></v-col
                 >
                 <v-col cols="2"
-                  ><div class="blue-grey--text text-subtitle-1">Duration:</div>
+                  ><div class="blue-grey--text text-subtitle-1">Project End Date:</div>
                 </v-col>
                 <v-col cols="2"
                   ><div class="black--text">
-                    {{ duration1 }}
+                    {{ prjEndDate }}
                   </div>
                 </v-col>
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
-                    Stipend :
+                    Tender Start Date
                   </div></v-col
                 >
                 <v-col cols="2"
                   ><div class="black--text">
-                    {{ stipend1 }}
+                    {{ tenderStartDate }}
                   </div></v-col
                 >
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
-                    Start Date :
+                    Tender End Date :
                   </div></v-col
                 >
                 <v-col cols="2"
                   ><div class="black--text">
-                    {{ startDate1 }}
+                    {{ tenderEndDate }}
                   </div></v-col
                 >
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
-                    Apply By :
+                    Budget :
                   </div></v-col
                 >
                 <v-col cols="2"
                   ><div class="black--text">
-                    {{ applyBy1 }}
+                    {{ expBudget }}
                   </div></v-col
                 >
                 <v-col cols="12"
                   ><div class="blue-grey--text text-subtitle-1">
-                    Learn More :
+                    Location :
                   </div></v-col
                 >
                 <v-col cols="12"
                   ><p class="black--text">
-                    {{ learnMore1 }}
+                    {{ location }}
                   </p></v-col
                 >
                 <v-col cols="12"
                   ><div class="blue-grey--text text-subtitle-1">
-                    Updates :
+                    Details :
                   </div></v-col
                 >
                 <v-col cols="12 "
-                  ><div class="black--text">{{ updates1 }}</div></v-col
+                  ><div class="black--text">{{ details }}</div></v-col
+                >
+                <v-col cols="12"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Link :
+                  </div></v-col
+                >
+                <v-col cols="12 "
+                  ><div class="black--text">{{ link }}</div></v-col
                 >
                 <v-col cols="12"
                   ><div class="blue-grey--text text-subtitle-1">
@@ -533,14 +541,23 @@
 export default {
   async asyncData({ $axios }) {
     try {
-      let response = await $axios.$get("http://localhost:3000/api/interncards");
+      let response = await $axios.$get("http://localhost:3000/api/projects");
 
       return {
-        interncards: response.interncards,
+        projects: response.projects,
       };
     } catch (err) {}
   },
   data: () => ({
+    name: "", //display
+    prjStartDate: "", //display
+    prjEndDate: "",
+    tenderStartDate: "",
+    expBudget: "", //display
+    tenderEndDate: "", //display
+    location: "", 
+    details: "",
+    link: "",
     drawer: true,
     propDocs: [{ link: "www.google.com" }, { link: "www.facebook.com" }],
     pastPro: [{ text: "Park" }, { text: "Ground" }, { text: "Building" }],
@@ -564,25 +581,33 @@ export default {
       },
     ],
     mini: false,
-
     drawer: null,
-
     search: "",
-
     headers: [
       {
-        text: "Role",
+        text: "Name",
         align: "left",
         sortable: true,
-        value: "role",
-      },
-      { text: "Stipend", value: "stipend" },
-      { text: "Duration", value: "duration" },
+        value: "name",
+      }, 
+      { text: "Tender End Date", value: "tenderEndDate" },
+      { text: "Budget", value: "expBudget" },
 
       { text: "Actions", value: "edit", sortable: false },
     ],
   }),
   methods: {
+    expItem(item) {
+      this.name = this.users[this.users.indexOf(item)].name;
+      this.prjStartDate = this.users[this.users.indexOf(item)].prjStartDate;
+      this.prjEndDate = this.users[this.users.indexOf(item)].prjEndDate;
+      this.tenderStartDate = this.users[this.users.indexOf(item)].tenderStartDate;
+      this.tenderEndDate = this.users[this.users.indexOf(item)].tenderEndDate;
+      this.expBudget = this.users[this.users.indexOf(item)].expBudget;
+      this.location = this.users[this.users.indexOf(item)].location;
+      this.details = this.users[this.users.indexOf(item)].details;
+      this.link = this.users[this.users.indexOf(item)].link;
+    },
     async verify() {
       try {
         let cookie = this.$cookies.get("jwt");
