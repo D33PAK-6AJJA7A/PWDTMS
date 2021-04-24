@@ -5,7 +5,7 @@
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
         align="right"
         height="50px" 
-        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1">LogOut</div></v-card
+        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" >LogOut</div></v-card
       >
       <v-navigation-drawer
         app
@@ -448,5 +448,31 @@ export default {
       { text: "Actions", value: "edit", sortable: false },
     ],
   }),
+  methods: {
+    async verify() {
+      try {
+        let cookie = this.$cookies.get("jwt");
+        if (cookie == null) {
+          this.$router.push("/Login");
+        }
+        let data = { 
+          cookie: cookie,
+        };
+        let verify_response = await this.$axios.$post(
+          `http://localhost:3000/api/verify/pwd`,
+          data
+        ); 
+        if (!verify_response.success) {
+          this.$cookies.set("jwt", null);
+          this.$router.push("/Login");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+  beforeMount() {
+    this.verify();
+  },
 };
 </script>

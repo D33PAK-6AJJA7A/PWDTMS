@@ -4,6 +4,7 @@ const Project = require("../models/project");
 // POST request - create a new card
 router.post("/projects", async (req, res) => {
   try {
+    console.log(req.body);
     let project = new Project();
     project.name = req.body.name; 
     project.prjStartDate = req.body.prjStartDate;
@@ -16,6 +17,8 @@ router.post("/projects", async (req, res) => {
     project.link = req.body.link;
     project.approved = req.body.approved;
     project.tenders = [];
+    project.final_tender = req.body.final_tender;
+    project.status = req.body.status;
     await project.save();
 
     res.json({
@@ -81,6 +84,8 @@ router.put("/projects/:id", async (req, res) => {
             link : req.body.link,
             approved : req.body.approved,
             tenders : req.body.tenders,
+            status : req.body.status,
+            final_tender : req.body.final_tender,
         },
       },
       { upsert: true }

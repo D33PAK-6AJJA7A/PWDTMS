@@ -358,6 +358,32 @@ export default {
       { text: "Actions", value: "edit", sortable: false },
     ],
   }),
+  methods: {
+    async verify() {
+      try {
+        let cookie = this.$cookies.get("jwt");
+        if (cookie == null) {
+          this.$router.push("/Login");
+        }
+        let data = { 
+          cookie: cookie,
+        };
+        let verify_response = await this.$axios.$post(
+          `http://localhost:3000/api/verify/contractor`,
+          data
+        ); 
+        if (!verify_response.success) {
+          this.$cookies.set("jwt", null);
+          this.$router.push("/Login");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+  beforeMount() {
+    this.verify();
+  },
 };
 </script>
 

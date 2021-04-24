@@ -6,7 +6,7 @@
         <v-app-bar height="100px" app color="semi-transparent">
           <div class="ml-2 mt-4">
             <vuetify-logo />
-          </div>
+          </div> 
           <v-toolbar-title
             class="text-h4 white--text text-lighten-1 font-weight-light"
             >PWD PORTAL</v-toolbar-title

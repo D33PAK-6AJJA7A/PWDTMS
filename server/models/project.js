@@ -11,9 +11,10 @@ const ProjectSchema = new Schema({
     expBudget: String, //display
     location: String, 
     details: String,
-    link: String, 
-    approved: Number,
+    link: String,  
+    final_tender: {type: tender},
     tenders: [{type: tender}],
+    status: Number, //0 1 2 3    
 });
 
 module.exports = mongoose.model("Project", ProjectSchema);
