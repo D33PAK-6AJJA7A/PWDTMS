@@ -251,7 +251,7 @@ export default {
     },
   },
   beforeMount() {
-    this.verify();
+   // this.verify();
   },
 };
 </script>

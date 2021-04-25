@@ -549,15 +549,15 @@ export default {
     } catch (err) {}
   },
   data: () => ({
-    name: "", //display
-    prjStartDate: "", //display
-    prjEndDate: "",
-    tenderStartDate: "",
-    expBudget: "", //display
-    tenderEndDate: "", //display
-    location: "", 
-    details: "",
-    link: "",
+    name: "NA", //display
+    prjStartDate: "NA", //display
+    prjEndDate: "NA",
+    tenderStartDate: "NA",
+    expBudget: "NA", //display
+    tenderEndDate: "NA", //display
+    location: "NA", 
+    details: "NA",
+    link: "NA",
     drawer: true,
     propDocs: [{ link: "www.google.com" }, { link: "www.facebook.com" }],
     pastPro: [{ text: "Park" }, { text: "Ground" }, { text: "Building" }],
@@ -598,15 +598,15 @@ export default {
   }),
   methods: {
     expItem(item) {
-      this.name = this.users[this.users.indexOf(item)].name;
-      this.prjStartDate = this.users[this.users.indexOf(item)].prjStartDate;
-      this.prjEndDate = this.users[this.users.indexOf(item)].prjEndDate;
-      this.tenderStartDate = this.users[this.users.indexOf(item)].tenderStartDate;
-      this.tenderEndDate = this.users[this.users.indexOf(item)].tenderEndDate;
-      this.expBudget = this.users[this.users.indexOf(item)].expBudget;
-      this.location = this.users[this.users.indexOf(item)].location;
-      this.details = this.users[this.users.indexOf(item)].details;
-      this.link = this.users[this.users.indexOf(item)].link;
+      this.name = this.projects[this.projects.indexOf(item)].name;
+      this.prjStartDate = this.projects[this.projects.indexOf(item)].prjStartDate;
+      this.prjEndDate = this.projects[this.projects.indexOf(item)].prjEndDate;
+      this.tenderStartDate = this.projects[this.projects.indexOf(item)].tenderStartDate;
+      this.tenderEndDate = this.projects[this.projects.indexOf(item)].tenderEndDate;
+      this.expBudget = this.projects[this.projects.indexOf(item)].expBudget;
+      this.location = this.projects[this.projects.indexOf(item)].location;
+      this.details = this.projects[this.projects.indexOf(item)].details;
+      this.link = this.projects[this.projects.indexOf(item)].link;
     },
     async verify() {
       try {
@@ -631,7 +631,7 @@ export default {
     },
   },
   beforeMount() {
-    this.verify();
+    //this.verify();
   },
 };
 </script>

@@ -460,7 +460,7 @@ export default {
     },
   },
   beforeMount() {
-    this.verify();
+  //  this.verify();
   },
   computed: {},
 };

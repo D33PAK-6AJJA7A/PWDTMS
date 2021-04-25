@@ -15,7 +15,7 @@ const UserSchema = new Schema({
     company: String,
     industry: String, 
     contact_info: String,
-    past_projects: String,  // in place of bio
+    past_projects: String,  // in place of bio 
     branch_addr_line: String, //in place of address
     city: String,
     state: String,
