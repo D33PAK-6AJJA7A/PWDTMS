@@ -77,17 +77,38 @@
 
       <v-main class="grey lighten-2 ml-4">
         <v-row class="mt-0">
-          <v-col cols="4"> </v-col>
+          <v-col cols="12" class="text-center"
+            ><p class="blue-grey--text text-h2">Welcome to PWD Prayagraj</p>
+          </v-col>
+          <v-col cols="4"
+            ><div class="blue-grey--text text-h4 text-center">Quick Links</div>
+            <v-card height="5px" class="ml-2 mr-2 blue-grey"></v-card>
+
+            <ul
+              class="blue-grey--text pa-2"
+              v-for="item in quicklinks"
+              :key="item"
+            >
+              <v-card
+                :href="'http://' + item.link"
+                target="_blank"
+                class="pa-2 blue-grey"
+                dark
+                >{{ item.title }}
+              </v-card>
+            </ul>
+          </v-col>
+
           <v-col cols="8">
             <v-container class="grey lighten-2">
+              <div class="blue-grey--text text-h4 text-center">
+                Announcements
+              </div>
               <v-card class="grey lighten-3 rounded-ls" elevation="0">
                 <div>
                   <v-toolbar flat color="grey lighten-2">
-                    <v-toolbar-title class="text-h4 blue-grey--text"
-                      >Announcements</v-toolbar-title
-                    >
                     <v-divider class="mx-2" inset vertical></v-divider>
-                    <v-spacer></v-spacer>
+
                     <v-text-field
                       light
                       v-model="search"
@@ -97,61 +118,6 @@
                       hide-details
                       color="blue-grey"
                     ></v-text-field>
-                    <v-spacer></v-spacer>
-
-                    <v-dialog
-                      class="grey lighten-2"
-                      v-model="dialog"
-                      max-width="500px"
-                    >
-                      <v-btn
-                        slot="activator"
-                        color="blue-grey"
-                        dark
-                        class="mb-2"
-                        @click="dialog = true"
-                        >New Item<v-icon>mdi-pencil-plus</v-icon></v-btn
-                      >
-                      <v-card light class="grey lighten-2">
-                        <v-card-title>
-                          <span class="headline">Edits</span>
-                        </v-card-title>
-
-                        <v-card-text color="grey lighten-2">
-                          <v-container grid-list-md class="grey lighten-2">
-                            <v-layout wrap>
-                              <v-flex xs12 sm12 md12>
-                                <v-text-field
-                                  v-model="title"
-                                  label="Title"
-                                  class="grey lighten-2"
-                                  color="black"
-                                ></v-text-field>
-                              </v-flex>
-                              <v-flex xs12 sm12 md12>
-                                <v-textarea
-                                  outlined
-                                  v-model="description"
-                                  color="blue-grey"
-                                >
-                                </v-textarea>
-                              </v-flex>
-                            </v-layout>
-                          </v-container>
-                        </v-card-text>
-
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <!--<v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>-->
-                          <v-btn
-                            color="cyan darken-1"
-                            flat
-                            @click.native="onAddAnnouncement"
-                            >Save</v-btn
-                          >
-                        </v-card-actions>
-                      </v-card>
-                    </v-dialog>
                   </v-toolbar>
 
                   <v-container class="grey lighten-2">
@@ -195,6 +161,23 @@
               </v-card>
             </v-container>
           </v-col>
+          <v-col cols="12" class="text-center"
+            ><p class="blue-grey--text text-h2">Projects</p>
+          </v-col>
+
+          <v-col cols="3" v-for="item in desktop" :key="item"
+            ><v-card class="mx-auto blue-grey lighten-1" max-width="344">
+              <v-img :src="item.img" height="200px"></v-img>
+
+              <v-card-title>
+                {{ item.title }}
+              </v-card-title>
+
+              <v-card-subtitle>
+                {{ item.text }}
+              </v-card-subtitle>
+            </v-card>
+          </v-col>
         </v-row>
       </v-main>
     </v-app>
@@ -217,6 +200,54 @@ export default {
   },
   data: () => ({
     drawer: true,
+    url: "",
+    desktop: [
+      {
+        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+        text: "TExt123",
+        title: "Topic1",
+      },
+      {
+        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+        text: "TExt123",
+        title: "Topic1",
+      },
+      {
+        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+        text: "TExt123",
+        title: "Topic1",
+      },
+      {
+        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+        text: "TExt123",
+        title: "Topic1",
+      },
+      {
+        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+        text: "TExt123",
+        title: "Topic1",
+      },
+      {
+        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+        text: "TExt123",
+        title: "Topic1",
+      },
+      {
+        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+        text: "TExt123",
+        title: "Topic1",
+      },
+      {
+        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
+        text: "TExt123",
+        title: "Topic1",
+      },
+    ],
+    quicklinks: [
+      { title: "Title1", link: "www.google.com" },
+      { title: "Title2", link: "www.google.com" },
+      { title: "Title3", link: "www.google.com" },
+    ],
     cards: ["Announcements"],
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/contractorDashboard" },
