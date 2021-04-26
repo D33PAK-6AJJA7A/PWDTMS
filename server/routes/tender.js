@@ -1,29 +1,65 @@
 const router = require("express").Router();
 const Tender = require("../models/tender");
+const Project = require("../models/project")
+const User = require("../models/user")
 
 // POST request - create a new card
 router.post("/tenders", async (req, res) => {
   try
   {
+    let project1 = await Project.findOne({ _id: req.body.project_id });
+    let arr = project1.tenders;
+    for(let i=0;i<arr.length;i++)
+    {
+      if(arr[i].contractor_id === tender.contractor_id)
+      {
+        throw "contrator tender already exists";
+      }
+    }
     let tender = new Tender();
-    tender.contractor = req.body.contractor;
+    tender.project_id = req.body.project_id;
+    tender.contractor_id = req.body.contractor_id;
     tender.Budget = req.body.Budget;
     tender.timelineStart = req.body.timelineStart;
     tender.timelineEnd = req.body.timelineEnd;
-    tender.materaial = req.body.materaial;
-    tender.pic = req.body.pic;
-    tender.doc = [];
-    tender.pastProjects = [];
+    tender.material = req.body.material;
+    tender.doc = [];    
     await tender.save();
-
+    arr.push(tender);
+    let project = await Project.findOneAndUpdate(
+      { _id: req.body.project_id },
+      {
+        $set: {
+            tenders :  arr
+        },
+      },
+      { upsert: true }
+    );
+    await project.save();
+    let user1 = await User.findOne({ _id: req.body.contractor_id });
+    let arr1 = user1.my_projects;
+    arr1.push(tender);
+    //console.log(arr1);
+    let user = await User.findOneAndUpdate(
+      { _id: req.body.contractor_id },
+      {
+        $set: {
+            my_projects: arr1
+        },
+      },
+      { upsert: true }
+    );
+    await user.save(); 
     res.json({
       status: true,
       message: "Successfully saved",
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json({
+    
       success: false,
-      message: err.message,
+      message: err,
     });
   }
 });
@@ -68,19 +104,25 @@ router.put("/tenders/:id", async (req, res) => {
       { _id: req.params.id },
       {
         $set: {
-            contractor : req.body.contractor,
+            project_id : req.body.project_id,
+            contractor_id : req.body.contractor,
             Budget : req.body.Budget,
             timelineStart : req.body.timelineStart,
             timelineEnd : req.body.timelineEnd,
-            materaial : req.body.materaial,
-            pic : req.body.pic,
-            doc : req.body.doc,
-            pastProjects : req.body.pastProjects,
+            material : req.body.material,
         },
       },
       { upsert: true }
     );
-
+    let project = await Project.findOneAndUpdate(
+      { _id: req.body.project_id },
+      {
+        $set: {
+            tenders :  tenders.append(tender)
+        },
+      },
+      { upsert: true }
+    );
     res.json({
       success: true,
       updateTender: tender,
@@ -92,6 +134,9 @@ router.put("/tenders/:id", async (req, res) => {
     });
   }
 });
+
+// PUT request - update a single tender
+
 
 // DELETE request - delete a single tender
 router.delete("/tenders/:id", async (req, res) => {

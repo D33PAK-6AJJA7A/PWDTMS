@@ -561,7 +561,7 @@ export default {
     onFileChanged(event) {
       this.selectedFile = event.target.files[0];
       this.$router.push("/contractorProfile");
-    },
+    }, 
     async getURL() {
       try {
         let cookies = this.$cookies.get("jwt");

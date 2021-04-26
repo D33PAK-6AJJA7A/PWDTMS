@@ -1,4 +1,4 @@
-<template>
+.<template>
   <div class="Dashboard">
     <v-app>
       <v-card
@@ -82,20 +82,28 @@
           </v-col>
           <v-col cols="4"
             ><div class="blue-grey--text text-h4 text-center">Quick Links</div>
-            <v-card height="5px" class="ml-2 mr-2 blue-grey"></v-card>
+            <v-card height="5px" class="ml-2 mr-2 mb-10 blue-grey"></v-card>
 
             <ul
-              class="blue-grey--text pa-2"
+              class="transparent pa-2 mt-4"
               v-for="item in quicklinks"
               :key="item"
             >
-              <v-card
+
+            <v-card light>
+              <v-row>              
+                <v-col cols="6" class="pa-5"><v-img class=" rounded-circle" height=150px width=150px :src="item.src"></v-img></v-col>
+              <v-col cols="6"><p class="text-h3 blue-grey--text">{{item.name}}</p><p>{{item.details}}</p></v-col>
+              </v-row>
+
+            </v-card>
+              <!-- <v-card
                 :href="'http://' + item.link"
                 target="_blank"
                 class="pa-2 blue-grey lighten-2"
                 dark
                 >{{ item.title }}
-              </v-card>
+              </v-card> -->
             </ul>
           </v-col>
 
@@ -244,7 +252,7 @@ export default {
       },
     ],
     quicklinks: [
-      { title: "Title1", link: "www.google.com" },
+      { name:"YOGI", details:"CM of uttar pradesh of iia of warth of solar syatem", title: "Title1", link: "www.google.com" , src:"http://uppwd.gov.in/site/writereaddata/siteContent/201905281159150225CMSir.jpg"},
       { title: "Title2", link: "www.google.com" },
       { title: "Title3", link: "www.google.com" },
     ],

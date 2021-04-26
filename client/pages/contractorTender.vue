@@ -370,7 +370,7 @@
                                 </v-col>
                                 <v-col cols="2">
                                   <v-text-field
-                                    outlined
+                                    outlined 
                                     v-model="timelineEnd"
                                   ></v-text-field>
                                 </v-col>
@@ -404,7 +404,7 @@
         >
           <v-card>
             <v-card-title>
-              Dialog 2
+              Confirm
             </v-card-title>
             <v-card-text>
               
@@ -421,7 +421,7 @@
                <v-btn
                 color="primary"
                 text
-                @click="dialog2 = false ; dialog = false"
+                @click="dialog2 = false ; dialog = false; confirmTender()"
 
               >
                 Apply and Lock <v-icon>mdi-lock</v-icon>
@@ -472,6 +472,7 @@ export default {
     profile_url: "",
     annual_report_url: "",
     id: "",
+    project_id: "",
     email: "",
     contractor_name: " ",
     company: " ",
@@ -548,6 +549,31 @@ export default {
     ],
   }),
   methods: {
+    async confirmTender() {
+      try {
+        let data = {
+          project_id: this.project_id,
+          contractor_id: this.id, 
+          Budget: this.Budget,
+          timelineStart: this.timelineStart,
+          timelineEnd: this.timelineEnd,
+          material: this.material,
+          approved: 0,
+        }
+        console.log(data);
+      let response = await this.$axios.$post(`http://localhost:3000/api/tenders/`,data);
+      if(response){
+        this.project_id =  "";
+        this.contractor_id = ""; 
+        this.Budget = "";
+        this.timelineStart = "";
+        this.timelineEnd = "";
+        this.material = "";
+      }
+    }catch (err) {
+        console.log(err);
+      }
+    },
     async getUser() {
       try {
         let cookie = this.$cookies.get("jwt");
@@ -593,6 +619,7 @@ export default {
     },
     expItem() {
       this.selected = 1;
+      this.project_id = this.projects[this.selectedRow]._id;
       this.name = this.projects[this.selectedRow].name;
       this.prjStartDate = this.projects[
        this.selectedRow
