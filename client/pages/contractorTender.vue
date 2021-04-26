@@ -101,7 +101,7 @@
                   </v-toolbar>
 
                   <v-container class="grey lighten-2">
-                    <v-data-table
+                    <!-- <v-data-table
                       light
                       :headers="headers"
                       :items="projects"
@@ -114,7 +114,28 @@
                           mdi-account-box
                         </v-icon>
                       </template>
-                    </v-data-table>
+                    </v-data-table> -->
+
+                  <v-data-table
+                      light
+     
+      :headers="headers"
+      :items="projects"
+      :search="search"
+      item-key="name"
+      class="elevation-1"
+    >
+      <template v-slot:body="{ items }">
+        <tbody>
+          <tr :class="key === selectedRow ? 'custom-highlight-row' : ''" @click="rowSelect(key)" v-for="(item, key) in items" :key="item.name">
+            <td>{{ item.name }}</td>
+            <td>{{ item.tenderEndDate }}</td>
+            <td>{{ item.expBudget }}</td>
+           
+          </tr>
+        </tbody>
+      </template>
+    </v-data-table> 
                   </v-container>
                 </div>
               </v-card>
@@ -279,6 +300,16 @@
                                   }}</v-list-item-subtitle>
                                 </v-list-item-content>
                               </v-list-item>
+                              <v-list-item>
+                                <v-list-item-content>
+                                  <v-list-item-title
+                                    >Phone</v-list-item-title
+                                  >
+                                  <v-list-item-subtitle>{{
+                                    contact_info
+                                  }}</v-list-item-subtitle>
+                                </v-list-item-content>
+                              </v-list-item>
                               <v-btn large class="blue-grey">
                                 <a
                                   v-bind:href="annual_report_url"
@@ -309,183 +340,56 @@
 
                         <v-card class="pa-5" light elevation="0">
                           <div class="pa-2 mb-4 blue-grey text-h5 white--text">
-                            My Details
+                            Tender Details
                           </div>
                           <v-card class="transparent" flat>
                             <v-container fluid>
                               <v-row>
                                 <v-col cols="2">
-                                  <v-subheader>Company</v-subheader>
+                                  <v-subheader>Proposable Budget</v-subheader>
                                 </v-col>
                                 <v-col cols="2">
                                   <v-text-field
                                     outlined
-                                    v-model="company"
+                                    v-model="Budget"
                                   ></v-text-field>
                                 </v-col>
 
                                 <v-col cols="2">
-                                  <v-subheader>Industry</v-subheader>
+                                  <v-subheader>Start Timeline </v-subheader>
                                 </v-col>
                                 <v-col cols="2">
                                   <v-text-field
                                     outlined
-                                    v-model="industry"
+                                    v-model="timelineStart"
                                   ></v-text-field>
                                 </v-col>
 
                                 <v-col cols="2">
-                                  <v-subheader>Phone</v-subheader>
+                                  <v-subheader>End Timeline</v-subheader>
                                 </v-col>
                                 <v-col cols="2">
                                   <v-text-field
                                     outlined
-                                    v-model="contact_info"
+                                    v-model="timelineEnd"
                                   ></v-text-field>
                                 </v-col>
 
                                 <v-col cols="12">
-                                  <v-subheader>Past Projects</v-subheader>
+                                  <v-subheader>Material used</v-subheader>
                                   <v-textarea
                                     outlined
-                                    v-model="past_projects"
+                                    v-model="material"
                                     color="blue-grey"
                                   >
                                   </v-textarea>
                                 </v-col>
-                              </v-row>
-                              <v-subheader class="text-h5"
-                                >Company Address</v-subheader
-                              >
-
-                              <v-row>
-                                <v-col cols="2">
-                                  <v-subheader>Address Line</v-subheader>
+                                
+                                <v-col cols="12">
+                                    <v-btn @click="dialog2=!dialog2" color="blue-grey" x-large>Apply <v-icon>mdi-lock</v-icon></v-btn>
                                 </v-col>
-                                <v-col cols="4">
-                                  <v-text-field
-                                    outlined
-                                    v-model="branch_addr_line"
-                                  ></v-text-field>
-                                </v-col>
-
-                                <v-col cols="2">
-                                  <v-subheader>City</v-subheader>
-                                </v-col>
-                                <v-col cols="4">
-                                  <v-text-field
-                                    outlined
-                                    v-model="city"
-                                  ></v-text-field>
-                                </v-col>
-
-                                <v-col cols="2">
-                                  <v-subheader>State</v-subheader>
-                                </v-col>
-                                <v-col cols="4">
-                                  <v-text-field
-                                    outlined
-                                    v-model="state"
-                                  ></v-text-field>
-                                </v-col>
-
-                                <v-col cols="2">
-                                  <v-subheader>Country</v-subheader>
-                                </v-col>
-                                <v-col cols="4">
-                                  <v-text-field
-                                    outlined
-                                    v-model="country"
-                                  ></v-text-field>
-                                </v-col>
-
-                                <v-col cols="2"> </v-col>
-                                <v-col cols="12"
-                                  ><v-subheader class="text-h5"
-                                    >Annual Report</v-subheader
-                                  >
-                                </v-col>
-                                <v-row>
-                                  <v-col class="ml-8" cols="3">
-                                    <v-btn large class="blue-grey">
-                                      <a
-                                        v-bind:href="annual_report_url"
-                                        target="_blank"
-                                        class="black--text"
-                                        style="text-decoration: none"
-                                      >
-                                        View Report<v-icon>mdi-eye</v-icon>
-                                      </a></v-btn
-                                    ></v-col
-                                  >
-                                  <v-col cols="3">
-                                    <v-dialog
-                                      light
-                                      v-model="dialog2"
-                                      persistent
-                                      max-width="400"
-                                    >
-                                      <template
-                                        v-slot:activator="{ on, attrs }"
-                                      >
-                                        <v-btn
-                                          color="blue-grey"
-                                          flat
-                                          large
-                                          elevation="0"
-                                          v-bind="attrs"
-                                          v-on="on"
-                                        >
-                                          Upload Report
-                                          <v-icon
-                                            >mdi-file-document-multiple</v-icon
-                                          >
-                                        </v-btn>
-                                        {{ Uploaded }}
-                                      </template>
-                                      <v-card>
-                                        <v-card-title class="headline">
-                                          Upload Report
-                                        </v-card-title>
-                                        <v-card-text>
-                                          <input
-                                            type="file"
-                                            @change="onFileChanged"
-                                          />
-                                          <v-btn
-                                            large
-                                            class="mt-4 blue-grey"
-                                            @click="onUploadReport"
-                                            >Upload Report</v-btn
-                                          >
-                                        </v-card-text>
-                                        <v-card-actions>
-                                          <v-spacer></v-spacer>
-                                          <v-btn
-                                            color="blue-grey darken-1"
-                                            text
-                                            @click="dialog2 = false"
-                                          >
-                                            Close
-                                          </v-btn>
-                                        </v-card-actions>
-                                      </v-card>
-                                    </v-dialog>
-                                  </v-col>
-                                  <v-col cols="2"></v-col>
-                                  <v-col cols="3">
-                                    {{ Saved }}
-                                    <v-btn
-                                      large
-                                      class="blue-grey"
-                                      @click="onSaveProfile"
-                                      >Save</v-btn
-                                    >
-                                  </v-col>
-                                </v-row>
-                                <v-col cols="8"> </v-col>
-                                <v-col cols="1"></v-col>
-                              </v-row>
+                                
+                              </v-row>                      
                             </v-container>
                           </v-card>
                         </v-card>
@@ -493,6 +397,38 @@
                         <div style="flex: 1 1 auto"></div>
                       </v-card>
                     </v-dialog>
+                    <v-dialog
+                    light
+          v-model="dialog2"
+          max-width="500px"
+        >
+          <v-card>
+            <v-card-title>
+              Dialog 2
+            </v-card-title>
+            <v-card-text>
+              
+             Are you sure about applied Tender ?
+            </v-card-text>
+            <v-card-actions>
+              <v-btn
+                color="primary"
+                text
+                @click="dialog2 = false"
+              >
+                back
+              </v-btn>
+               <v-btn
+                color="primary"
+                text
+                @click="dialog2 = false ; dialog = false"
+
+              >
+                Apply and Lock <v-icon>mdi-lock</v-icon>
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
                   </v-row>
                 </div> </v-row
             ></v-card>
@@ -503,6 +439,12 @@
     </v-app>
   </div>
 </template>
+
+<style>
+.custom-highlight-row{
+  background-color: rgb(249, 255, 192)
+}
+</style>
 
 <script>
 export default {
@@ -516,6 +458,7 @@ export default {
     } catch (err) {}
   },
   data: () => ({
+     selectedRow: null,
     selected: -1,
     name: "NA", //display
     prjStartDate: "NA", //display
@@ -541,6 +484,11 @@ export default {
     country: " ",
     password: "",
     role: "",
+    Budget: "",
+    timelineStart: "",
+    timelineEnd: "",
+    material: "",
+    
     confirmed: false,
     drawer: true,
     dialog: false,
@@ -597,8 +545,6 @@ export default {
       },
       { text: "Tender End Date", value: "tenderEndDate" },
       { text: "Budget", value: "expBudget" },
-
-      { text: "Actions", value: "edit", sortable: false },
     ],
   }),
   methods: {
@@ -640,23 +586,28 @@ export default {
         console.log(err);
       }
     },
-    expItem(item) {
+    rowSelect(idx) {
+      console.dir(idx)
+      this.selectedRow = idx;
+      this.expItem();
+    },
+    expItem() {
       this.selected = 1;
-      this.name = this.projects[this.projects.indexOf(item)].name;
+      this.name = this.projects[this.selectedRow].name;
       this.prjStartDate = this.projects[
-        this.projects.indexOf(item)
+       this.selectedRow
       ].prjStartDate;
-      this.prjEndDate = this.projects[this.projects.indexOf(item)].prjEndDate;
+      this.prjEndDate = this.projects[this.selectedRow].prjEndDate;
       this.tenderStartDate = this.projects[
-        this.projects.indexOf(item)
+        this.selectedRow
       ].tenderStartDate;
       this.tenderEndDate = this.projects[
-        this.projects.indexOf(item)
+        this.selectedRow
       ].tenderEndDate;
-      this.expBudget = this.projects[this.projects.indexOf(item)].expBudget;
-      this.location = this.projects[this.projects.indexOf(item)].location;
-      this.details = this.projects[this.projects.indexOf(item)].details;
-      this.link = this.projects[this.projects.indexOf(item)].link;
+      this.expBudget = this.projects[this.selectedRow].expBudget;
+      this.location = this.projects[this.selectedRow].location;
+      this.details = this.projects[this.selectedRow].details;
+      this.link = this.projects[this.selectedRow].link;
     },
     async verify() {
       try {

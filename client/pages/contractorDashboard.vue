@@ -92,7 +92,7 @@
               <v-card
                 :href="'http://' + item.link"
                 target="_blank"
-                class="pa-2 blue-grey"
+                class="pa-2 blue-grey lighten-2"
                 dark
                 >{{ item.title }}
               </v-card>
@@ -166,8 +166,8 @@
           </v-col>
 
           <v-col cols="3" v-for="item in desktop" :key="item"
-            ><v-card class="mx-auto blue-grey lighten-1" max-width="344">
-              <v-img :src="item.img" height="200px"></v-img>
+            ><v-card class="mx-auto blue-grey lighten-1" max-width="344" href="http://uppwd.gov.in/">
+              <v-img :src="item.img" height="125"></v-img>
 
               <v-card-title>
                 {{ item.title }}
@@ -203,44 +203,44 @@ export default {
     url: "",
     desktop: [
       {
-        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-        text: "TExt123",
-        title: "Topic1",
+        img: "https://www.mumbailive.com/images/media/images/images_1588162734983_national_highway.jpg?bg=d5e3e9&crop=512%2C384%2Cnull%2C0&fit=fill&fitToScale=h%2C1368%2C768&h=432.2807017543859&height=384&w=770&width=512",
+        text: "Construction of road to mohalla kullah ward no . 4 lower bhalwal , kanger mishriwala road",
+        title: "Road Construction",
       },
       {
-        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-        text: "TExt123",
-        title: "Topic1",
+        img: "http://www.kinfratech.com/wp-content/uploads/2016/07/roadworks2.jpg",
+        text: "Construction/upgradation of roads under pradhan mantri gram sadak yojana and their maintenance for five years of potrel to mv - 37 via old chitapari, mv - 108",
+        title: "Road Construction",
       },
       {
-        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-        text: "TExt123",
-        title: "Topic1",
+        img: "https://3.imimg.com/data3/IQ/WI/MY-924799/building-works-500x500.jpg",
+        text: "Tender for term contract ( building ) 2021-22 term contract ( building ) 2021-22",
+        title: "Building Construction",
       },
       {
-        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-        text: "TExt123",
-        title: "Topic1",
+        img: "https://images.newindianexpress.com/uploads/user/imagelibrary/2017/11/5/w600X300/Govtlkji.jpg",
+        text: "Tender for term contract (school building) 2021-22 term contract ( school building ) 2021-22",
+        title: "Building Construction",
       },
       {
-        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-        text: "TExt123",
-        title: "Topic1",
+        img: "https://gumlet.assettype.com/freepressjournal%2F2020-01%2Fddfa26c6-1388-4470-b16d-a71b26db227f%2Fcats.jpg?w=1200",
+        text: "Construction of medical college campus for 100 mbbs admission annually and modification in existing govt. hospital into teaching hospital as per applicable mci / nmc norms at rudrapur, uttarakhand",
+        title: "Building Construction",
       },
       {
-        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-        text: "TExt123",
-        title: "Topic1",
+        img: "http://grossreservoir.org/wp-content/uploads/2018/08/101817-Raising-the-Dam-36-x-24-009-1.jpg",
+        text: "Construction of upper narmada project on narmada river on turn key basis including construction of dam and 45600 ha cca micro irrigation system up to 2 . 5 ha chak of 0 . 35 lps/ha in district dindori and anuppur including scada work as per detail scope",
+        title: "Dam Construction",
       },
       {
-        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-        text: "TExt123",
-        title: "Topic1",
+        img: "https://static.theprint.in/wp-content/uploads/2020/03/Railway-construction-696x392.jpg",
+        text: "C01422-biennial maintenance of rail track at railway siding ntpc solapur c01422-biennial maintenance of rail track at railway siding ntpc solapur",
+        title: "Railway Construction",
       },
       {
-        img: "https://cdn.vuetifyjs.com/images/cards/sunshine.jpg",
-        text: "TExt123",
-        title: "Topic1",
+        img: "https://assets-news.housing.com/news/wp-content/uploads/2018/09/24202353/Construction-of-elevated-flyover-on-Gurugram-Alwar-Road-to-begin-from-September-21-2018-FB-1200x628-compressed.jpg",
+        text: "Construction of flover on nagpur amravati road nh53 in nagpur city. Total of 1453 km long 4 lane massive highway with 3 toll gates in between states.",
+        title: "Highway Construction",
       },
     ],
     quicklinks: [
