@@ -118,6 +118,15 @@
                     <li><div  :href="'http://' + item.src" class="black--text"><p>{{item.title}}</p></div></li>
                   </ul>
                 </v-card>
+                 <v-data-table
+                      light
+                      :headers="headers"
+                      :items="announcementcards"
+                      :search=false
+                      hide-actions
+                      class="grey lighten-2"
+                    >
+                    </v-data-table>
                
                 </v-card>
               </v-col>
@@ -199,6 +208,16 @@ export default {
   },
 
   data: () => ({
+    headers: [
+      {
+        text: "Title",
+        align: "left",
+        sortable: true,
+        value: "title",
+      },
+      { text: "Description", value: "description", align: "left" },
+      //{ text: "Actions", value: "edit", sortable: false, align: "left" },
+    ],
       
     news:[{src:"www.google.com",title:"Google announced "},
     {src:"https://mib.gov.in/sites/default/files/Tender%20Invite%20for%20maintenance%20%26%20enhancements%20of%20CBFCs%20Application%20Portal%2C%20Website%20%26%20development%20of%20Mobile%20App%20%E2%80%93%20Request%20for%20uploading%20RFP%20on%20Ministry%E2%80%99s%20website.pdf",title:"Tender Invite for maintenance & enhancements of CBFC's Application Portal, Website & development of Mobile App" },

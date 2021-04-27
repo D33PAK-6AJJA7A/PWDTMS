@@ -5,7 +5,7 @@
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
         align="right"
         height="50px"
-        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1">LogOut</div></v-card
+        ><v-btn class="pa-2 mr-4 yellow darken-3 mt-1 mb-1">LogOut</v-btn></v-card
       >
       <v-navigation-drawer
         app

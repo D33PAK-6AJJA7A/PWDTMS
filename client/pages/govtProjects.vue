@@ -5,7 +5,7 @@
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
         align="right"
         height="50px"
-        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1">LogOut</div></v-card
+        ><v-card class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click = "logoutfunc"><p>LogOut</p></v-card></v-card
       >
       <v-navigation-drawer
         app
@@ -98,6 +98,175 @@
                       hide-details
                     ></v-text-field>
                     <v-spacer></v-spacer>
+                  </v-toolbar>
+
+                  <v-container class="grey lighten-2">
+                    <v-data-table
+                      light
+                      :headers="headers"
+                      :items="projects"
+                      :search="search"
+                      hide-actions
+                      class="grey lighten-2"
+                    >
+                      <template #item.edit="{ item }">
+                        <v-icon x-large color="blue" @click="expItem(item)">
+                          mdi-account-box
+                        </v-icon>
+                        <!-- <v-icon
+                          x-large
+                          class="mr-2"
+                          color="blue-grey"
+                          @click="editItem(item)"
+                        >
+                          mdi-pencil
+                        </v-icon>
+
+                        <v-icon
+                          x-large
+                          color="red"
+                          @click="
+                            deleteItem(
+                              projects[projects.indexOf(item)]._id,
+                              item
+                            )
+                          "
+                        >
+                          mdi-delete
+                        </v-icon> -->
+                      </template>
+                    </v-data-table>
+                  </v-container>
+                </div>
+              </v-card>
+            </v-container>
+          </v-col>
+
+          <v-divider class="mt-10 blue-grey" vertical></v-divider>
+          <v-col cols="8">
+            <p class="text-center blue-grey text-h4">View Project</p>
+            <v-card light elevation="0" class="grey lighten-2 ma-10">
+              <v-row>
+                <v-col cols="4"
+                  ><v-btn color="success" x-large>Open Project</v-btn></v-col
+                >
+                <v-col cols="4"
+                  ><v-btn color="red" x-large>Close Project</v-btn></v-col
+                >
+                <v-col cols="4"></v-col>
+                <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Name
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="text--black">{{ name }}</div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Project Start Date :
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="text--black">{{ prjStartDate }}</div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">Project End Date:</div>
+                </v-col>
+                <v-col cols="2"
+                  ><div class="black--text">
+                    {{ prjEndDate }}
+                  </div>
+                </v-col>
+                <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Tender Start Date
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="black--text">
+                    {{ tenderStartDate }}
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Tender End Date :
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="black--text">
+                    {{ tenderEndDate }}
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Budget :
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="black--text">
+                    {{ expBudget }}
+                  </div></v-col
+                >
+                <v-col cols="12"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Location :
+                  </div></v-col
+                >
+                <v-col cols="12"
+                  ><p class="black--text">
+                    {{ location }}
+                  </p></v-col
+                >
+                <v-col cols="12"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Details :
+                  </div></v-col
+                >
+                <v-col cols="12 "
+                  ><div class="black--text">{{ details }}</div></v-col
+                >
+                <v-col cols="12"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Link :
+                  </div></v-col
+                >
+                <v-col cols="12 "
+                  ><div class="black--text">{{ link }}</div></v-col
+                >
+                <v-col cols="12"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Approved Tender :
+                  </div></v-col
+                >
+              </v-row></v-card
+            >
+            </v-col
+                  >
+
+      <!-- <v-main class="grey lighten-2">
+        <p class="text-center grey lighten-2 blue-grey--text mt-5 text-h2">
+          View Project
+        </p>
+        <v-row>
+          <v-col cols="4">
+            <p class="text-center blue-grey text-h4">Projects</p>
+            <v-container class="grey lighten-2">
+              <v-card class="grey lighten-2 rounded-ls" elevation="0">
+                <div>
+                  <v-toolbar flat color="grey lighten-2">
+                    <v-divider class="mx-2" inset vertical></v-divider>
+                    <v-spacer></v-spacer>
+                    <v-text-field
+                      light
+                      color="blue-grey"
+                      v-model="search"
+                      append-icon="mdi-magnify"
+                      label="Search"
+                      single-line
+                      hide-details
+                    ></v-text-field>
+                    <v-spacer></v-spacer>
 
                     <v-dialog light v-model="dialog" max-width="500px">
                       <v-btn
@@ -107,8 +276,10 @@
                         class="mb-2"
                         @click="dialog = true"
                         >New Item</v-btn
-                      >
-                      <v-card class="grey lighten-2">
+                      > -->
+
+
+                      <!-- <v-card class="grey lighten-2">
                         <v-card-title>
                           <span class="headline">Edits</span>
                         </v-card-title>
@@ -182,7 +353,7 @@
                         <v-card-actions>
                           <v-spacer></v-spacer>
                           <!--<v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>-->
-                          <v-btn
+                          <!-- <v-btn
                             color="blue-grey"
                             flat
                             @click.native="onAddinterncard"
@@ -316,7 +487,7 @@
                   ><div class="blue-grey--text text-subtitle-1">
                     Approve Tender :
                   </div></v-col
-                >
+                > -->
                 <!-- <v-col cols="12"
                   ><div class="blue-grey--text text-h5">Applied Students :</div>
                 </v-col>
@@ -367,16 +538,16 @@
 
                         <v-card-text color="grey lighten-2">
                           <v-container grid-list-md class="grey lighten-2">
-                            <v-layout wrap>
-                              <v-flex xs12 sm12 md12>
-                                <v-text-field
-                                  v-model="company"
+//                             <v-layout wrap>
+//                               <v-flex xs12 sm12 md12>
+//                                 <v-text-field
+//                                   v-model="company"
                                   label="company"
-                                  color="black"
-                                ></v-text-field>
-                              </v-flex>
-                              <v-flex xs12 sm12 md12>
-                                <v-text-field
+//                                   color="black"
+//                                 ></v-text-field>
+//                               </v-flex>
+//                               <v-flex xs12 sm12 md12>
+//                                 <v-text-field
                                   v-model="role"
                                   label="role"
                                   color="black"
@@ -497,14 +668,23 @@
 export default {
   async asyncData({ $axios }) {
     try {
-      let response = await $axios.$get("http://localhost:3000/api/interncards");
+      let response = await $axios.$get("http://localhost:3000/api/projects");
 
       return {
-        interncards: response.interncards,
+        projects: response.projects,
       };
     } catch (err) {}
   },
   data: () => ({
+    name: "NA", //display
+    prjStartDate: "NA", //display
+    prjEndDate: "NA",
+    tenderStartDate: "NA",
+    expBudget: "NA", //display
+    tenderEndDate: "NA", //display
+    location: "NA", 
+    details: "NA",
+    link: "NA",
     drawer: true,
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/govtDashboard" },
@@ -516,8 +696,34 @@ export default {
       { title: "Projects", icon: "mdi-bookshelf", to: "/govtProjects" },
     ],
     mini: false,
+    headers: [
+      {
+        text: "Name",
+        align: "left",
+        sortable: true,
+        value: "name",
+      }, 
+      { text: "Tender End Date", value: "tenderEndDate" },
+      { text: "Budget", value: "expBudget" },
+
+      { text: "Actions", value: "edit", sortable: false },
+    ],
   }),
   methods: {
+    logoutfunc() {
+      this.$router.push("/Logout");
+    },
+    expItem(item) {
+      this.name = this.projects[this.projects.indexOf(item)].name;
+      this.prjStartDate = this.projects[this.projects.indexOf(item)].prjStartDate;
+      this.prjEndDate = this.projects[this.projects.indexOf(item)].prjEndDate;
+      this.tenderStartDate = this.projects[this.projects.indexOf(item)].tenderStartDate;
+      this.tenderEndDate = this.projects[this.projects.indexOf(item)].tenderEndDate;
+      this.expBudget = this.projects[this.projects.indexOf(item)].expBudget;
+      this.location = this.projects[this.projects.indexOf(item)].location;
+      this.details = this.projects[this.projects.indexOf(item)].details;
+      this.link = this.projects[this.projects.indexOf(item)].link;
+    },
     async verify() {
       try {
         let cookie = this.$cookies.get("jwt");
