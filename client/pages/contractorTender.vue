@@ -118,7 +118,7 @@
 
                   <v-data-table
                       light
-     
+
       :headers="headers"
       :items="projects"
       :search="search"
@@ -131,11 +131,11 @@
             <td>{{ item.name }}</td>
             <td>{{ item.tenderEndDate }}</td>
             <td>{{ item.expBudget }}</td>
-           
+
           </tr>
         </tbody>
       </template>
-    </v-data-table> 
+    </v-data-table>
                   </v-container>
                 </div>
               </v-card>
@@ -370,7 +370,7 @@
                                 </v-col>
                                 <v-col cols="2">
                                   <v-text-field
-                                    outlined 
+                                    outlined
                                     v-model="timelineEnd"
                                   ></v-text-field>
                                 </v-col>
@@ -384,12 +384,12 @@
                                   >
                                   </v-textarea>
                                 </v-col>
-                                
+
                                 <v-col cols="12">
                                     <v-btn @click="dialog2=!dialog2" color="blue-grey" x-large>Apply <v-icon>mdi-lock</v-icon></v-btn>
                                 </v-col>
-                                
-                              </v-row>                      
+
+                              </v-row>
                             </v-container>
                           </v-card>
                         </v-card>
@@ -407,7 +407,7 @@
               Confirm
             </v-card-title>
             <v-card-text>
-              
+
              Are you sure about applied Tender ?
             </v-card-text>
             <v-card-actions>
@@ -441,31 +441,31 @@
         >
           <v-card>
             <v-card-title>
-              <div v-if="success==true">            
+              <div v-if="success==true">
                 Success
                 </div>
-                <div v-if="success==false">            
-                Failed 
+                <div v-if="success==false">
+                Failed
                 </div>
             </v-card-title>
             <v-card-text>
-              <div v-if="success==true">            
+              <div v-if="success==true">
                 Successfully applied to Project
                 </div>
-                <div v-if="success==false">            
+                <div v-if="success==false">
                 Failed to Apply
                 </div>
 
             </v-card-text>
             <v-card-actions>
-             
+
                <v-btn
                 color="primary"
                 text
                 @click="dialog3 = false"
 
               >
-                Close 
+                Close
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -525,8 +525,8 @@ export default {
     timelineEnd: "",
     material: "",
     success: true,
-    
-    confirmed: false,
+
+    confirmed: 0,
     drawer: true,
     dialog: false,
     dialog2: false,
@@ -589,7 +589,7 @@ export default {
       try {
         let data = {
           project_id: this.project_id,
-          contractor_id: this.id, 
+          contractor_id: this.id,
           Budget: this.Budget,
           timelineStart: this.timelineStart,
           timelineEnd: this.timelineEnd,
@@ -601,16 +601,16 @@ export default {
       if(response){
         this.success = true;
         this.project_id =  "";
-        this.contractor_id = ""; 
+        this.contractor_id = "";
         this.Budget = "";
         this.timelineStart = "";
-        this.timelineEnd = ""; 
+        this.timelineEnd = "";
         this.material = "";
       }
     }catch (err) {
-        console.log(err); 
+        console.log(err);
          this.success = false;
-       
+
       }
     },
     async getUser() {

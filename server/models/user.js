@@ -8,7 +8,7 @@ const UserSchema = new Schema({
     password: { type: String, required: true },
     role: String,
     confirmed: {
-        type: Boolean,
+        type: Number,
     },
     
     //for contractor profile 

@@ -404,7 +404,7 @@ export default {
   async asyncData({ $axios }) {
     try {
       let response = await $axios.$get("http://localhost:3000/api/users");
-      console.log(response.users);
+      // console.log(response.users);
       return {
         users: response.users,
       };
@@ -470,6 +470,7 @@ export default {
         console.log(err);
       }
     },
+
   },
   beforeMount() {
     this.verify();

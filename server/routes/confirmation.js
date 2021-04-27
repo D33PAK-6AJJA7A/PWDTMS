@@ -16,14 +16,14 @@ router.get('/confirmation/:token', async (req, res) => {
             
         }
     });
-    console.log(user);
+    // console.log(user);
     if(user){
       
       await User.findOneAndUpdate(
         { _id: user._id },
         {
           $set: {
-             confirmed : true, 
+             confirmed : 1,
           },
         },
         { upsert: true }
@@ -34,6 +34,29 @@ router.get('/confirmation/:token', async (req, res) => {
     }
   
     return res.redirect('http://localhost:8080/login');
-  }); 
+  });
+
+router.post("/pwdconfirm/", async (req, res) => {
+    try
+    {
+        let user = await User.findOneAndUpdate(
+            { _id: req.body.contractor_id },
+            {
+                $set: {
+                    confirmed: 2,
+                },
+            },
+            { upsert: true }
+        );
+        await user.save();
+    }
+    catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message,
+        });
+    }
+});
+
 
 module.exports = router;

@@ -468,6 +468,18 @@ export default {
         console.log(err);
       }
     },
+    //add this to a button
+    async confirmContractor(index)
+    {
+      let id = this.users[index]._id;
+      let data = {
+        contractor_id: id,
+      };
+      await this.$axios.$post(
+        `http://localhost:3000/api/pwdconfirm/`,
+        data
+      );
+    },
   },
   beforeMount() {
     this.verify();

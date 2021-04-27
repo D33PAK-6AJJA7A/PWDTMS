@@ -12,7 +12,7 @@ router.post('/auth/signup',async(req,res) => {
     else {
         try {
             let foundUser = await User.findOne({ email: req.body.email});
-            if(foundUser && foundUser.confirmed) {
+            if(foundUser && foundUser.confirmed == 1) {
                 res.status(403).json({
                     success: false,
                     message: "User already exists."
@@ -24,7 +24,7 @@ router.post('/auth/signup',async(req,res) => {
             newUser.email = req.body.email;
             newUser.password = req.body.password;
             newUser.role = req.body.role;   //request has to send role (possible roles : 'pwd','contractor', 'govt'
-            newUser.confirmed = false;
+            newUser.confirmed = 0;
             await newUser.save();
             let token = jwt.sign(newUser.toJSON(), process.env.SECRET, {
                 expiresIn: 604800 // 1 week
@@ -91,10 +91,17 @@ router.post("/auth/login", async(req,res) => {
                 message: "Authentication failed, User not found"
             });
         }
-        else if (!foundUser.confirmed) {
+        else if (foundUser.confirmed == 0) {
             res.status(403).json({
                 success: false,
                 message: "Please confirm your email to login"
+            });
+        }
+        //1 is being checked only for contractor, others dont need approval
+        else if (foundUser.confirmed == 1 && foundUser.role === "contractor") {
+            res.status(403).json({
+                success: false,
+                message: "Please wait for PWD to confirm your email"
             });
         }
         else {
