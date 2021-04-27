@@ -80,7 +80,7 @@
         <div class="text-h3 blue-grey--text text-center mt-10 mb-5">
           My Tenders and Projects
         </div>
-        <v-card class="blue-grey" width="100%" height="10px"></v-card>
+        
         <v-row>
           <v-col cols="5">
             <v-container class="grey lighten-2">
@@ -100,41 +100,45 @@
                   <v-spacer></v-spacer>
 
                   <v-container class="grey lighten-2">
-                    <v-data-table
+                     <v-data-table
                       light
-                      :headers="headers"
-                      :items="contractors"
-                      :search="search"
-                      hide-actions
-                      class="grey lighten-2"
-                    >
-                      <template #item.edit="{ item }">
-                        <v-icon large color="blue" @click="expItem(item)">
-                          mdi-account-box
-                        </v-icon>
-                        <v-icon
-                          large
-                          class="mr-2"
-                          color="blue-grey"
-                          @click="editItem(item)"
-                        >
-                          mdi-pencil
-                        </v-icon>
-
-                        <v-icon
-                          large
-                          color="red"
-                          @click="
-                            deleteItem(
-                              contractors[contractors.indexOf(item)]._id,
-                              item
-                            )
-                          "
-                        >
-                          mdi-delete
-                        </v-icon>
-                      </template>
-                    </v-data-table>
+     
+      :headers="headers"
+      :items="projects_arr"
+      :search="search"
+      item-key="name"
+      class="elevation-1"
+    >
+      <template v-slot:body="{ items }">
+        <tbody>
+          <tr :class="key === selectedRow ? 'custom-highlight-row' : ''" @click="rowSelect(key)" v-for="(item, key) in items" :key="projects_arr.indexOf(item)">
+            <td>{{ item.name }}</td>
+            <td>{{ item.tenderEndDate }}</td>
+            <td>{{ item.expBudget }}</td>
+            <td> 
+              <div v-if=" tender_arr[projects_arr.indexOf(item)].approved == '0' ">
+                <v-icon color="blue-grey">mdi-clock-outline</v-icon>
+              
+              </div>
+               <div v-if="  tender_arr[projects_arr.indexOf(item)].approved=='1'">
+                <v-icon color="blue-grey">mdi-account-clock-outline</v-icon>
+              
+              </div> 
+               <div v-if="  tender_arr[projects_arr.indexOf(item)].approved=='2'">
+                <v-icon color="green">mdi-check-bold</v-icon>
+              
+              </div> 
+               <div v-if="  tender_arr[projects_arr.indexOf(item)].approved=='-1'">
+                <v-icon color="red">mdi-close-thick</v-icon>
+              
+              </div>   
+              
+            </td>
+           
+          </tr>
+        </tbody>
+      </template>
+    </v-data-table> 
                   </v-container>
                 </div>
               </v-card>
@@ -142,208 +146,172 @@
           </v-col>
           <v-divider vertical class="blue-grey mt-10 mb-10"></v-divider>
 
-          <v-col cols="7">
-            <v-card class="grey lighten-2 mt-5" light elevation="0">
-              <v-card class="transparent" flat>
-                <v-container fluid>
-                  <v-row>
-                    <v-col cols="2">
-                      <v-subheader>Status</v-subheader>
-                    </v-col>
-                    <v-col cols="10">
-                      <v-text-field
-                        outlined
-                        v-model="status"
-                        disabled
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="4"> </v-col>
-                    <v-col cols="4"> <div class="justify-center"></div></v-col>
-                    <v-col cols="4"> </v-col>
-                    <v-col cols="2">
-                      <v-subheader>Semester</v-subheader>
-                    </v-col>
-                    <v-col cols="2">
-                      <v-text-field
-                        outlined
-                        v-model="sem1"
-                        disabled
-                      ></v-text-field>
-                    </v-col>
+            <v-col cols="7">
+            <p class="text-center blue-grey text-h4">View Project</p>
+            <v-card light elevation="0" class="grey lighten-2 ma-10">
+              <v-row>
+                 <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Name :
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="text--black">{{ name }}</div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Project Start Date :
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="text--black">{{ prjStartDate }}</div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Project End Date:
+                  </div>
+                </v-col>
+                <v-col cols="2"
+                  ><div class="black--text">
+                    {{ prjEndDate }}
+                  </div>
+                </v-col>
+                <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Tender Start Date : 
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="black--text">
+                    {{ tenderStartDate }}
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Tender End Date :
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="black--text">
+                    {{ tenderEndDate }}
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Budget :
+                  </div></v-col
+                >
+                <v-col cols="2"
+                  ><div class="black--text">
+                    {{ expBudget }}
+                  </div></v-col
+                >
+                <v-col cols="4"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Location :
+                  </div></v-col
+                >
+                <v-col cols="4"
+                  ><p class="black--text">
+                    {{ location }}
+                  </p></v-col
+                >
+                <v-col cols="12"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Details :
+                  </div></v-col
+                >
+                <v-col cols="12 "
+                  ><div class="black--text">{{ details }}</div></v-col
+                >
+                <v-col cols="4"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Link :
+                  </div></v-col
+                >
+                <v-col cols="4"
+                  ><div class="black--text">{{ link }}</div></v-col
+                >
+                <v-col cols="4"></v-col>
+                
+                 <v-card class="pa-5" light elevation="0">
+                          <div class="pa-2 mb-4 blue-grey text-h5 white--text">
+                            Tender Details
+                          </div>
+                          <v-card class="transparent" flat>
+                            <v-container fluid>
+                              <v-row>
+                                <v-col cols="2">
+                                  <v-subheader>Proposable Budget</v-subheader>
+                                </v-col>
+                                <v-col cols="2">
+                                  <v-text-field
+                                    outlined
+                                    disabled
+                                    v-model="Budget"
+                                  ></v-text-field>
+                                </v-col>
 
-                    <v-col cols="2">
-                      <v-subheader>Batch</v-subheader>
-                    </v-col>
-                    <v-col cols="2">
-                      <v-text-field
-                        disabled
-                        outlined
-                        v-model="batch1"
-                      ></v-text-field>
-                    </v-col>
+                                <v-col cols="2">
+                                  <v-subheader>Start Timeline </v-subheader>
+                                </v-col>
+                                <v-col cols="2">
+                                  <v-text-field
+                                    outlined
+                                    disabled
+                                    v-model="timelineStart"
+                                  ></v-text-field>
+                                </v-col>
 
-                    <v-col cols="2">
-                      <v-subheader>Section</v-subheader>
-                    </v-col>
-                    <v-col cols="2">
-                      <v-text-field
-                        outlined
-                        disabled
-                        v-model="section1"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="2">
-                      <v-subheader>Phone</v-subheader>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field
-                        disabled
-                        v-model="phone1"
-                        outlined
-                        color="blue-grey"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-subheader>BIO</v-subheader>
-                      <v-textarea
-                        disabled
-                        outlined
-                        v-model="bio1"
-                        color="blue-grey"
-                      >
-                      </v-textarea>
-                    </v-col>
-                  </v-row>
-                  <v-subheader class="text-h5">Address</v-subheader>
+                                <v-col cols="2">
+                                  <v-subheader>End Timeline</v-subheader>
+                                </v-col>
+                                <v-col cols="2">
+                                  <v-text-field
+                                  v-if="approved=='2'"
+                                    outlined 
+                                   
+                                    v-model="timelineEnd"
+                                  ></v-text-field>
+                                  <v-text-field
+                                  v-else
+                                    outlined 
+                                   disabled
+                                    v-model="timelineEnd"
+                                  ></v-text-field>
+                                </v-col>
 
-                  <v-row>
-                    <v-col cols="2">
-                      <v-subheader>Address Line</v-subheader>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field
-                        disabled
-                        outlined
-                        v-model="addr_line1"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="2">
-                      <v-subheader>City</v-subheader>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field
-                        disabled
-                        outlined
-                        v-model="city1"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="2">
-                      <v-subheader>State</v-subheader>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field
-                        disabled
-                        outlined
-                        v-model="state1"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="2">
-                      <v-subheader>Country</v-subheader>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-text-field
-                        disabled
-                        outlined
-                        v-model="country1"
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="2"> </v-col>
-                    <v-col cols="12"
-                      ><v-subheader class="text-h5"
-                        >Approved Tenders</v-subheader
-                      >
-                    </v-col>
-                    <v-col cols="12"
-                      ><v-subheader class="text-h5">Documents</v-subheader>
-                    </v-col>
-                    <v-row>
-                      <v-col class="ml-8" cols="3">
-                        <v-btn large class="blue-grey">
-                          <a
-                            v-bind:href="resume_url"
-                            target="_blank"
-                            class="black--text"
-                            style="text-decoration: none"
-                          >
-                            View Resume<v-icon>mdi-eye</v-icon>
-                          </a></v-btn
-                        ></v-col
-                      >
-                      <v-col cols="3">
-                        <v-dialog
-                          light
-                          v-model="dialog2"
-                          persistent
-                          max-width="400"
-                        >
-                          <template v-slot:activator="{ on, attrs }">
-                            <v-btn
-                              color="blue-grey"
-                              flat
-                              large
-                              elevation="0"
-                              v-bind="attrs"
-                              v-on="on"
-                            >
-                              Upload Resume
-                              <v-icon>mdi-file-document-multiple</v-icon>
-                            </v-btn>
-                            {{ Uploaded }}
-                          </template>
-                          <v-card>
-                            <v-card-title class="headline">
-                              Upload Resume
-                            </v-card-title>
-                            <v-card-text>
-                              <input type="file" @change="onFileChanged" />
-                              <v-btn
-                                large
-                                class="mt-4 blue-grey"
-                                @click="onUploadResume"
-                                >Upload Resume</v-btn
-                              >
-                            </v-card-text>
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn
-                                color="blue-grey darken-1"
-                                text
-                                @click="dialog2 = false"
-                              >
-                                Close
-                              </v-btn>
-                            </v-card-actions>
+                                <v-col cols="12">
+                                  <v-subheader>Material used</v-subheader>
+                                  <v-textarea
+                                    v-if="approved=='2'"
+                                    outlined
+                                    v-model="material"
+                                    color="blue-grey"
+                                  >
+                                  </v-textarea>
+                                 <v-textarea
+                                    v-else
+                                    disabled
+                                    outlined
+                                    v-model="material"
+                                    color="blue-grey"
+                                  >
+                                  </v-textarea>
+                                 
+                                </v-col>
+                                
+                                <v-col cols="12">
+                                    <v-btn  color="blue-grey" x-large>Edit<v-icon>mdi-lock</v-icon></v-btn>
+                                </v-col>
+                                
+                              </v-row>                      
+                            </v-container>
                           </v-card>
-                        </v-dialog>
-                      </v-col>
-                      <v-col cols="2"></v-col>
-                      <v-col cols="3">
-                        {{ Saved }}
-                        <v-btn large class="blue-grey" @click="onSaveProfile"
-                          >Save</v-btn
-                        >
-                      </v-col>
-                    </v-row>
-                    <v-col cols="8"> </v-col>
-                    <v-col cols="1"></v-col>
-                  </v-row>
-                </v-container>
-              </v-card>
-            </v-card>
+                        </v-card>
+
+                </v-row
+            ></v-card>
           </v-col>
         </v-row>
       </v-main>
@@ -351,9 +319,33 @@
   </div>
 </template>
 
+<style>
+.custom-highlight-row{
+  background-color: rgb(249, 255, 192)
+}
+</style>
+
 <script>
 export default {
   data: () => ({
+    selectedRow: null,
+    selected: -1,
+    name: "NA", //display
+    prjStartDate: "NA", //display
+    prjEndDate: "NA",
+    tenderStartDate: "NA",
+    expBudget: "NA", //display
+    tenderEndDate: "NA", //display
+    location: "NA",
+    details: "NA",
+    link: "NA",
+    Budget: "",
+    timelineStart: "",
+    timelineEnd: "",
+    material: "",
+    approved: "",
+    projects_arr: [],
+    tender_arr: [],
     drawer: true,
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/contractorDashboard" },
@@ -379,11 +371,109 @@ export default {
         sortable: true,
         value: "name",
       },
-      { text: "Email", value: "email" },
-      { text: "Actions", value: "edit", sortable: false },
+      { text: "Tender End Date", value: "tenderEndDate" },
+      { text: "Budget", value: "expBudget" },
+      { text: "Status", value: "" },
     ],
   }),
   methods: {
+    async getProjects() {
+    try {
+      let cookie = this.$cookies.get("jwt");
+        if (cookie == null) {
+          this.$router.push("/login");
+        }
+        let data = {
+          cookie: cookie,
+        };
+        let response = await this.$axios.$post(
+          `http://localhost:3000/api/profile/`,
+          data
+        );
+        if (!response.success) {
+          this.$router.push("/login");
+        } else if (response.user.role !== "contractor") {
+          this.$cookies.set("jwt", null);
+          this.$router.push("/Login");
+        }
+
+        for(let i=0;i<response.user.my_projects.length;i++)
+        {
+          let idd = response.user.my_projects[i].project_id;
+          
+          let response1 = await this.$axios.$get(
+            `http://localhost:3000/api/projects/${idd}`,
+          );
+          if(response)
+          {
+            this.projects_arr.push(response1.project);
+            this.tender_arr.push(response.user.my_projects[i]);
+          }
+        }
+        // console.log(this.projects_arr);
+        // console.log(this.tender_arr);
+        
+// contractor_id
+// :
+// "6076fe4a360b76533047367a"
+// Budget
+// :
+// "100 INR" 
+// timelineStart
+// :
+// "25 May"
+// timelineEnd
+// :
+// "25 June"
+// material
+// :
+// "Graphine"
+// approved
+// :
+// "0"
+        //this.tender1 = response.user.my_projects;
+
+      
+      // let response = await $axios.$get("http://localhost:3000/api/users/");
+      // let project1 = new Array();
+      // for(let i=0;i<response.projects.length;i++)
+      // {
+      //   if(response.projects.tenders[i].approved === 0)
+      //   {
+      //     project1.push(response.projects[i]);
+      //   }
+      // }
+      // console.log(project1);
+      // return {
+      //   projects: project1,
+      // };
+    } catch (err) {
+
+    }
+  },
+    rowSelect(idx) {
+      this.selectedRow = idx;
+      this.expItem();
+    },
+    expItem() {
+      this.selected = 1;
+    
+      this.project_id = this.tender_arr[this.selectedRow].project_id;
+      this.name = this.projects_arr[this.selectedRow].name;
+      this.prjStartDate = this.projects_arr[this.selectedRow].prjStartDate;
+      this.prjEndDate = this.projects_arr[this.selectedRow].prjEndDate;
+      this.tenderStartDate = this.projects_arr[this.selectedRow].tenderStartDate;
+      this.tenderEndDate = this.projects_arr[this.selectedRow].tenderEndDate;
+      this.expBudget = this.projects_arr[this.selectedRow].expBudget;
+      this.location = this.projects_arr[this.selectedRow].location;
+      this.details = this.projects_arr[this.selectedRow].details;
+      this.link = this.projects_arr[this.selectedRow].link;
+      this.Budget = this.tender_arr[this.selectedRow].Budget;
+      this.timelineStart = this.tender_arr[this.selectedRow].timelineStart;
+      this.timelineEnd = this.tender_arr[this.selectedRow].timelineEnd;
+      this.material = this.tender_arr[this.selectedRow].material;
+      this.approved = this.tender_arr[this.selectedRow].approved;
+    },
     async verify() {
       try {
         let cookie = this.$cookies.get("jwt");
@@ -408,6 +498,7 @@ export default {
   },
   beforeMount() {
   //  this.verify();
+    this.getProjects();
   },
 };
 </script>

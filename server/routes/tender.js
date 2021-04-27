@@ -9,13 +9,7 @@ router.post("/tenders", async (req, res) => {
   {
     let project1 = await Project.findOne({ _id: req.body.project_id });
     let arr = project1.tenders;
-    for(let i=0;i<arr.length;i++)
-    {
-      if(arr[i].contractor_id === tender.contractor_id)
-      {
-        throw "contrator tender already exists";
-      }
-    }
+    
     let tender = new Tender();
     tender.project_id = req.body.project_id;
     tender.contractor_id = req.body.contractor_id;
@@ -23,7 +17,14 @@ router.post("/tenders", async (req, res) => {
     tender.timelineStart = req.body.timelineStart;
     tender.timelineEnd = req.body.timelineEnd;
     tender.material = req.body.material;
-    tender.doc = [];    
+    tender.approved =  req.body.approved;   
+    for(let i=0;i<arr.length;i++)
+    {
+      if(arr[i].contractor_id === tender.contractor_id)
+      {
+        throw "contrator tender already exists";
+      }
+    }
     await tender.save();
     arr.push(tender);
     let project = await Project.findOneAndUpdate(
@@ -110,6 +111,7 @@ router.put("/tenders/:id", async (req, res) => {
             timelineStart : req.body.timelineStart,
             timelineEnd : req.body.timelineEnd,
             material : req.body.material,
+            approved: req.body.approved,
         },
       },
       { upsert: true }

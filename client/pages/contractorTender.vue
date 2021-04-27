@@ -421,7 +421,7 @@
                <v-btn
                 color="primary"
                 text
-                @click="dialog2 = false ; dialog = false; confirmTender()"
+                @click="dialog2 = false ; dialog = false; dialog3 = true; confirmTender()"
 
               >
                 Apply and Lock <v-icon>mdi-lock</v-icon>
@@ -433,7 +433,43 @@
                 </div> </v-row
             ></v-card>
           </v-col>
-          <v-col cols="8"> </v-col>
+
+          <v-col cols="8"> <v-dialog
+                    light
+          v-model="dialog3"
+          max-width="500px"
+        >
+          <v-card>
+            <v-card-title>
+              <div v-if="success==true">            
+                Success
+                </div>
+                <div v-if="success==false">            
+                Failed 
+                </div>
+            </v-card-title>
+            <v-card-text>
+              <div v-if="success==true">            
+                Successfully applied to Project
+                </div>
+                <div v-if="success==false">            
+                Failed to Apply
+                </div>
+
+            </v-card-text>
+            <v-card-actions>
+             
+               <v-btn
+                color="primary"
+                text
+                @click="dialog3 = false"
+
+              >
+                Close 
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog> </v-col>
         </v-row>
       </v-main>
     </v-app>
@@ -469,7 +505,6 @@ export default {
     location: "NA",
     details: "NA",
     link: "NA",
-    profile_url: "",
     annual_report_url: "",
     id: "",
     project_id: "",
@@ -489,6 +524,7 @@ export default {
     timelineStart: "",
     timelineEnd: "",
     material: "",
+    success: true,
     
     confirmed: false,
     drawer: true,
@@ -558,20 +594,23 @@ export default {
           timelineStart: this.timelineStart,
           timelineEnd: this.timelineEnd,
           material: this.material,
-          approved: 0,
+          approved: "0",
         }
         console.log(data);
       let response = await this.$axios.$post(`http://localhost:3000/api/tenders/`,data);
       if(response){
+        this.success = true;
         this.project_id =  "";
         this.contractor_id = ""; 
         this.Budget = "";
         this.timelineStart = "";
-        this.timelineEnd = "";
+        this.timelineEnd = ""; 
         this.material = "";
       }
     }catch (err) {
-        console.log(err);
+        console.log(err); 
+         this.success = false;
+       
       }
     },
     async getUser() {

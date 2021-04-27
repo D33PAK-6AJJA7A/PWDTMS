@@ -118,6 +118,7 @@
                     <li><div  :href="'http://' + item.src" class="black--text"><p>{{item.title}}</p></div></li>
                   </ul>
                 </v-card>
+               
                 </v-card>
               </v-col>
              </v-row>
@@ -198,7 +199,15 @@ export default {
   },
 
   data: () => ({
-    news:[{src:"www.google.com",title:"Google announced "}],
+      
+    news:[{src:"www.google.com",title:"Google announced "},
+    {src:"https://mib.gov.in/sites/default/files/Tender%20Invite%20for%20maintenance%20%26%20enhancements%20of%20CBFCs%20Application%20Portal%2C%20Website%20%26%20development%20of%20Mobile%20App%20%E2%80%93%20Request%20for%20uploading%20RFP%20on%20Ministry%E2%80%99s%20website.pdf",title:"Tender Invite for maintenance & enhancements of CBFC's Application Portal, Website & development of Mobile App" },
+     {src:"https://mib.gov.in/sites/default/files/PublicationsDivision061120.pdf",title:"Empanelment of Zonal marketing Distribution Agencies (ZMDAs)	" },
+      {src:"https://mib.gov.in/sites/default/files/TenderObsolteArticles%20%281%29.pdf",title:"Tender-Condemnation of Obsolete Articles	" },
+      {src:"https://mib.gov.in/sites/default/files/ShortTermTenderCatering.pdf",title:"Tender for provisioning of dinner at the residence of HMIB" },
+      {src:"https://mib.gov.in/sites/default/files/ShortTermTenderTent_0.pdf",title:"Tender for provisioning of Tent and related items at the residence of HMIB" },
+      {src:"",title:"" },
+      ],
       slides123: [
       {
         src: "https://www.mumbailive.com/images/media/images/images_1588162734983_national_highway.jpg?bg=d5e3e9&crop=512%2C384%2Cnull%2C0&fit=fill&fitToScale=h%2C1368%2C768&h=432.2807017543859&height=384&w=770&width=512",

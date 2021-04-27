@@ -8,7 +8,7 @@
         ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1">LogOut</div></v-card
       >
 
-      <v-navigation-drawer
+      <v-navigation-drawer 
         app
         v-model="drawer"
         :mini-variant.sync="mini"
@@ -226,8 +226,99 @@ export default {
       { title: "Projects", icon: "mdi-bookshelf", to: "/govtProjects" },
     ],
     mini: false,
+    search: "",
+
+    headers: [
+      {
+        text: "Title",
+        align: "left",
+        sortable: true,
+        value: "title",
+      },
+      { text: "Description", value: "description", align: "left" },
+      { text: "Actions", value: "edit", sortable: false, align: "left" },
+    ],
+    editedIndex: -1,
+    editedItem: {
+      title: "",
+      description: 0,
+    },
+    defaultItem: {
+      title: "",
+      description: 0,
+    },
+    dialog: false,
+    edt: 0,
+    title: "",
+    ide: "",
+    description: "",
+    ind: "",
   }),
   methods: {
+    editItem(item) {
+      this.edt = 1;
+      this.title = this.announcementcards[
+        this.announcementcards.indexOf(item)
+      ].title;
+      this.description = this.announcementcards[
+        this.announcementcards.indexOf(item)
+      ].description;
+      this.ind = this.announcementcards.indexOf(item);
+      this.dialog = true;
+    },
+
+    async deleteItem(id, item) {
+      const index = this.announcementcards.indexOf(item);
+
+      //confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+      try {
+        let response = await this.$axios.$delete(
+          `http://localhost:3000/api/announcementcards/${id}`
+        );
+        console.log(response);
+        if (response.status) {
+          this.announcementcards.splice(index, 1);
+        }
+      } catch (err) {}
+    },
+
+    async onAddAnnouncement() {
+      if (this.edt === 1) {
+        this.ide = this.announcementcards[this.ind]._id;
+        let data = {
+          title: this.title,
+          description: this.description,
+        };
+        let result = await this.$axios.$put(
+          `http://localhost:3000/api/announcementcards/${this.ide}`,
+          data
+        );
+        this.dialog = false;
+        this.announcementcards[this.ind].title = this.title;
+        this.announcementcards[this.ind].description = this.description;
+        this.edt = 0;
+      } else {
+        try {
+          console.log(this.title);
+          console.log(this.description);
+
+          let data = {
+            title: this.title,
+            description: this.description,
+          };
+          let response = await this.$axios.$post(
+            "http://localhost:3000/api/announcementcards",
+            data
+          );
+          this.announcementcards.push(data);
+          this.title = "";
+          this.description = "";
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      //this.dialog=false;
+    },
     async verify() {
       try {
         let cookie = this.$cookies.get("jwt");

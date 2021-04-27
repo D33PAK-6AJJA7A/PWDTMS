@@ -137,32 +137,6 @@
                       hide-actions
                       class="grey lighten-2"
                     >
-                      <template #item.edit="{ item }" min-width="50%">
-                        <v-icon
-                          x-large
-                          class="mr-2"
-                          color="blue-grey"
-                          @click="editItem(item)"
-                        >
-                          mdi-pencil
-                        </v-icon>
-
-                        <v-icon
-                          x-large
-                          color="red"
-                          @click="
-                            deleteItem(
-                              announcementcards[announcementcards.indexOf(item)]
-                                ._id,
-                              item
-                            )
-                          "
-                        >
-                          mdi-delete
-                        </v-icon>
-
-                        <btn> </btn>
-                      </template>
                     </v-data-table>
                   </v-container>
                 </div>
@@ -272,6 +246,18 @@ export default {
       },
     ],
     mini: false,
+    search: "",
+
+    headers: [
+      {
+        text: "Title",
+        align: "left",
+        sortable: true,
+        value: "title",
+      },
+      { text: "Description", value: "description", align: "left" },
+      //{ text: "Actions", value: "edit", sortable: false, align: "left" },
+    ],
   }),
   methods: {
     async verify() {
