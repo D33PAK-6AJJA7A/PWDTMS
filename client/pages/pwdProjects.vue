@@ -5,7 +5,7 @@
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
         align="right"
         height="50px"
-        ><v-btn class="pa-2 mr-4 yellow darken-3 mt-1 mb-1">LogOut</v-btn></v-card
+        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click = "logoutfunc">LogOut</div></v-card
       >
       <v-navigation-drawer
         app
@@ -597,6 +597,9 @@ export default {
     ],
   }),
   methods: {
+    logoutfunc() {
+      this.$router.push("/Logout");
+    },
     expItem(item) {
       this.name = this.projects[this.projects.indexOf(item)].name;
       this.prjStartDate = this.projects[this.projects.indexOf(item)].prjStartDate;
