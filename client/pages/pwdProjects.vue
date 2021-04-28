@@ -87,11 +87,6 @@
             <v-container class="grey lighten-2">
               <v-card class="grey lighten-2 rounded-ls" elevation="0">
                 <div>
-                  <div>
-                    <v-btn color="blue-grey"
-                      >Create New Project <v-icon>mdi-plus</v-icon></v-btn
-                    >
-                  </div>
                   <v-toolbar flat color="grey lighten-2">
                     <v-text-field
                       light
@@ -110,34 +105,61 @@
                       :headers="headers"
                       :items="projects"
                       :search="search"
-                      hide-actions
-                      class="grey lighten-2"
+                      class="elevation-1"
                     >
-                      <template #item.edit="{ item }">
-                        <v-icon x-large color="blue" @click="expItem(item)">
-                          mdi-account-box
-                        </v-icon>
-                        <!-- <v-icon
-                          x-large
-                          class="mr-2"
-                          color="blue-grey"
-                          @click="editItem(item)"
-                        >
-                          mdi-pencil
-                        </v-icon>
-
-                        <v-icon
-                          x-large
-                          color="red"
-                          @click="
-                            deleteItem(
-                              projects[projects.indexOf(item)]._id,
-                              item
-                            )
-                          "
-                        >
-                          mdi-delete
-                        </v-icon> -->
+                      <template v-slot:body="{ items }">
+                        <tbody>
+                          <tr
+                            :class="
+                              key === selectedRow ? 'custom-highlight-row' : ''
+                            "
+                            @click="rowSelect(key)"
+                            v-for="(item, key) in items"
+                            :key="projects.indexOf(item)"
+                          >
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.tenderEndDate }}</td>
+                            <td>{{ item.expBudget }}</td>
+                            <!-- <td>
+                              <div
+                                v-if="
+                                  tender_arr[projects_arr.indexOf(item)]
+                                    .approved == '0'
+                                "
+                              >
+                                <v-icon color="blue-grey"
+                                  >mdi-clock-outline</v-icon
+                                >
+                              </div>
+                              <div
+                                v-if="
+                                  tender_arr[projects_arr.indexOf(item)]
+                                    .approved == '1'
+                                "
+                              >
+                                <v-icon color="blue-grey"
+                                  >mdi-account-clock-outline</v-icon
+                                >
+                              </div>
+                              <div
+                                v-if="
+                                  tender_arr[projects_arr.indexOf(item)]
+                                    .approved == '2'
+                                "
+                              >
+                                <v-icon color="green">mdi-check-bold</v-icon>
+                              </div>
+                              <div
+                                v-if="
+                                  tender_arr[projects_arr.indexOf(item)]
+                                    .approved == '-1'
+                                "
+                              >
+                                <v-icon color="red">mdi-close-thick</v-icon>
+                              </div>
+                            </td> -->
+                          </tr>
+                        </tbody>
                       </template>
                     </v-data-table>
                   </v-container>
@@ -258,7 +280,7 @@
                   <v-text-field
                     light
                     color="blue-grey"
-                    v-model="search"
+                    v-model="search1"
                     append-icon="mdi-magnify"
                     label="Search"
                     single-line
@@ -268,7 +290,7 @@
                 </v-toolbar>
 
                 <v-container class="grey lighten-2">
-                  <v-data-table
+                  <!-- <v-data-table
                     light
                     :headers="headers1"
                     :items="tenders"
@@ -280,6 +302,30 @@
                       <v-icon x-large color="blue" @click="expItem1(item)">
                         mdi-account-box
                       </v-icon>
+                    </template>
+                  </v-data-table> -->
+                  <v-data-table
+                    light
+                    :headers="headers1"
+                    :items="tenders"
+                    :search="search1"
+                    class="elevation-1"
+                  >
+                    <template v-slot:body="{ items }">
+                      <tbody>
+                        <tr
+                          :class="
+                            key === selectedRow1 ? 'custom-highlight-row' : ''
+                          "
+                          @click="rowSelect1(key)"
+                          v-for="(item, key) in items"
+                          :key="tenders.indexOf(item)"
+                        >
+                          <td>{{ item.Budget }}</td>
+                          <td>{{ item.timelineStart }}</td>
+                          <td>{{ item.timelineEnd }}</td>
+                        </tr>
+                      </tbody>
                     </template>
                   </v-data-table>
                 </v-container>
@@ -393,6 +439,13 @@
   </div>
 </template>
 
+<style>
+.custom-highlight-row {
+  background-color: rgb(249, 255, 192);
+}
+</style>
+
+
 <script>
 export default {
   async asyncData({ $axios }) {
@@ -407,6 +460,9 @@ export default {
     }
   },
   data: () => ({
+    selectedRow: -1,
+    selectedRow1: -1,
+
     name: "NA", //display
     dialog1: false,
     prjStartDate: "NA", //display
@@ -454,6 +510,7 @@ export default {
     mini: false,
     drawer: null,
     search: "",
+    search1: "",
     headers: [
       {
         text: "Name",
@@ -463,8 +520,6 @@ export default {
       },
       { text: "Tender End Date", value: "tenderEndDate" },
       { text: "Budget", value: "expBudget" },
-
-      { text: "Actions", value: "edit", sortable: false },
     ],
     headers1: [
       {
@@ -475,14 +530,17 @@ export default {
       },
       { text: "Start Date", value: "timelineStart" },
       { text: "End Date", value: "timelineEnd" },
-
-      { text: "Actions", value: "edit", sortable: false },
     ],
   }),
   methods: {
     logoutfunc() {
       this.$router.push("/Logout");
     },
+    rowSelect(idx) {
+      this.selectedRow = idx;
+      this.expItem(this.projects[this.selectedRow]);
+    },
+
     expItem(item) {
       this.name = this.projects[this.projects.indexOf(item)].name;
       this.prjStartDate = this.projects[
@@ -500,6 +558,10 @@ export default {
       this.details = this.projects[this.projects.indexOf(item)].details;
       this.link = this.projects[this.projects.indexOf(item)].link;
       this.tenders = this.projects[this.projects.indexOf(item)].tenders;
+    },
+    rowSelect1(idx) {
+      this.selectedRow1 = idx;
+      this.expItem1(this.tenders[this.selectedRow1]);
     },
     async expItem1(item) {
       this.project_id = this.tenders[this.tenders.indexOf(item)].project_id;
