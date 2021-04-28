@@ -331,71 +331,72 @@
                 </v-container>
               </div>
             </v-card>
+            <div v-if="selectedRow1 != -1">
+              <p class="text-center blue-grey text-h4">View Applied Tenders</p>
+              <v-card light elevation="0" class="grey lighten-2 ma-10">
+                <v-row>
+                  <v-col cols="2"
+                    ><div class="blue-grey--text text-subtitle-1">
+                      Contracter :
+                    </div></v-col
+                  >
+                  <v-col cols="2"
+                    ><div class="text--black">{{ contractor_name }}</div></v-col
+                  >
+                  <v-col cols="2"
+                    ><div class="blue-grey--text text-subtitle-1">
+                      Budget :
+                    </div></v-col
+                  >
+                  <v-col cols="2"
+                    ><div class="text--black">{{ Budget }}</div></v-col
+                  >
+                  <v-col cols="2"
+                    ><div class="blue-grey--text text-subtitle-1">
+                      TimeLine Start:
+                    </div>
+                  </v-col>
+                  <v-col cols="2"
+                    ><div class="black--text">{{ timelineStart }}</div>
+                  </v-col>
+                  <v-col cols="2"
+                    ><div class="blue-grey--text text-subtitle-1">
+                      TimeLine End:
+                    </div></v-col
+                  >
+                  <v-col cols="2"
+                    ><div class="black--text">{{ timelineEnd }}</div></v-col
+                  >
+                  <v-col cols="8"></v-col>
 
-            <p class="text-center blue-grey text-h4">View Applied Tenders</p>
-            <v-card light elevation="0" class="grey lighten-2 ma-10">
-              <v-row>
-                <v-col cols="2"
-                  ><div class="blue-grey--text text-subtitle-1">
-                    Contracter :
-                  </div></v-col
-                >
-                <v-col cols="2"
-                  ><div class="text--black">{{ contractor_name }}</div></v-col
-                >
-                <v-col cols="2"
-                  ><div class="blue-grey--text text-subtitle-1">
-                    Budget :
-                  </div></v-col
-                >
-                <v-col cols="2"
-                  ><div class="text--black">{{ Budget }}</div></v-col
-                >
-                <v-col cols="2"
-                  ><div class="blue-grey--text text-subtitle-1">
-                    TimeLine Start:
-                  </div>
-                </v-col>
-                <v-col cols="2"
-                  ><div class="black--text">{{ timelineStart }}</div>
-                </v-col>
-                <v-col cols="2"
-                  ><div class="blue-grey--text text-subtitle-1">
-                    TimeLine End:
-                  </div></v-col
-                >
-                <v-col cols="2"
-                  ><div class="black--text">{{ timelineEnd }}</div></v-col
-                >
-                <v-col cols="8"></v-col>
+                  <v-divider class="mt-10 blue-grey" vertical></v-divider>
+                  <v-col cols="2"
+                    ><div class="blue-grey--text text-subtitle-1">
+                      Past Projects :
+                    </div></v-col
+                  >
+                  <v-col cols="10">
+                    <div class="black--text">{{ past_projects }}</div>
+                  </v-col>
 
-                <v-divider class="mt-10 blue-grey" vertical></v-divider>
-                <v-col cols="2"
-                  ><div class="blue-grey--text text-subtitle-1">
-                    Past Projects :
-                  </div></v-col
-                >
-                <v-col cols="10">
-                  <div class="black--text">{{ past_projects }}</div>
-                </v-col>
-
-                <v-col cols="2"
-                  ><div class="blue-grey--text text-subtitle-1">
-                    Materials :
-                  </div></v-col
-                >
-                <v-col cols="10"
-                  ><p class="black--text">
-                    {{ material }}
-                  </p></v-col
-                >
-                <v-col cols="4"
-                  ><v-btn color="blue-grey" @click="dialog1 = true"
-                    >Lock<v-icon>mdi-lock</v-icon></v-btn
-                  ></v-col
-                >
-              </v-row></v-card
-            >
+                  <v-col cols="2"
+                    ><div class="blue-grey--text text-subtitle-1">
+                      Materials :
+                    </div></v-col
+                  >
+                  <v-col cols="10"
+                    ><p class="black--text">
+                      {{ material }}
+                    </p></v-col
+                  >
+                  <v-col cols="4"
+                    ><v-btn color="blue-grey" @click="dialog1 = true"
+                      >Lock<v-icon>mdi-lock</v-icon></v-btn
+                    ></v-col
+                  >
+                </v-row></v-card
+              >
+            </div>
             <v-dialog
               class="grey lighten-2"
               v-model="dialog1"
