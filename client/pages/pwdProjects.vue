@@ -5,7 +5,9 @@
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
         align="right"
         height="50px"
-        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click = "logoutfunc">LogOut</div></v-card
+        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click="logoutfunc">
+          LogOut
+        </div></v-card
       >
       <v-navigation-drawer
         app
@@ -85,9 +87,12 @@
             <v-container class="grey lighten-2">
               <v-card class="grey lighten-2 rounded-ls" elevation="0">
                 <div>
+                  <div>
+                    <v-btn color="blue-grey"
+                      >Create New Project <v-icon>mdi-plus</v-icon></v-btn
+                    >
+                  </div>
                   <v-toolbar flat color="grey lighten-2">
-                    <v-divider class="mx-2" inset vertical></v-divider>
-                    <v-spacer></v-spacer>
                     <v-text-field
                       light
                       color="blue-grey"
@@ -97,7 +102,6 @@
                       single-line
                       hide-details
                     ></v-text-field>
-                    <v-spacer></v-spacer>
                   </v-toolbar>
 
                   <v-container class="grey lighten-2">
@@ -171,7 +175,9 @@
                   ><div class="text--black">{{ prjStartDate }}</div></v-col
                 >
                 <v-col cols="2"
-                  ><div class="blue-grey--text text-subtitle-1">Project End Date:</div>
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Project End Date:
+                  </div>
                 </v-col>
                 <v-col cols="2"
                   ><div class="black--text">
@@ -274,7 +280,6 @@
                       <v-icon x-large color="blue" @click="expItem1(item)">
                         mdi-account-box
                       </v-icon>
-                      
                     </template>
                   </v-data-table>
                 </v-container>
@@ -290,7 +295,7 @@
                   </div></v-col
                 >
                 <v-col cols="2"
-                  ><div class="text--black">{{ contractor_name }} </div></v-col
+                  ><div class="text--black">{{ contractor_name }}</div></v-col
                 >
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
@@ -306,66 +311,26 @@
                   </div>
                 </v-col>
                 <v-col cols="2"
-                  ><div class="black--text">{{ timelineStart }} </div> 
+                  ><div class="black--text">{{ timelineStart }}</div>
                 </v-col>
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
-                    TimeLine End :
+                    TimeLine End:
                   </div></v-col
                 >
                 <v-col cols="2"
-                  ><div class="black--text">{{ timelineEnd }} </div></v-col
+                  ><div class="black--text">{{ timelineEnd }}</div></v-col
                 >
                 <v-col cols="8"></v-col>
-                <!-- <v-col cols="6">
-                  <v-col cols="12"
-                    ><div class="blue-grey--text text-h4">
-                      Proposal Documents
-                    </div></v-col
-                  >
 
-                  <v-card
-                    v-for="(item, i) in propDocs"
-                    :key="i"
-                    :href="item.link"
-                    target="_blank"
-                    class="transparent elevation-0"
-                  >
-                    <v-btn x-large>
-                      <div class="text-h5 black--text pa-4">
-                        Document {{ i }}
-                      </div>
-                      <v-icon>mdi-download</v-icon>
-                    </v-btn>
-                    <v-divider class="mt-4"></v-divider>
-                  </v-card>
-                </v-col> -->
                 <v-divider class="mt-10 blue-grey" vertical></v-divider>
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
                     Past Projects :
                   </div></v-col
                 >
-                <v-col cols="6">
-                  <div class="black--text">{{ past_projects }} </div>
-                  <!-- <v-col cols="12"
-                    ><div class="blue-grey--text text-h4">
-                      Past Projects
-                    </div></v-col
-                  >
-                  <v-card
-                    v-for="(item, i) in pastPro"
-                    :key="i"
-                    :href="item.link"
-                    target="_blank"
-                    class="transparent elevation-0"
-                  >
-                    <div class="text-h5 black--text pa-4">
-                      {{ i }} ) {{ item.text }}
-                    </div>
-
-                    <v-divider class="mt-4"></v-divider>
-                  </v-card> -->
+                <v-col cols="10">
+                  <div class="black--text">{{ past_projects }}</div>
                 </v-col>
 
                 <v-col cols="2"
@@ -378,8 +343,49 @@
                     {{ material }}
                   </p></v-col
                 >
+                <v-col cols="4"
+                  ><v-btn color="blue-grey" @click="dialog1 = true"
+                    >Lock<v-icon>mdi-lock</v-icon></v-btn
+                  ></v-col
+                >
               </v-row></v-card
-            >            
+            >
+            <v-dialog
+              class="grey lighten-2"
+              v-model="dialog1"
+              max-width="500px"
+            >
+              <v-card light class="grey lighten-2">
+                <v-card-title>
+                  <span class="headline">Are you sure!!!</span>
+                </v-card-title>
+
+                <v-card-text color="grey lighten-2">
+                  <v-container grid-list-md class="grey lighten-2">
+                    <v-layout wrap>
+                      <v-flex xs12 sm12 md12>
+                        <p>
+                          Are you sure you want to lock this tender for this
+                          project. You would not be able to change this after
+                          this.
+                        </p>
+                      </v-flex>
+                    </v-layout>
+                  </v-container>
+                </v-card-text>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <!--<v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>-->
+                  <v-btn color="blue-grey" flat @click="dialog1 = false"
+                    >Yes, Lock it <v-icon>mdi-lock</v-icon></v-btn
+                  >
+                  <v-btn color="blue-grey" flat @click="dialog1 = false"
+                    >No, take me back
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-col>
         </v-row>
       </v-main>
@@ -395,7 +401,6 @@ export default {
 
       return {
         projects: response.projects,
-
       };
     } catch (err) {
       console.log(err);
@@ -403,12 +408,13 @@ export default {
   },
   data: () => ({
     name: "NA", //display
+    dialog1: false,
     prjStartDate: "NA", //display
     prjEndDate: "NA",
     tenderStartDate: "NA",
     expBudget: "NA", //display
     tenderEndDate: "NA", //display
-    location: "NA", 
+    location: "NA",
     details: "NA",
     link: "NA",
     project_id: "",
@@ -454,7 +460,7 @@ export default {
         align: "left",
         sortable: true,
         value: "name",
-      }, 
+      },
       { text: "Tender End Date", value: "tenderEndDate" },
       { text: "Budget", value: "expBudget" },
 
@@ -466,7 +472,7 @@ export default {
         align: "left",
         sortable: true,
         value: "Budget",
-      }, 
+      },
       { text: "Start Date", value: "timelineStart" },
       { text: "End Date", value: "timelineEnd" },
 
@@ -479,31 +485,40 @@ export default {
     },
     expItem(item) {
       this.name = this.projects[this.projects.indexOf(item)].name;
-      this.prjStartDate = this.projects[this.projects.indexOf(item)].prjStartDate;
+      this.prjStartDate = this.projects[
+        this.projects.indexOf(item)
+      ].prjStartDate;
       this.prjEndDate = this.projects[this.projects.indexOf(item)].prjEndDate;
-      this.tenderStartDate = this.projects[this.projects.indexOf(item)].tenderStartDate;
-      this.tenderEndDate = this.projects[this.projects.indexOf(item)].tenderEndDate;
+      this.tenderStartDate = this.projects[
+        this.projects.indexOf(item)
+      ].tenderStartDate;
+      this.tenderEndDate = this.projects[
+        this.projects.indexOf(item)
+      ].tenderEndDate;
       this.expBudget = this.projects[this.projects.indexOf(item)].expBudget;
       this.location = this.projects[this.projects.indexOf(item)].location;
       this.details = this.projects[this.projects.indexOf(item)].details;
       this.link = this.projects[this.projects.indexOf(item)].link;
       this.tenders = this.projects[this.projects.indexOf(item)].tenders;
-      
     },
-    async expItem1(item){
+    async expItem1(item) {
       this.project_id = this.tenders[this.tenders.indexOf(item)].project_id;
-      this.contractor_id = this.tenders[this.tenders.indexOf(item)].contractor_id;
+      this.contractor_id = this.tenders[
+        this.tenders.indexOf(item)
+      ].contractor_id;
       this.Budget = this.tenders[this.tenders.indexOf(item)].Budget;
-      this.timelineStart = this.tenders[this.tenders.indexOf(item)].timelineStart;
+      this.timelineStart = this.tenders[
+        this.tenders.indexOf(item)
+      ].timelineStart;
       this.timelineEnd = this.tenders[this.tenders.indexOf(item)].timelineEnd;
       this.material = this.tenders[this.tenders.indexOf(item)].material;
       this.approved = this.tenders[this.tenders.indexOf(item)].approved;
       this.tender_id = this.tenders[this.tenders.indexOf(item)]._id;
 
       let response = await this.$axios.$get(
-          `http://localhost:3000/api/users/${this.contractor_id}`,
-        );
-      if(response){
+        `http://localhost:3000/api/users/${this.contractor_id}`
+      );
+      if (response) {
         this.contractor_name = response.user.name;
         this.past_projects = response.user.past_projects;
         this.annual_report = response.user.annual_report;

@@ -83,11 +83,125 @@
           <v-col cols="4">
             <p class="text-center blue-grey text-h4">Projects</p>
             <v-container class="grey lighten-2">
+               <v-dialog
+                      light
+                      v-model="dialog"
+                      fullscreen
+                      hide-overlay
+                      transition="dialog-bottom-transition"
+                      scrollable
+                    >
+                      <v-card tile>
+                        <div>
+                          <v-toolbar
+                            dark
+                            extended
+                            extension-height="50"
+                            src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+                          >
+                            <v-btn icon dark @click="dialog = false">
+                              <v-icon x-large>mdi-close</v-icon>
+                            </v-btn>
+                            <v-toolbar-title class="text-h3"
+                              >Create New Project</v-toolbar-title
+                            >
+                            <v-spacer></v-spacer>
+                          </v-toolbar>
+                        </div>
+
+                       
+
+                        <v-card class="pa-5" light elevation="0">
+                          <div class="pa-2 mb-4 blue-grey text-h5 white--text">
+                            Project Details
+                          </div>
+                          <v-card class="transparent" flat>
+                            <v-container fluid>
+                              <v-row>
+                                  <v-col cols="2">
+                                  <v-subheader>Name</v-subheader>
+                                </v-col>
+                                <v-col cols="2">
+                                  <v-text-field
+                                    outlined
+                                    v-model="Budget"
+                                  ></v-text-field>
+                                </v-col>
+                                  <v-col cols="2">
+                                  <v-subheader>Project Start Date</v-subheader>
+                                </v-col>
+                                <v-col cols="2">
+                                  <v-text-field
+                                    outlined
+                                    v-model="Budget"
+                                  ></v-text-field>
+                                </v-col>
+                                  <v-col cols="2">
+                                  <v-subheader>Project End Date</v-subheader>
+                                </v-col>
+                                <v-col cols="2">
+                                  <v-text-field
+                                    outlined
+                                    v-model="Budget"
+                                  ></v-text-field>
+                                </v-col>
+                                  <v-col cols="2">
+                                  <v-subheader>Tender Start Date</v-subheader>
+                                </v-col>
+                                <v-col cols="2">
+                                  <v-text-field
+                                    outlined
+                                    v-model="Budget"
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="2">
+                                  <v-subheader>Tender End Date</v-subheader>
+                                </v-col>
+                                <v-col cols="2">
+                                  <v-text-field
+                                    outlined
+                                    v-model="Budget"
+                                  ></v-text-field>
+                                </v-col>
+
+                                
+
+                                <v-col cols="12">
+                                  <v-subheader>Location</v-subheader>
+                                  <v-textarea
+                                    outlined
+                                    v-model="material"
+                                    color="blue-grey"
+                                  >
+                                  </v-textarea>
+                                </v-col>
+                                 
+                                 <v-col cols="12">
+                                  <v-subheader>Attach Documents</v-subheader>
+                                  <v-file-input
+    multiple
+   
+
+  ></v-file-input>
+                                </v-col>
+                                <v-col cols="12">
+                                    <v-btn @click="dialog=!dialog" color="blue-grey" x-large>Create </v-btn>
+                                </v-col>
+
+                              </v-row>
+                            </v-container>
+                          </v-card>
+                        </v-card>
+
+                        <div style="flex: 1 1 auto"></div>
+                      </v-card>
+                    </v-dialog>
               <v-card class="grey lighten-2 rounded-ls" elevation="0">
                 <div>
+                  <v-btn color="blue-grey" @click="dialog=true">Create New Project <v-icon>mdi-plus</v-icon></v-btn>
                   <v-toolbar flat color="grey lighten-2">
                     <v-divider class="mx-2" inset vertical></v-divider>
-                    <v-spacer></v-spacer>
+                    
                     <v-text-field
                       light
                       color="blue-grey"
@@ -97,7 +211,7 @@
                       single-line
                       hide-details
                     ></v-text-field>
-                    <v-spacer></v-spacer>
+                    
                   </v-toolbar>
 
                   <v-container class="grey lighten-2">
@@ -676,13 +790,14 @@ export default {
     } catch (err) {}
   },
   data: () => ({
+    dialog: false,
     name: "NA", //display
     prjStartDate: "NA", //display
     prjEndDate: "NA",
     tenderStartDate: "NA",
     expBudget: "NA", //display
     tenderEndDate: "NA", //display
-    location: "NA", 
+    location: "NA",
     details: "NA",
     link: "NA",
     drawer: true,
@@ -702,7 +817,7 @@ export default {
         align: "left",
         sortable: true,
         value: "name",
-      }, 
+      },
       { text: "Tender End Date", value: "tenderEndDate" },
       { text: "Budget", value: "expBudget" },
 
@@ -715,10 +830,16 @@ export default {
     },
     expItem(item) {
       this.name = this.projects[this.projects.indexOf(item)].name;
-      this.prjStartDate = this.projects[this.projects.indexOf(item)].prjStartDate;
+      this.prjStartDate = this.projects[
+        this.projects.indexOf(item)
+      ].prjStartDate;
       this.prjEndDate = this.projects[this.projects.indexOf(item)].prjEndDate;
-      this.tenderStartDate = this.projects[this.projects.indexOf(item)].tenderStartDate;
-      this.tenderEndDate = this.projects[this.projects.indexOf(item)].tenderEndDate;
+      this.tenderStartDate = this.projects[
+        this.projects.indexOf(item)
+      ].tenderStartDate;
+      this.tenderEndDate = this.projects[
+        this.projects.indexOf(item)
+      ].tenderEndDate;
       this.expBudget = this.projects[this.projects.indexOf(item)].expBudget;
       this.location = this.projects[this.projects.indexOf(item)].location;
       this.details = this.projects[this.projects.indexOf(item)].details;
@@ -730,13 +851,13 @@ export default {
         if (cookie == null) {
           this.$router.push("/Login");
         }
-        let data = { 
+        let data = {
           cookie: cookie,
         };
         let verify_response = await this.$axios.$post(
           `http://localhost:3000/api/verify/govt`,
           data
-        ); 
+        );
         if (!verify_response.success) {
           this.$cookies.set("jwt", null);
           this.$router.push("/Login");
@@ -747,7 +868,7 @@ export default {
     },
   },
   beforeMount() {
- //   this.verify();
+    //   this.verify();
   },
 };
 </script>
