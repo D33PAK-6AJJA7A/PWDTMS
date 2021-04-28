@@ -106,8 +106,8 @@ router.put("/tenders/:id", async (req, res) => {
       {
         $set: {
             project_id : req.body.project_id,
-            contractor_id : req.body.contractor,
-            Budget : req.body.Budget,
+            contractor_id : req.body.contractor_id, 
+            Budget : req.body.Budget, 
             timelineStart : req.body.timelineStart,
             timelineEnd : req.body.timelineEnd,
             material : req.body.material,

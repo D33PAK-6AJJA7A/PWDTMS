@@ -302,7 +302,7 @@
                                 </v-col>
                                 
                                 <v-col cols="12">
-                                    <v-btn  color="blue-grey" x-large>Edit<v-icon>mdi-lock</v-icon></v-btn>
+                                    <v-btn  color="blue-grey" x-large @click= "updatetender">Edit<v-icon>mdi-lock</v-icon></v-btn>
                                 </v-col>
                                 
                               </v-row>                      
@@ -344,6 +344,7 @@ export default {
     timelineEnd: "",
     material: "",
     approved: "",
+    tender_id: "",
     projects_arr: [],
     tender_arr: [],
     drawer: true,
@@ -413,54 +414,37 @@ export default {
             this.tender_arr.push(response.user.my_projects[i]);
           }
         }
-        // console.log(this.projects_arr);
-        // console.log(this.tender_arr);
-        
-// contractor_id
-// :
-// "6076fe4a360b76533047367a"
-// Budget
-// :
-// "100 INR" 
-// timelineStart
-// :
-// "25 May"
-// timelineEnd
-// :
-// "25 June"
-// material
-// :
-// "Graphine"
-// approved
-// :
-// "0"
-        //this.tender1 = response.user.my_projects;
-
-      
-      // let response = await $axios.$get("http://localhost:3000/api/users/");
-      // let project1 = new Array();
-      // for(let i=0;i<response.projects.length;i++)
-      // {
-      //   if(response.projects.tenders[i].approved === 0)
-      //   {
-      //     project1.push(response.projects[i]);
-      //   }
-      // }
-      // console.log(project1);
-      // return {
-      //   projects: project1,
-      // };
     } catch (err) {
-
+      console.log(err);
     }
   },
+  async updatetender() {
+      try {
+        let data = { 
+          project_id : this.tender_arr[this.selectedRow].project_id,
+          contractor_id : this.tender_arr[this.selectedRow].contractor_id,
+          Budget : this.tender_arr[this.selectedRow].Budget, 
+          timelineStart : this.tender_arr[this.selectedRow].timelineStart,
+          timelineEnd : this.tender_arr[this.selectedRow].timelineEnd,
+          material : this.tender_arr[this.selectedRow].material,
+          approved: this.tender_arr[this.selectedRow].approved,
+        };
+        let response = await this.$axios.$put(
+          `http://localhost:3000/api/tenders/${this.tender_id}`,
+          data
+        ); 
+        
+      } catch (err) {
+        console.log(err);
+      }
+    },
     rowSelect(idx) {
       this.selectedRow = idx;
       this.expItem();
     },
     expItem() {
       this.selected = 1;
-    
+      this.tender_id = this.tender_arr[this.selectedRow]._id;
       this.project_id = this.tender_arr[this.selectedRow].project_id;
       this.name = this.projects_arr[this.selectedRow].name;
       this.prjStartDate = this.projects_arr[this.selectedRow].prjStartDate;

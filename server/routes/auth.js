@@ -98,7 +98,7 @@ router.post("/auth/login", async(req,res) => {
             });
         }
         //1 is being checked only for contractor, others dont need approval
-        else if (foundUser.confirmed == 1 && foundUser.role === "contractor") {
+        else if (foundUser.confirmed == false && foundUser.role === "contractor") {
             res.status(403).json({
                 success: false,
                 message: "Please wait for PWD to confirm your email"

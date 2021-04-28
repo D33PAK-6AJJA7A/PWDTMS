@@ -241,6 +241,46 @@
                 >
               </v-row></v-card
             >
+            <v-card class="grey lighten-2 rounded-ls" elevation="0">
+              <div>
+                <v-toolbar flat color="grey lighten-2">
+                  <v-toolbar-title class="text-h4 blue-grey--text darken-5"
+                    >Tenders</v-toolbar-title
+                  >
+                  <v-divider class="mx-2" inset vertical></v-divider>
+                  <v-spacer></v-spacer>
+                  <v-text-field
+                    light
+                    color="blue-grey"
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                  ></v-text-field>
+                  <v-spacer></v-spacer>
+                </v-toolbar>
+
+                <v-container class="grey lighten-2">
+                  <v-data-table
+                    light
+                    :headers="headers1"
+                    :items="tenders"
+                    :search="search"
+                    hide-actions
+                    class="grey lighten-2"
+                  >
+                    <template #item.edit="{ item }">
+                      <v-icon x-large color="blue" @click="expItem1(item)">
+                        mdi-account-box
+                      </v-icon>
+                      
+                    </template>
+                  </v-data-table>
+                </v-container>
+              </div>
+            </v-card>
+
             <p class="text-center blue-grey text-h4">View Applied Tenders</p>
             <v-card light elevation="0" class="grey lighten-2 ma-10">
               <v-row>
@@ -250,7 +290,7 @@
                   </div></v-col
                 >
                 <v-col cols="2"
-                  ><div class="text--black">{{ company1 }} BOB</div></v-col
+                  ><div class="text--black">{{ contractor_name }} </div></v-col
                 >
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
@@ -258,7 +298,7 @@
                   </div></v-col
                 >
                 <v-col cols="2"
-                  ><div class="text--black">{{ role1 }}12 cr</div></v-col
+                  ><div class="text--black">{{ Budget }}</div></v-col
                 >
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
@@ -266,7 +306,7 @@
                   </div>
                 </v-col>
                 <v-col cols="2"
-                  ><div class="black--text">{{ duration1 }} 12 March</div>
+                  ><div class="black--text">{{ timelineStart }} </div> 
                 </v-col>
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
@@ -274,10 +314,10 @@
                   </div></v-col
                 >
                 <v-col cols="2"
-                  ><div class="black--text">{{ stipend1 }} 14 March</div></v-col
+                  ><div class="black--text">{{ timelineEnd }} </div></v-col
                 >
                 <v-col cols="8"></v-col>
-                <v-col cols="6">
+                <!-- <v-col cols="6">
                   <v-col cols="12"
                     ><div class="blue-grey--text text-h4">
                       Proposal Documents
@@ -299,10 +339,16 @@
                     </v-btn>
                     <v-divider class="mt-4"></v-divider>
                   </v-card>
-                </v-col>
+                </v-col> -->
                 <v-divider class="mt-10 blue-grey" vertical></v-divider>
+                <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Past Projects :
+                  </div></v-col
+                >
                 <v-col cols="6">
-                  <v-col cols="12"
+                  <div class="black--text">{{ past_projects }} </div>
+                  <!-- <v-col cols="12"
                     ><div class="blue-grey--text text-h4">
                       Past Projects
                     </div></v-col
@@ -319,7 +365,7 @@
                     </div>
 
                     <v-divider class="mt-4"></v-divider>
-                  </v-card>
+                  </v-card> -->
                 </v-col>
 
                 <v-col cols="2"
@@ -329,207 +375,11 @@
                 >
                 <v-col cols="10"
                   ><p class="black--text">
-                    {{ startDate1 }}Rajiv Hari Om Bhatia (born 9 September
-                    1967),[5] known professionally as Akshay Kumar (pronounced
-                    [əkˈʂeː kʊˈmaːr]), is an India-born naturalised
-                    Canadian[1][2][3] actor, producer, martial artist and
-                    television personality who works in Bollywood, the
-                    commercial Hindi language film industry based chiefly in
-                    Mumbai, India. Over 29 years, Kumar has appeared in over 100
-                    films and has won several awards, including a National Film
-                    Award for Best Actor and two Filmfare Awards. Kumar is one
-                    of the most successful prolific actors of Hindi
-                    cinema.[6][7] Having starred in 113 films, 52 of which were
-                    commercially successful, he was the first Bollywood actor
-                    whose films' domestic net lifetime collections crossed ₹20
-                    billion (US$280 million) by 2013, and ₹30 billion (US$420
-                    million) by 2016.[8][9][10] Kumar began his career in 1991
-                    with Saugandh, but his first mainstream success came a year
-                    later with the action thriller Khiladi. The film established
-                    him as an action star in the 1990s and was the first of
-                    several films starring Kumar which would later become
-                    commonly known as the Khiladi film series, in addition to a
-                    string of other action films. Although his early tryst with
-                    romance in Yeh Dillagi (1994) was positively received, it
-                    was in the next decade that Kumar expanded his range of
-                    roles. He gained recognition for the romantic films Dhadkan
-                    (2000), Andaaz (2003) and Namastey London (2007), as well as
-                    drama films such as Waqt (2005) and Patiala House (2011).
-                    His comic performances in films such as Hera Pheri (2000),
-                    Mujhse Shaadi Karogi (2004), Bhool Bhulaiyaa (2007) and
-                    Singh Is Kinng (2008) met with acclaim. Kumar won Filmfare
-                    Awards for his negative role in Ajnabee (2001) and his comic
-                    performance in Garam Masala (2005). While his career had
-                    fluctuated commercially, his mainstream success soared in
-                    2007 with four consecutive box-office hits in India; it was
-                    consistent until a short period of professional setbacks
-                    between 2009 and 2011, after which he reinforced his status
-                    with several films, including Rowdy Rathore (2012) and
-                    Holiday (2014). Moreover, around this time the critical
-                    response to several of his films improved; after favourable
-                    reviews came his way for his work in Special 26 (2013), Baby
-                    and Airlift (2016), he won the National Film Award for Best
-                    Actor for his performance in the crime thriller Rustom
-                    (2016). He earned further notice for the social films
-                    Toilet: Ek Prem Katha (2017) and Pad Man (2018) and the war
-                    film Kesari (2019).
+                    {{ material }}
                   </p></v-col
                 >
               </v-row></v-card
-            >
-
-            <v-card class="grey lighten-2 rounded-ls" elevation="0">
-              <div>
-                <v-toolbar flat color="grey lighten-2">
-                  <v-toolbar-title class="text-h4 blue-grey--text darken-5"
-                    >Tenders</v-toolbar-title
-                  >
-                  <v-divider class="mx-2" inset vertical></v-divider>
-                  <v-spacer></v-spacer>
-                  <v-text-field
-                    light
-                    color="blue-grey"
-                    v-model="search"
-                    append-icon="mdi-magnify"
-                    label="Search"
-                    single-line
-                    hide-details
-                  ></v-text-field>
-                  <v-spacer></v-spacer>
-
-                  <v-dialog light v-model="dialog" max-width="500px">
-                    <v-btn
-                      slot="activator"
-                      color="blue-grey"
-                      dark
-                      class="mb-2"
-                      @click="dialog = true"
-                      >New Item</v-btn
-                    >
-                    <v-card class="grey lighten-2">
-                      <v-card-title>
-                        <span class="headline">Edits</span>
-                      </v-card-title>
-
-                      <v-card-text color="grey lighten-2">
-                        <v-container grid-list-md class="grey lighten-2">
-                          <v-layout wrap>
-                            <v-flex xs12 sm12 md12>
-                              <v-text-field
-                                v-model="company"
-                                label="company"
-                                color="black"
-                              ></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm12 md12>
-                              <v-text-field
-                                v-model="role"
-                                label="role"
-                                color="black"
-                              ></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm12 md12>
-                              <v-text-field
-                                v-model="stipend"
-                                label="stipend"
-                                color="black"
-                              ></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm12 md12>
-                              <v-text-field
-                                v-model="duration"
-                                label="Duration"
-                                color="black"
-                              ></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm12 md12>
-                              <v-text-field
-                                v-model="startDate"
-                                label="Start date"
-                                color="black"
-                              ></v-text-field>
-                            </v-flex>
-
-                            <v-flex xs12 sm12 md12>
-                              <v-text-field
-                                v-model="applyBy"
-                                label="Apply By"
-                                color="black"
-                              ></v-text-field>
-                            </v-flex>
-
-                            <v-flex xs12 sm12 md12>
-                              <v-textarea
-                                v-model="learnMore"
-                                label="Learn More"
-                                color="black"
-                              ></v-textarea>
-                            </v-flex>
-
-                            <v-flex xs12 sm12 md12>
-                              <v-textarea
-                                v-model="updates"
-                                label="Updates"
-                                color="black"
-                              ></v-textarea>
-                            </v-flex>
-                          </v-layout>
-                        </v-container>
-                      </v-card-text>
-
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-
-                        <v-btn
-                          color="blue-grey"
-                          flat
-                          @click.native="onAddinterncard"
-                          >Save</v-btn
-                        >
-                      </v-card-actions>
-                    </v-card>
-                  </v-dialog>
-                </v-toolbar>
-
-                <v-container class="grey lighten-2">
-                  <v-data-table
-                    light
-                    :headers="headers"
-                    :items="interncards"
-                    :search="search"
-                    hide-actions
-                    class="grey lighten-2"
-                  >
-                    <template #item.edit="{ item }">
-                      <v-icon x-large color="blue" @click="expItem(item)">
-                        mdi-account-box
-                      </v-icon>
-                      <v-icon
-                        x-large
-                        class="mr-2"
-                        color="blue-grey"
-                        @click="editItem(item)"
-                      >
-                        mdi-pencil
-                      </v-icon>
-
-                      <v-icon
-                        x-large
-                        color="red"
-                        @click="
-                          deleteItem(
-                            interncards[interncards.indexOf(item)]._id,
-                            item
-                          )
-                        "
-                      >
-                        mdi-delete
-                      </v-icon>
-                    </template>
-                  </v-data-table>
-                </v-container>
-              </div>
-            </v-card>
+            >            
           </v-col>
         </v-row>
       </v-main>
@@ -545,8 +395,11 @@ export default {
 
       return {
         projects: response.projects,
+
       };
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   },
   data: () => ({
     name: "NA", //display
@@ -558,6 +411,18 @@ export default {
     location: "NA", 
     details: "NA",
     link: "NA",
+    project_id: "",
+    contractor_id: "",
+    Budget: "",
+    timelineStart: "",
+    timelineEnd: "",
+    material: "",
+    approved: "",
+    tender_id: "",
+    tenders: [],
+    contractor_name: "",
+    past_projects: "",
+    annual_report: "",
     drawer: true,
     propDocs: [{ link: "www.google.com" }, { link: "www.facebook.com" }],
     pastPro: [{ text: "Park" }, { text: "Ground" }, { text: "Building" }],
@@ -595,6 +460,18 @@ export default {
 
       { text: "Actions", value: "edit", sortable: false },
     ],
+    headers1: [
+      {
+        text: "Proposed Budget",
+        align: "left",
+        sortable: true,
+        value: "Budget",
+      }, 
+      { text: "Start Date", value: "timelineStart" },
+      { text: "End Date", value: "timelineEnd" },
+
+      { text: "Actions", value: "edit", sortable: false },
+    ],
   }),
   methods: {
     logoutfunc() {
@@ -610,6 +487,27 @@ export default {
       this.location = this.projects[this.projects.indexOf(item)].location;
       this.details = this.projects[this.projects.indexOf(item)].details;
       this.link = this.projects[this.projects.indexOf(item)].link;
+      this.tenders = this.projects[this.projects.indexOf(item)].tenders;
+      
+    },
+    async expItem1(item){
+      this.project_id = this.tenders[this.tenders.indexOf(item)].project_id;
+      this.contractor_id = this.tenders[this.tenders.indexOf(item)].contractor_id;
+      this.Budget = this.tenders[this.tenders.indexOf(item)].Budget;
+      this.timelineStart = this.tenders[this.tenders.indexOf(item)].timelineStart;
+      this.timelineEnd = this.tenders[this.tenders.indexOf(item)].timelineEnd;
+      this.material = this.tenders[this.tenders.indexOf(item)].material;
+      this.approved = this.tenders[this.tenders.indexOf(item)].approved;
+      this.tender_id = this.tenders[this.tenders.indexOf(item)]._id;
+
+      let response = await this.$axios.$get(
+          `http://localhost:3000/api/users/${this.contractor_id}`,
+        );
+      if(response){
+        this.contractor_name = response.user.name;
+        this.past_projects = response.user.past_projects;
+        this.annual_report = response.user.annual_report;
+      }
     },
     async verify() {
       try {
