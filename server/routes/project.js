@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Project = require("../models/project");
-
+const Tender = require("../models/tender");
+let User = require("../models/user");
 // POST request - create a new card
 router.post("/projects", async (req, res) => {
   try {
@@ -67,7 +68,7 @@ router.get("/projects/:id", async (req, res) => {
 });
 
 // PUT request - update a single interncard
-router.put("/projects/:id", async (req, res) => {
+router.put("/projects/:id", async (req, res) => { 
   try {
     let project = await Project.findOneAndUpdate(
       { _id: req.params.id },
@@ -82,7 +83,6 @@ router.put("/projects/:id", async (req, res) => {
             location : req.body.location,
             details : req.body.details,
             link : req.body.link,
-            approved : req.body.approved,
             tenders : req.body.tenders,
             status : req.body.status,
             final_tender : req.body.final_tender,
@@ -106,8 +106,23 @@ router.put("/projects/:id", async (req, res) => {
 // DELETE request - delete a single interncard
 router.delete("/projects/:id", async (req, res) => {
   try {
+    let project = await Project.findOne({_id: req.params.id });
+    for(let i =0; i<project.tenders.length; i++){
+        let id = project.tenders[i]._id;
+        let user_id = project.tenders[i].contractor_id;
+        let user=  await User.findOne({_id: user_id});
+        let arr = user.my_projects;
+        let idd = arr.indexOf(project.tenders[i]);
+        arr.splice(idd,1);
+        let userr = await User.findOneAndUpdate({_id:user_id},{
+          $set: {
+            my_projects: arr,
+          },
+        },
+        { upsert: true } );
+        let deleteTender = await Tender.findOneAndDelete({_id: id});
+    }
     let deleteProject = await Project.findOneAndDelete({ _id: req.params.id });
-
     if (deleteProject) {
       res.json({
         status: true,

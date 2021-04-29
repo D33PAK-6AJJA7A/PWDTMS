@@ -84,10 +84,17 @@
         </div>
 
         <v-row>
-          <v-col cols="5">
+          <v-col :cols=maximise>
+             <p class="text-center blue-grey text-h4">Applied Project</p>
+             
             <v-container class="grey lighten-2">
-              <v-card class="grey lighten-2 rounded-ls" elevation="0">
+              <v-card class="grey lighten-2 pa-4 rounded-ls" elevation="0">
+                
+            
                 <div>
+                  <v-btn v-if="maximise==12" color='blue-grey' @click="maximise=5"> Minimise</v-btn>
+                   <v-btn v-if="maximise==5" color='blue-grey' @click="maximise=12"> Maximise</v-btn>
+           
                   <div>
                     <v-text-field
                       light
@@ -172,7 +179,7 @@
           </v-col>
           <v-divider vertical class="blue-grey mt-10 mb-10"></v-divider>
 
-          <v-col cols="7">
+          <v-col v-if="maximise!=12":cols=12-maximise>
             <p class="text-center blue-grey text-h4">View Project</p>
             <v-card light elevation="0" class="grey lighten-2 ma-10">
               <v-row>
@@ -356,6 +363,7 @@
 <script>
 export default {
   data: () => ({
+    maximise: 12,
     selectedRow: null,
     selected: -1,
     name: "NA", //display
@@ -464,6 +472,7 @@ export default {
       }
     },
     rowSelect(idx) {
+      this.maximise = 5;
       this.selectedRow = idx;
       this.expItem();
     },

@@ -91,9 +91,8 @@
               flat
             >
               <p class="pa-5 green--text text-h5">News and Updates</p>
-              <ul v-for="(item, i) in news" :key="i" class="pl-5 pr-5">
-                <li>
-                  <v-card class="green mt-5 mb-5" height="2px"></v-card>
+              <div v-for="(item, i) in news" :key="i" class="pl-5 pr-5">
+                <v-card class="transparent" elevation="0" light> 
                   <v-card
                     elevation="0"
                     color="transparent"
@@ -101,8 +100,10 @@
                     class="black--text pl-5"
                     ><div>{{ item.title }}</div></v-card
                   >
-                </li>
-              </ul>
+                </v-card>
+                <v-card class="blue-grey mt-5 mb-5" height="2px"></v-card>
+                  
+              </div>
             </v-card>
           </v-col>
 

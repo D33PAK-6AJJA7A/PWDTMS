@@ -94,8 +94,8 @@
               min-height="50"
               flat
             >
-              <ul>
-                <li v-for="(item, i) in news" :key="i" class="pl-5 pr-5">
+              <div v-for="(item, i) in news" :key="i" class="pl-5 pr-5">
+                <v-card class="transparent" elevation="0" light> 
                   <v-card
                     elevation="0"
                     color="transparent"
@@ -103,9 +103,10 @@
                     class="black--text pl-5"
                     ><div>{{ item.title }}</div></v-card
                   >
-                  <v-card class="blue-grey mt-5 mb-5" height="2px"></v-card>
-                </li>
-              </ul>
+                </v-card>
+                <v-card class="blue-grey mt-5 mb-5" height="2px"></v-card>
+                  
+              </div>
             </v-card>
           </v-col>
 

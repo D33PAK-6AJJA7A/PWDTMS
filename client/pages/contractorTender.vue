@@ -3,9 +3,9 @@
     <v-app>
       <v-card
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
-        align="right"
+        align="right" 
         height="50px"
-        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click ="logoutfunc">LogOut</div></v-card
+        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click = "logoutfunc">LogOut</div></v-card
       >
       <v-navigation-drawer
         app
@@ -80,10 +80,13 @@
           Projects
         </p>
         <v-row>
-          <v-col cols="4">
+          <v-col :cols=maximise>
             <p class="text-center blue-grey text-h4">Projects</p>
             <v-container class="grey lighten-2">
-              <v-card class="grey lighten-2 rounded-ls" elevation="0">
+              <v-card class="grey lighten-2 pa-4 rounded-ls" elevation="0">
+                   <v-btn v-if="maximise==12" color='blue-grey' @click="maximise=5"> Minimise</v-btn>
+                   <v-btn v-if="maximise==5" color='blue-grey' @click="maximise=12"> Maximise</v-btn>
+                
                 <div>
                   <v-toolbar flat color="grey lighten-2">
                     <v-divider class="mx-2" inset vertical></v-divider>
@@ -101,7 +104,7 @@
                   </v-toolbar>
 
                   <v-container class="grey lighten-2">
-                    <!-- <v-data-table
+                     <!-- <v-data-table
                       light
                       :headers="headers"
                       :items="projects"
@@ -110,13 +113,13 @@
                       class="grey lighten-2"
                     >
                       <template #item.edit="{ item }">
-                        <v-icon x-large color="blue" @click="expItem(item)">
+                        <v-icon x-large color="blue" @click= "expItem(item)">
                           mdi-account-box
                         </v-icon>
                       </template>
-                    </v-data-table> -->
+                    </v-data-table>  -->
 
-                  <v-data-table
+                   <v-data-table
                       light
 
       :headers="headers"
@@ -127,7 +130,7 @@
     >
       <template v-slot:body="{ items }">
         <tbody>
-          <tr :class="key === selectedRow ? 'custom-highlight-row' : ''" @click="rowSelect(key)" v-for="(item, key) in items" :key="item.name">
+          <tr :class="key === selectedRow ? 'custom-highlight-row' : ''" @click= "rowSelect(key)" v-for="(item, key) in items" :key="item.name">
             <td>{{ item.name }}</td>
             <td>{{ item.tenderEndDate }}</td>
             <td>{{ item.expBudget }}</td>
@@ -135,14 +138,14 @@
           </tr>
         </tbody>
       </template>
-    </v-data-table>
+    </v-data-table> 
                   </v-container>
                 </div>
               </v-card>
             </v-container>
           </v-col>
           <v-divider class="mt-10 blue-grey" vertical></v-divider>
-          <v-col cols="8">
+          <v-col v-if="maximise!=12" :cols="12-maximise">
             <p class="text-center blue-grey text-h4">View Project</p>
             <v-card light elevation="0" class="grey lighten-2 ma-10">
               <v-row>
@@ -493,8 +496,9 @@ export default {
       };
     } catch (err) {}
   },
-  data: () => ({
-     selectedRow: null,
+  data: ()=>({
+    selectedRow: -1,
+    maximise: 12,
     selected: -1,
     name: "NA", //display
     prjStartDate: "NA", //display
@@ -534,29 +538,7 @@ export default {
     notifications: false,
     sound: true,
     widgets: false,
-    items: [
-      {
-        title: "Click Me",
-      },
-      {
-        title: "Click Me",
-      },
-      {
-        title: "Click Me",
-      },
-      {
-        title: "Click Me 2",
-      },
-    ],
-    select: [
-      { text: "State 1" },
-      { text: "State 2" },
-      { text: "State 3" },
-      { text: "State 4" },
-      { text: "State 5" },
-      { text: "State 6" },
-      { text: "State 7" },
-    ],
+    
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/contractorDashboard" },
       {
@@ -582,9 +564,13 @@ export default {
       },
       { text: "Tender End Date", value: "tenderEndDate" },
       { text: "Budget", value: "expBudget" },
+      
     ],
   }),
   methods: {
+    logoutfunc() {
+      this.$router.push("/Logout");
+    },
     async confirmTender() {
       try {
         let data = {
@@ -594,7 +580,7 @@ export default {
           timelineStart: this.timelineStart,
           timelineEnd: this.timelineEnd,
           material: this.material,
-          approved: "0",
+          approved: 0,
         }
         console.log(data);
       let response = await this.$axios.$post(`http://localhost:3000/api/tenders/`,data);
@@ -609,8 +595,7 @@ export default {
       }
     }catch (err) {
         console.log(err);
-         this.success = false;
-
+        this.success = false;
       }
     },
     async getUser() {
@@ -652,28 +637,33 @@ export default {
       }
     },
     rowSelect(idx) {
-      console.dir(idx)
+      //console.dir(idx)
+      this.maximise=5;
       this.selectedRow = idx;
-      this.expItem();
+      this.expItem(this.projects[this.selectedRow]);
     },
-    expItem() {
+    expItem(item) {
       this.selected = 1;
-      this.project_id = this.projects[this.selectedRow]._id;
-      this.name = this.projects[this.selectedRow].name;
+      this.project_id = this.projects[this.projects.indexOf(item)]._id;
+      this.name = this.projects[this.projects.indexOf(item)].name;
+      console.log(this.name);
       this.prjStartDate = this.projects[
-       this.selectedRow
+       this.projects.indexOf(item)
       ].prjStartDate;
-      this.prjEndDate = this.projects[this.selectedRow].prjEndDate;
-      this.tenderStartDate = this.projects[
-        this.selectedRow
-      ].tenderStartDate;
+      console.log(this.prjStartDate);
+      this.prjEndDate = this.projects[this.projects.indexOf(item)].prjEndDate;
+      console.log(this.prjEndDate);
+      this.tenderStartDate = this.projects[this.projects.indexOf(item)].tenderStartDate;
+      console.log(this.tenderStartDate);
       this.tenderEndDate = this.projects[
-        this.selectedRow
+        this.projects.indexOf(item)
       ].tenderEndDate;
-      this.expBudget = this.projects[this.selectedRow].expBudget;
-      this.location = this.projects[this.selectedRow].location;
-      this.details = this.projects[this.selectedRow].details;
-      this.link = this.projects[this.selectedRow].link;
+      console.log(this.tenderEndDate);
+      this.expBudget = this.projects[this.projects.indexOf(item)].expBudget;
+      console.log(this.expBudget);
+      this.location = this.projects[this.projects.indexOf(item)].location;
+      this.details = this.projects[this.projects.indexOf(item)].details;
+      this.link = this.projects[this.projects.indexOf(item)].link;
     },
     async verify() {
       try {
@@ -698,7 +688,7 @@ export default {
     },
   },
   beforeMount() {
-    this.verify();
+    //this.verify();
     this.getUser();
   },
 };

@@ -99,8 +99,9 @@ router.get("/tenders/:id", async (req, res) => {
 });
 
 // PUT request - update a single tender
-router.put("/tenders/:id", async (req, res) => {
+router.put("/tenders/:id", async (req, res) => { 
   try {
+    let tender1 = await Tender.findOne({_id: req.params.id });
     let tender = await Tender.findOneAndUpdate(
       { _id: req.params.id },
       {
@@ -116,11 +117,29 @@ router.put("/tenders/:id", async (req, res) => {
       },
       { upsert: true }
     );
-    let project = await Project.findOneAndUpdate(
+    let project = await Project.findOne(
+      { _id: req.body.project_id });
+    let arr = project.tenders;
+    let idd = arr.indexOf(tender1);
+    arr.splice(idd,1);
+    let project2 = await Project.findOneAndUpdate(
       { _id: req.body.project_id },
       {
         $set: {
-            tenders :  tenders.append(tender)
+            tenders :  arr
+        },
+      },
+      { upsert: true }
+    );
+    let user = await User.findOne({_id : req.body.contractor_id});
+    let arr2 = user.my_projects;
+    let idd2 = arr.indexOf(tender1);
+    arr2.splice(idd2,1);
+    let user2 = await User.findOneAndUpdate(
+      { _id: req.body.contractor_id },
+      {
+        $set: {
+            my_projects :  arr2
         },
       },
       { upsert: true }
@@ -136,6 +155,7 @@ router.put("/tenders/:id", async (req, res) => {
     });
   }
 });
+
 
 // PUT request - update a single tender
 

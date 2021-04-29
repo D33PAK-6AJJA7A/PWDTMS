@@ -82,10 +82,15 @@
           View Project
         </p>
         <v-row>
-          <v-col cols="4">
+          <v-col :cols=maximise>
             <p class="text-center blue-grey text-h4">Projects</p>
-            <v-container class="grey lighten-2">
-              <v-card class="grey lighten-2 rounded-ls" elevation="0">
+            <v-container class="grey lighten-2"></v-container>
+
+
+              <v-card class="grey lighten-2 pa-4 rounded-ls" elevation="0">
+                 <v-btn v-if="maximise==12" color='blue-grey' @click="maximise=4"> Minimise</v-btn>
+                   <v-btn v-if="maximise==4" color='blue-grey' @click="maximise=12"> Maximise</v-btn>
+             
                 <div>
                   <v-toolbar flat color="grey lighten-2">
                     <v-text-field
@@ -94,7 +99,7 @@
                       v-model="search"
                       append-icon="mdi-magnify"
                       label="Search"
-                      single-line
+                      single-line 
                       hide-details
                     ></v-text-field>
                   </v-toolbar>
@@ -169,15 +174,15 @@
           </v-col>
 
           <v-divider class="mt-10 blue-grey" vertical></v-divider>
-          <v-col cols="8">
+          <v-col v-if="maximise!=12" :cols=12-maximise>
             <p class="text-center blue-grey text-h4">View Project</p>
             <v-card light elevation="0" class="grey lighten-2 ma-10">
               <v-row>
                 <v-col cols="4"
-                  ><v-btn color="success" x-large>Open Project</v-btn></v-col
+                  ><v-btn color="success" x-large @click= "openProject">Open Project</v-btn></v-col
                 >
                 <v-col cols="4"
-                  ><v-btn color="red" x-large>Close Project</v-btn></v-col
+                  ><v-btn color="red" x-large @click= "closeProject">Close Project</v-btn></v-col
                 >
                 <v-col cols="4"></v-col>
                 <v-col cols="2"
@@ -340,36 +345,39 @@
                       Contracter :
                     </div></v-col
                   >
-                  <v-col cols="2"
+                  <v-col cols="4"
                     ><div class="text--black">{{ contractor_name }}</div></v-col
                   >
+                   
                   <v-col cols="2"
                     ><div class="blue-grey--text text-subtitle-1">
                       Budget :
                     </div></v-col
                   >
-                  <v-col cols="2"
+                  <v-col cols="4"
                     ><div class="text--black">{{ Budget }}</div></v-col
                   >
+                  
                   <v-col cols="2"
                     ><div class="blue-grey--text text-subtitle-1">
                       TimeLine Start:
                     </div>
                   </v-col>
-                  <v-col cols="2"
+                  <v-col cols="4"
                     ><div class="black--text">{{ timelineStart }}</div>
                   </v-col>
+                   
                   <v-col cols="2"
                     ><div class="blue-grey--text text-subtitle-1">
                       TimeLine End:
                     </div></v-col
                   >
-                  <v-col cols="2"
+                  <v-col cols="4"
                     ><div class="black--text">{{ timelineEnd }}</div></v-col
                   >
-                  <v-col cols="8"></v-col>
+                  
 
-                  <v-divider class="mt-10 blue-grey" vertical></v-divider>
+                 
                   <v-col cols="2"
                     ><div class="blue-grey--text text-subtitle-1">
                       Past Projects :
@@ -424,7 +432,7 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <!--<v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>-->
-                  <v-btn color="blue-grey" flat @click="dialog1 = false"
+                  <v-btn color="blue-grey" flat @click= "tenderLocked(); dialog1 = false"
                     >Yes, Lock it <v-icon>mdi-lock</v-icon></v-btn
                   >
                   <v-btn color="blue-grey" flat @click="dialog1 = false"
@@ -463,7 +471,7 @@ export default {
   data: () => ({
     selectedRow: -1,
     selectedRow1: -1,
-
+    maximise: 12,
     name: "NA", //display
     dialog1: false,
     prjStartDate: "NA", //display
@@ -480,7 +488,7 @@ export default {
     timelineStart: "",
     timelineEnd: "",
     material: "",
-    approved: "",
+    approved: 0,
     tender_id: "",
     tenders: [],
     contractor_name: "",
@@ -538,11 +546,94 @@ export default {
       this.$router.push("/Logout");
     },
     rowSelect(idx) {
+      this.maximise=4;
       this.selectedRow = idx;
       this.expItem(this.projects[this.selectedRow]);
     },
-
+    async closeProject(){
+      try{
+        let data = {
+            name : this.name,
+            prjStartDate : this.prjStartDate,
+            prjEndDate : this.prjEndDate,
+            tenderStartDate : this.tenderStartDate,
+            tenderEndDate : this.tenderEndDate,
+            expBudget : this.expBudget,
+            location : this.location,
+            details : this.details,
+            link : this.link,
+            tenders : this.tenders,
+            status : 1,
+        };
+        let response = this.$axios.$put(
+          `http://localhost:3000/api/projects/${this.project_id}`,
+          data
+        );
+      }catch(err){
+        console.log(err);
+      }
+    },
+    async openProject(){
+      try{
+        let data = {
+            name : this.name,
+            prjStartDate : this.prjStartDate,
+            prjEndDate : this.prjEndDate,
+            tenderStartDate : this.tenderStartDate,
+            tenderEndDate : this.tenderEndDate,
+            expBudget : this.expBudget,
+            location : this.location,
+            details : this.details,
+            link : this.link,
+            tenders : this.tenders,
+            status : 0,
+        };
+        let response = this.$axios.$put(
+          `http://localhost:3000/api/projects/${this.project_id}`,
+          data
+        );
+      }catch(err){
+        console.log(err);
+      }
+    },
+    async tenderLocked(){
+      try{
+        let data = {
+            name : this.name,
+            prjStartDate : this.prjStartDate,
+            prjEndDate : this.prjEndDate,
+            tenderStartDate : this.tenderStartDate,
+            tenderEndDate : this.tenderEndDate,
+            expBudget : this.expBudget,
+            location : this.location,
+            details : this.details,
+            link : this.link,
+            tenders : this.tenders,
+            status : 2,
+        };
+        let data1 = {
+            project_id : this.project_id,
+            contractor_id : this.contractor_id, 
+            Budget : this.Budget, 
+            timelineStart : this.timelineStart,
+            timelineEnd : this.timelineEnd,
+            material : this.material,
+            approved: 1,
+        }
+        let response = this.$axios.$put(
+          `http://localhost:3000/api/projects/${this.project_id}`,
+          data
+        );
+        let response1 = this.$axios.$put(
+          `http://localhost:3000/api/tenders/${this.tender_id}`,
+          data1
+        );
+      }catch(err){
+        console.log(err);
+      }
+    },
     expItem(item) {
+      this.project_id = this.projects[this.projects.indexOf(item)]._id; 
       this.name = this.projects[this.projects.indexOf(item)].name;
       this.prjStartDate = this.projects[
         this.projects.indexOf(item)

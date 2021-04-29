@@ -81,10 +81,13 @@
         </div>
         <v-card class="blue-grey" width="100%" height="10px"></v-card>
         <v-row>
-          <v-col cols="5">
+          <v-col :cols=maximise>
             <v-container class="grey lighten-2">
               <v-card class="grey lighten-2 rounded-ls" elevation="0">
                 <div>
+                     <v-btn v-if="maximise==12" color='blue-grey' @click="maximise=5"> Minimise</v-btn>
+                   <v-btn v-if="maximise==5" color='blue-grey' @click="maximise=12"> Maximise</v-btn>
+                
                   <div>
                     <v-text-field
                       light
@@ -98,81 +101,51 @@
                   </div>
                   <v-spacer></v-spacer>
 
-                  <!-- <v-dialog v-model="dialog" max-width="500px">
-                      <v-btn
-                        slot="activator"
-                        color="blue-grey"
-                        dark
-                        class="mb-2"
-                        @click="dialog = true"
-                        >New Item
-                        <v-icon class="mr-2"> mdi-pencil-plus </v-icon></v-btn
-                      >
-                      <v-card class="grey darken-3">
-                        <v-card-title>
-                          <span class="headline">Edits</span>
-                        </v-card-title>
-
-                        <v-card-text color="grey darken-3">
-                          <v-container grid-list-md class="grey darken-2">
-                            <v-layout wrap>
-                              <v-flex xs12 sm12 md12>
-                                <v-text-field
-                                  v-model="title"
-                                  label="Title"
-                                  class="grey darken-2"
-                                  color="black"
-                                ></v-text-field>
-                              </v-flex>
-                              <v-flex xs12 sm12 md12>
-                                <v-text-field
-                                  v-model="email"
-                                  label="Email"
-                                  color="black"
-                                ></v-text-field>
-                              </v-flex>
-                            </v-layout>
-                          </v-container>
-                        </v-card-text>
-
-                        <v-card-actions>
-                          <v-spacer></v-spacer>
-                          <v-btn
-                            color="blue-grey "
-                            flat
-                            @click.native="onAddAnnouncement"
-                            >Save</v-btn
-                          >
-                        </v-card-actions>
-                      </v-card>
-                    </v-dialog> -->
-
+                 
                   <v-container class="grey lighten-2">
-                    <v-data-table
+                 
+
+                     <v-data-table
                       light
                       :headers="headers"
                       :items="users"
                       :search="search"
-                      hide-actions
-                      class="grey lighten-2"
+                      item-key="name"
+                      class="elevation-1"
                     >
-                      <template #item.edit="{ item }">
-                        <v-icon large color="blue" @click="expItem(item)">
-                          mdi-account-box
-                        </v-icon>
-                        
+                      <template v-slot:body="{ items }">
+                        <tbody>
+                          <tr
+                            :class="
+                              key === selectedRow ? 'custom-highlight-row' : ''
+                            "
+                            @click="rowSelect(key)"
+                            v-for="(item, key) in items"
+                            :key="users.indexOf(item)"
+                          >
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.email }}</td>
+                            <td>
 
+<v-icon large color="green" @click= "acceptContractor()">
+                           mdi-check-bold
+                        </v-icon>
                         <v-icon
                           large
                           color="red"
                           @click="
-                            deleteItem(users[users.indexOf(item)]._id, item)
-                          "
+                            deleteItem(users[users.indexOf(item)]._id, item)"
                         >
                           mdi-delete
                         </v-icon>
+
+                            </td>
+                            
+                          </tr>
+                        </tbody>
                       </template>
-                    </v-data-table>
+                    </v-data-table> 
+                    
                   </v-container>
                 </div>
               </v-card>
@@ -180,7 +153,7 @@
           </v-col>
           <v-divider vertical class="blue-grey mt-10 mb-10"></v-divider>
 
-          <v-col cols="7">
+          <v-col v-if="maximise!=12" :cols=12-maximise>
             <v-card class="grey lighten-2 mt-5" light elevation="0">
               <v-card class="transparent" flat>
                 <v-container fluid>
@@ -204,7 +177,7 @@
                     <v-col cols="2">
                       <v-subheader>Name</v-subheader>
                     </v-col>
-                    <v-col cols="2">
+                    <v-col cols="4">
                       <v-text-field
                         outlined
                         v-model="name"
@@ -215,7 +188,7 @@
                     <v-col cols="2">
                       <v-subheader>Email</v-subheader>
                     </v-col>
-                    <v-col cols="2">
+                    <v-col cols="4">
                       <v-text-field
                         disabled
                         outlined
@@ -226,7 +199,7 @@
                     <v-col cols="2">
                       <v-subheader>Company</v-subheader>
                     </v-col>
-                    <v-col cols="2">
+                    <v-col cols="4">
                       <v-text-field
                         outlined
                         disabled
@@ -356,6 +329,13 @@
   </div>
 </template>
 
+<style>
+.custom-highlight-row {
+  background-color: rgb(249, 255, 192);
+}
+</style>
+
+
 <script>
 export default {
   async asyncData({ $axios }) {
@@ -374,6 +354,7 @@ export default {
     } catch (err) {}
   },
   data: () => ({
+    maximise: 12,
     profile_url: "",
     annual_report_url: "",
     id: "",
@@ -390,6 +371,7 @@ export default {
     password: "",
     role: "",
     confirmed: 0,
+    selectedRow: -1,
     drawer: true,
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/pwdDashboard" },
@@ -431,6 +413,11 @@ export default {
     logoutfunc() {
       this.$router.push("/Logout");
     },
+     rowSelect(idx) {
+       this.maximise = 5;
+      this.selectedRow = idx;
+      this.expItem(this.users[this.selectedRow]);
+    },
     expItem(item) {
       try {
         // let id = this.users[this.users.indexOf(item)]._id;
@@ -438,6 +425,7 @@ export default {
         // let response = await this.$axios.$post(
         //   `http://localhost:3000/api/users/${id}`
         // );
+        //this.selectedRow
         this.id = this.users[this.users.indexOf(item)]._id; 
         this.name = this.users[this.users.indexOf(item)].name;
         this.email = this.users[this.users.indexOf(item)].email;
@@ -456,6 +444,44 @@ export default {
         this.annual_report_url = this.users[this.users.indexOf(item)].annual_report;
         console.log(this.annual_report_url);
       } catch (err) {
+        console.log(err);
+      }
+    },
+    async acceptContractor(){
+      try{
+        let data = {
+          company:  this.company,
+          industry: this.industry,
+          past_projects: this.past_projects,
+          contact_info: this.contact_info,
+          branch_addr_line: this.branch_addr_line,
+          city: this.city,
+          state: this.state,
+          country: this.country,
+          role: this.role,
+          confirmed: 2,
+        };
+        let response = this.$axios.$put(
+          `http://localhost:3000/api/users/${this.id}`,
+          data
+        );
+         if(response){
+           this.users.splice(this.selectedRow,1);
+           this.company = "NA";
+          this.industry = "NA";
+          this.past_projects = "NA";
+          this.contact_info = "NA";
+          this.branch_addr_line = "NA";
+          this.city = "NA";
+          this.state = "NA";
+          this.country = "NA";
+          this.role =  "NA";
+          this.name = "NA";
+          this.email = "NA";
+          this.profile_url = "";
+          this.annual_report_url = "";
+         };
+      }catch(err){
         console.log(err);
       }
     },

@@ -7,8 +7,8 @@ const TenderSchema = new Schema({
     Budget: String,
     timelineStart: String,
     timelineEnd: String,
-    material: String,
-    approved: String, //0 - applied , 1 - pwd approved, 2 - govt approved, -1 - rejected
+    material: String, 
+    approved: Number, //0 - applied , 1 - pwd approved, 2 - govt approved, -1 - rejected
 });
 
 module.exports = mongoose.model("Tender", TenderSchema);
