@@ -112,6 +112,7 @@
                         <v-card-title>
                           <span class="headline">Edits</span>
                         </v-card-title>
+
                         <v-card-text color="grey darken-3">
                           <v-container grid-list-md class="grey darken-2">
                             <v-layout wrap>
@@ -133,6 +134,7 @@
                             </v-layout>
                           </v-container>
                         </v-card-text>
+
                         <v-card-actions>
                           <v-spacer></v-spacer>
                           <v-btn
@@ -158,14 +160,7 @@
                         <v-icon large color="blue" @click="expItem(item)">
                           mdi-account-box
                         </v-icon>
-                        <v-icon
-                          large
-                          class="mr-2"
-                          color="blue-grey"
-                          @click="editItem(item)"
-                        >
-                          mdi-pencil
-                        </v-icon>
+                        
 
                         <v-icon
                           large
@@ -199,7 +194,7 @@
                           width="150px"
                         >
                           <v-img
-                            v-bind:src="profile_url1"
+                            v-bind:src="profile_url"
                             class="rounded-circle"
                             height="150px"
                           ></v-img>
@@ -207,35 +202,46 @@
                     ></v-col>
                     <v-col cols="4"> </v-col>
                     <v-col cols="2">
-                      <v-subheader>Semester</v-subheader>
+                      <v-subheader>Name</v-subheader>
                     </v-col>
                     <v-col cols="2">
                       <v-text-field
                         outlined
-                        v-model="sem1"
+                        v-model="name"
                         disabled
                       ></v-text-field>
                     </v-col>
 
                     <v-col cols="2">
-                      <v-subheader>Batch</v-subheader>
+                      <v-subheader>Email</v-subheader>
                     </v-col>
                     <v-col cols="2">
                       <v-text-field
                         disabled
                         outlined
-                        v-model="batch1"
+                        v-model="email"
                       ></v-text-field>
                     </v-col>
 
                     <v-col cols="2">
-                      <v-subheader>Section</v-subheader>
+                      <v-subheader>Company</v-subheader>
                     </v-col>
                     <v-col cols="2">
                       <v-text-field
                         outlined
                         disabled
-                        v-model="section1"
+                        v-model="company"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="2">
+                      <v-subheader>Industry</v-subheader>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-text-field
+                        disabled
+                        v-model="industry"
+                        outlined
+                        color="blue-grey"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="2">
@@ -244,23 +250,23 @@
                     <v-col cols="4">
                       <v-text-field
                         disabled
-                        v-model="phone1"
+                        v-model="contact_info"
                         outlined
                         color="blue-grey"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12">
-                      <v-subheader>BIO</v-subheader>
+                      <v-subheader>Past Projects</v-subheader>
                       <v-textarea
                         disabled
                         outlined
-                        v-model="bio1"
+                        v-model="past_projects"
                         color="blue-grey"
                       >
                       </v-textarea>
                     </v-col>
                   </v-row>
-                  <v-subheader class="text-h5">Address</v-subheader>
+                  <v-subheader class="text-h5">Company Address</v-subheader>
 
                   <v-row>
                     <v-col cols="2">
@@ -270,7 +276,7 @@
                       <v-text-field
                         disabled
                         outlined
-                        v-model="addr_line1"
+                        v-model="branch_addr_line"
                       ></v-text-field>
                     </v-col>
 
@@ -281,7 +287,7 @@
                       <v-text-field
                         disabled
                         outlined
-                        v-model="city1"
+                        v-model="city"
                       ></v-text-field>
                     </v-col>
 
@@ -292,7 +298,7 @@
                       <v-text-field
                         disabled
                         outlined
-                        v-model="state1"
+                        v-model="state"
                       ></v-text-field>
                     </v-col>
 
@@ -303,7 +309,7 @@
                       <v-text-field
                         disabled
                         outlined
-                        v-model="country1"
+                        v-model="country"
                       ></v-text-field>
                     </v-col>
 
@@ -314,75 +320,28 @@
                       >
                     </v-col>
                     <v-col cols="12"
-                      ><v-subheader class="text-h5">Documents</v-subheader>
+                      ><v-subheader class="text-h5">Annual Report</v-subheader>
                     </v-col>
                     <v-row>
                       <v-col class="ml-8" cols="3">
                         <v-btn large class="blue-grey">
                           <a
-                            v-bind:href="resume_url"
+                            v-bind:href="annual_report_url"
                             target="_blank"
                             class="black--text"
                             style="text-decoration: none"
                           >
-                            View Resume<v-icon>mdi-eye</v-icon>
+                            View Report<v-icon>mdi-eye</v-icon>
                           </a></v-btn
                         ></v-col
                       >
-                      <v-col cols="3">
-                        <v-dialog
-                          light
-                          v-model="dialog2"
-                          persistent
-                          max-width="400"
-                        >
-                          <template v-slot:activator="{ on, attrs }">
-                            <v-btn
-                              color="blue-grey"
-                              flat
-                              large
-                              elevation="0"
-                              v-bind="attrs"
-                              v-on="on"
-                            >
-                              Upload Resume
-                              <v-icon>mdi-file-document-multiple</v-icon>
-                            </v-btn>
-                            {{ Uploaded }}
-                          </template>
-                          <v-card>
-                            <v-card-title class="headline">
-                              Upload Resume
-                            </v-card-title>
-                            <v-card-text>
-                              <input type="file" @change="onFileChanged" />
-                              <v-btn
-                                large
-                                class="mt-4 blue-grey"
-                                @click="onUploadResume"
-                                >Upload Resume</v-btn
-                              >
-                            </v-card-text>
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn
-                                color="blue-grey darken-1"
-                                text
-                                @click="dialog2 = false"
-                              >
-                                Close
-                              </v-btn>
-                            </v-card-actions>
-                          </v-card>
-                        </v-dialog>
-                      </v-col>
-                      <v-col cols="2"></v-col>
+                      <!-- <v-col cols="2"></v-col>
                       <v-col cols="3">
                         {{ Saved }}
                         <v-btn large class="blue-grey" @click="onSaveProfile"
                           >Save</v-btn
                         >
-                      </v-col>
+                      </v-col> -->
                     </v-row>
                     <v-col cols="8"> </v-col>
                     <v-col cols="1"></v-col>
@@ -402,13 +361,35 @@ export default {
   async asyncData({ $axios }) {
     try {
       let response = await $axios.$get("http://localhost:3000/api/users");
-      console.log(response.users);
+      // console.log(response.users);
+      let users1 = []
+      for(let i=0;i<response.users.length;i++ ){
+        if(response.users[i].confirmed === 2 && response.users[i].role === "contractor"){
+          users1.push(response.users[i]);
+        }
+      }
       return {
-        users: response.users,
+        users: users1,
       };
     } catch (err) {}
   },
   data: () => ({
+    profile_url: "",
+    annual_report_url: "",
+    id: "",
+    email: "",
+    name: " ",
+    company: " ",
+    industry: " ",
+    past_projects: " ",
+    contact_info: " ",
+    branch_addr_line: " ",
+    city: " ",
+    state: " ",
+    country: " ",
+    password: "",
+    role: "",
+    confirmed: 0,
     drawer: true,
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/govtDashboard" },
@@ -421,9 +402,10 @@ export default {
     ],
     mini: false,
 
+    drawer: null,
+
     search: "",
-    dialog: false,
-    edt: 0,
+
     headers: [
       {
         text: "Name",
@@ -434,11 +416,38 @@ export default {
       { text: "Email", value: "email" },
       { text: "Actions", value: "edit", sortable: false },
     ],
-    desserts: [],
   }),
   methods: {
     logoutfunc() {
       this.$router.push("/Logout");
+    },
+    expItem(item) {
+      try {
+        // let id = this.users[this.users.indexOf(item)]._id;
+        
+        // let response = await this.$axios.$post(
+        //   `http://localhost:3000/api/users/${id}`
+        // );
+        this.id = this.users[this.users.indexOf(item)]._id; 
+        this.name = this.users[this.users.indexOf(item)].name;
+        this.email = this.users[this.users.indexOf(item)].email;
+        this.company = this.users[this.users.indexOf(item)].company;
+        this.industry = this.users[this.users.indexOf(item)].industry;
+        this.contact_info = this.users[this.users.indexOf(item)].contact_info;
+        this.past_projects = this.users[this.users.indexOf(item)].past_projects;
+        this.branch_addr_line = this.users[this.users.indexOf(item)].branch_addr_line;
+        this.city = this.users[this.users.indexOf(item)].city;
+        this.state = this.users[this.users.indexOf(item)].state;
+        this.country = this.users[this.users.indexOf(item)].country;
+        this.profile_url = this.users[this.users.indexOf(item)].photo;
+        this.password = this.users[this.users.indexOf(item)].password;
+        this.role = this.users[this.users.indexOf(item)].role;
+        this.confirmed = this.users[this.users.indexOf(item)].confirmed;
+        this.annual_report_url = this.users[this.users.indexOf(item)].annual_report;
+        console.log(this.annual_report_url);
+      } catch (err) {
+        console.log(err);
+      }
     },
     async verify() {
       try {
@@ -446,13 +455,13 @@ export default {
         if (cookie == null) {
           this.$router.push("/Login");
         }
-        let data = { 
-          cookie: cookie,
+        let data = {
+          cookie: cookie, 
         };
         let verify_response = await this.$axios.$post(
           `http://localhost:3000/api/verify/govt`,
           data
-        ); 
+        );
         if (!verify_response.success) {
           this.$cookies.set("jwt", null);
           this.$router.push("/Login");
@@ -461,10 +470,10 @@ export default {
         console.log(err);
       }
     },
+
   },
   beforeMount() {
-  //  this.verify();
+    this.verify();
   },
-  computed: {},
 };
 </script>

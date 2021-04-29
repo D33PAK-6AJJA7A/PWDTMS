@@ -124,7 +124,7 @@
                                 <v-col cols="2">
                                   <v-text-field
                                     outlined
-                                    v-model="Budget"
+                                    v-model="name1"
                                   ></v-text-field>
                                 </v-col>
                                   <v-col cols="2">
@@ -133,7 +133,7 @@
                                 <v-col cols="2">
                                   <v-text-field
                                     outlined
-                                    v-model="Budget"
+                                    v-model="prjStartDate1"
                                   ></v-text-field>
                                 </v-col>
                                   <v-col cols="2">
@@ -142,7 +142,7 @@
                                 <v-col cols="2">
                                   <v-text-field
                                     outlined
-                                    v-model="Budget"
+                                    v-model="prjEndDate1"
                                   ></v-text-field>
                                 </v-col>
                                   <v-col cols="2">
@@ -151,7 +151,7 @@
                                 <v-col cols="2">
                                   <v-text-field
                                     outlined
-                                    v-model="Budget"
+                                    v-model="tenderStartDate1"
                                   ></v-text-field>
                                 </v-col>
                                 <v-col cols="2">
@@ -160,7 +160,7 @@
                                 <v-col cols="2">
                                   <v-text-field
                                     outlined
-                                    v-model="Budget"
+                                    v-model="tenderEndDate1"
                                   ></v-text-field>
                                 </v-col>
 
@@ -170,7 +170,7 @@
                                   <v-subheader>Location</v-subheader>
                                   <v-textarea
                                     outlined
-                                    v-model="material"
+                                    v-model="location1"
                                     color="blue-grey"
                                   >
                                   </v-textarea>
@@ -185,12 +185,12 @@
   ></v-file-input>
                                 </v-col>
                                 <v-col cols="12">
-                                    <v-btn @click="dialog=!dialog" color="blue-grey" x-large>Create </v-btn>
+                                    <v-btn @click= "newProject(); dialog = !dialog;" color="blue-grey" x-large>Create </v-btn>
                                 </v-col>
 
                               </v-row>
                             </v-container>
-                          </v-card>
+                          </v-card> 
                         </v-card>
 
                         <div style="flex: 1 1 auto"></div>
@@ -791,16 +791,27 @@ export default {
   },
   data: () => ({
     dialog: false,
-    name: "NA", //display
-    prjStartDate: "NA", //display
-    prjEndDate: "NA",
-    tenderStartDate: "NA",
-    expBudget: "NA", //display
-    tenderEndDate: "NA", //display
-    location: "NA",
-    details: "NA",
-    link: "NA",
+    name: "", //display
+    prjStartDate: "", //display
+    prjEndDate: "",
+    tenderStartDate: "",
+    expBudget: "", //display
+    tenderEndDate: "", //display
+    location: "",
+    details: "",
+    link: "",
+    name1: "", //display
+    prjStartDate1: "", //display
+    prjEndDate1: "",
+    tenderStartDate1: "",
+    expBudget1: "", //display
+    tenderEndDate1: "", //display
+    location1: "",
+    details1: "",
+    link1: "",
     drawer: true,
+    approved : 0,
+    status : 0,
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/govtDashboard" },
       {
@@ -865,6 +876,39 @@ export default {
       } catch (err) {
         console.log(err);
       }
+    },
+    async newProject(){
+      try{
+        let data = {
+          name : this.name1,
+          prjStartDate : this.prjStartDate1,
+          prjEndDate : this.prjEndDate1,
+          tenderStartDate : this.tenderStartDate1,
+          tenderEndDate : this.tenderEndDate1,
+          expBudget : this.expBudget1,
+          location : this.location1,
+          details : this.details1,
+          link : this.link1,
+          approved : this.approved1,
+          status : this.status1,
+      };
+       let response = await this.$axios.$post(
+         `http://localhost:3000/api/projects/`,
+          data);
+        if(response){
+          this.name1 = "";
+          this.prjStartDate1 = "";
+          this.prjEndDate1 = "";
+          this.tenderStartDate1 = "";
+          this.tenderEndDate1 = "";
+          this.expBudget1 = "";
+          this.location1 = "";
+          this.details1 = "";
+          this.link1 = "";
+      }
+      }catch(err){
+      console.log(err);
+    }
     },
   },
   beforeMount() {

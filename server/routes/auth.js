@@ -91,14 +91,14 @@ router.post("/auth/login", async(req,res) => {
                 message: "Authentication failed, User not found"
             });
         }
-        else if (foundUser.confirmed == 0) {
+        else if (foundUser.confirmed === 0) {
             res.status(403).json({
                 success: false,
                 message: "Please confirm your email to login"
             });
         }
         //1 is being checked only for contractor, others dont need approval
-        else if (foundUser.confirmed == false && foundUser.role === "contractor") {
+        else if (foundUser.confirmed === 1 && foundUser.role === "contractor") {
             res.status(403).json({
                 success: false,
                 message: "Please wait for PWD to confirm your email"

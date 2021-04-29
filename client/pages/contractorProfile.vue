@@ -627,7 +627,7 @@ export default {
         if (cookie == null) {
           this.$router.push("/login");
         }
-        let data = {
+        let data = { 
           cookie: cookie,
         };
         let response = await this.$axios.$post(
