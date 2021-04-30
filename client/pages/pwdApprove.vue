@@ -5,7 +5,7 @@
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
         align="right"
         height="50px"
-        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click = "logoutfunc">LogOut</div></v-card
+        ><v-card class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click = "logoutfunc">LogOut</v-card></v-card
       >
       <v-navigation-drawer
         app
@@ -126,19 +126,21 @@
                             <td>{{ item.name }}</td>
                             <td>{{ item.email }}</td>
                             <td>
-
-<v-icon large color="green" @click= "acceptContractor()">
+<v-btn color="blue-grey" @click= "acceptContractor()">
+<v-icon large color="green" >
                            mdi-check-bold
                         </v-icon>
+                        </v-btn>
+                        <v-btn color="white" @click="
+                            deleteItem(users[users.indexOf(item)]._id, item)">
                         <v-icon
                           large
                           color="red"
-                          @click="
-                            deleteItem(users[users.indexOf(item)]._id, item)"
+                          
                         >
                           mdi-delete
                         </v-icon>
-
+</v-btn>
                             </td>
                             
                           </tr>

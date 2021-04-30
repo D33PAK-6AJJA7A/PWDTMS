@@ -5,7 +5,7 @@
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
         align="right" 
         height="50px"
-        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click = "logoutfunc">LogOut</div></v-card
+        ><v-card class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click = "logoutfunc">LogOut</v-card></v-card
       >
       <v-navigation-drawer
         app
@@ -236,7 +236,7 @@
                 <div>
                   <v-row justify="center">
                     <v-btn
-                      v-if="selected == 1"
+                      v-if=" selected==1 && applyBtn==true"
                       color="primary"
                       class="ma-2"
                       dark
@@ -389,7 +389,7 @@
                                 </v-col>
 
                                 <v-col cols="12">
-                                    <v-btn @click="dialog2=!dialog2" color="blue-grey" x-large>Apply <v-icon>mdi-lock</v-icon></v-btn>
+                                    <v-btn  @click="dialog2=!dialog2" color="blue-grey" x-large>Apply <v-icon>mdi-lock</v-icon></v-btn>
                                 </v-col>
 
                               </v-row>
@@ -528,6 +528,7 @@ export default {
     timelineStart: "",
     timelineEnd: "",
     material: "",
+    my_projects: [],
     success: true,
 
     confirmed: 0,
@@ -538,6 +539,7 @@ export default {
     notifications: false,
     sound: true,
     widgets: false,
+    applyBtn: true,
     
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/contractorDashboard" },
@@ -574,7 +576,7 @@ export default {
     async confirmTender() {
       try {
         let data = {
-          project_id: this.project_id,
+          project_id: this.project_id, 
           contractor_id: this.id,
           Budget: this.Budget,
           timelineStart: this.timelineStart,
@@ -632,6 +634,7 @@ export default {
         this.role = response.user.role;
         this.confirmed = response.user.confirmed;
         this.annual_report_url = response.user.annual_report;
+        this.my_projects = response.user.my_projects;
       } catch (err) {
         console.log(err);
       }
@@ -643,8 +646,17 @@ export default {
       this.expItem(this.projects[this.selectedRow]);
     },
     expItem(item) {
+      this.applyBtn = true;
       this.selected = 1;
       this.project_id = this.projects[this.projects.indexOf(item)]._id;
+      for(let i=0;i<this.my_projects.length;i++)
+      {
+        if(this.my_projects[i].project_id == this.project_id)
+        {
+          this.applyBtn=false;
+          break;
+        }
+      }
       this.name = this.projects[this.projects.indexOf(item)].name;
       console.log(this.name);
       this.prjStartDate = this.projects[
@@ -688,7 +700,7 @@ export default {
     },
   },
   beforeMount() {
-    //this.verify();
+    this.verify();
     this.getUser();
   },
 };

@@ -127,6 +127,15 @@
                                     v-model="name1"
                                   ></v-text-field>
                                 </v-col>
+                                <v-col cols="2">
+                                  <v-subheader>Budget</v-subheader>
+                                </v-col>
+                                <v-col cols="2">
+                                  <v-text-field
+                                    outlined
+                                    v-model="expBudget1"
+                                  ></v-text-field>
+                                </v-col>
                                   <v-col cols="2">
                                   <v-subheader>Project Start Date</v-subheader>
                                 </v-col>
@@ -163,14 +172,24 @@
                                     v-model="tenderEndDate1"
                                   ></v-text-field>
                                 </v-col>
-
+                                <v-col cols="2">
+                                  <v-subheader>Location</v-subheader>
+                                </v-col>
+                                <v-col cols="4">
+                                  <v-text-field
+                                    outlined
+                                    v-model="location1"
+                                  ></v-text-field>
+                                </v-col>
+                                <v-col cols="6">
+                                </v-col>
                                 
 
                                 <v-col cols="12">
-                                  <v-subheader>Location</v-subheader>
+                                  <v-subheader>Details</v-subheader>
                                   <v-textarea
                                     outlined
-                                    v-model="location1"
+                                    v-model="details1"
                                     color="blue-grey"
                                   >
                                   </v-textarea>
@@ -234,7 +253,7 @@
             <td>{{ item.name }}</td>
             <td>{{ item.tenderEndDate }}</td>
             <td>{{ item.expBudget }}</td>
-            <td>
+            <td>Show status
 
                         <div
                                 v-if="
@@ -809,13 +828,13 @@ export default {
           location : this.location1,
           details : this.details1,
           link : this.link1,
-          approved : this.approved1,
-          status : this.status1,
+          status : 0,
       };
        let response = await this.$axios.$post(
          `http://localhost:3000/api/projects/`,
           data);
         if(response){
+          
           this.name1 = "";
           this.prjStartDate1 = "";
           this.prjEndDate1 = "";
@@ -825,6 +844,7 @@ export default {
           this.location1 = "";
           this.details1 = "";
           this.link1 = "";
+          this.projects.push(data);
       }
       }catch(err){
       console.log(err);
@@ -832,7 +852,7 @@ export default {
     },
   },
   beforeMount() {
-    //   this.verify();
+    this.verify();
   },
 };
 </script>

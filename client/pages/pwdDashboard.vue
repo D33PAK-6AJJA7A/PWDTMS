@@ -5,9 +5,7 @@
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
         align="right"
         height="50px"
-        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click="logoutfunc">
-          LogOut
-        </div></v-card
+        ><v-card class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click = "logoutfunc">LogOut</v-card></v-card
       >
       <v-navigation-drawer
         app
@@ -537,7 +535,7 @@ export default {
     },
   },
   beforeMount() {
-    //  this.verify();
+     this.verify();
   },
 };
 </script>

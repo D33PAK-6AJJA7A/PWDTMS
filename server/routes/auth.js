@@ -28,7 +28,7 @@ router.post('/auth/signup',async(req,res) => {
             await newUser.save();
             let token = jwt.sign(newUser.toJSON(), process.env.SECRET, {
                 expiresIn: 604800 // 1 week
-            },
+            }, 
             (err, emailToken) => {
                 const url = `http://localhost:3000/api/confirmation/${emailToken}`;
       

@@ -7,9 +7,10 @@ const User = require("../models/user")
 router.post("/tenders", async (req, res) => {
   try
   {
+    console.log(req.body.project_id);
     let project1 = await Project.findOne({ _id: req.body.project_id });
     let arr = project1.tenders;
-    
+    console.log(arr);
     let tender = new Tender();
     tender.project_id = req.body.project_id;
     tender.contractor_id = req.body.contractor_id;
@@ -18,15 +19,23 @@ router.post("/tenders", async (req, res) => {
     tender.timelineEnd = req.body.timelineEnd; 
     tender.material = req.body.material;
     tender.approved =  req.body.approved;   
-    for(let i=0;i<arr.length;i++)
+    if(arr !== null)
     {
-      if(arr[i].contractor_id === tender.contractor_id)
+      for(let i=0;i<arr.length;i++)
       {
-        throw "contrator tender already exists";
+        if(arr[i].contractor_id === tender.contractor_id)
+        {
+          throw "contrator tender already exists";
+        }
       }
+    }
+    else
+    {
+      arr = [];
     }
     await tender.save();
     arr.push(tender);
+    console.log(arr);
     let project = await Project.findOneAndUpdate(
       { _id: req.body.project_id },
       {
@@ -39,6 +48,10 @@ router.post("/tenders", async (req, res) => {
     await project.save();
     let user1 = await User.findOne({ _id: req.body.contractor_id });
     let arr1 = user1.my_projects;
+    if(arr1 == null)
+    {
+      arr1 = [];
+    }
     arr1.push(tender);
     //console.log(arr1);
     let user = await User.findOneAndUpdate(
@@ -50,6 +63,7 @@ router.post("/tenders", async (req, res) => {
       },
       { upsert: true }
     );
+    console.log(arr1);
     await user.save(); 
     res.json({
       status: true,
@@ -58,7 +72,6 @@ router.post("/tenders", async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
-    
       success: false,
       message: err,
     });
@@ -119,9 +132,18 @@ router.put("/tenders/:id", async (req, res) => {
     );
     let project = await Project.findOne(
       { _id: req.body.project_id });
-    let arr = project.tenders;
-    let idd = arr.indexOf(tender1);
-    arr.splice(idd,1);
+    // let arr = project.tenders;
+    // let idd = arr.indexOf(tender1);
+    // arr.splice(idd,1);
+    let arr = [];
+    for(let i=0;i<project.tenders.length;i++)
+    {
+      if(project.tenders[i]._id == tender1._id){}
+      else 
+      {
+        arr.push(project.tenders[i]);
+      }
+    }
     let project2 = await Project.findOneAndUpdate(
       { _id: req.body.project_id },
       {
@@ -132,9 +154,18 @@ router.put("/tenders/:id", async (req, res) => {
       { upsert: true }
     );
     let user = await User.findOne({_id : req.body.contractor_id});
-    let arr2 = user.my_projects;
-    let idd2 = arr.indexOf(tender1);
-    arr2.splice(idd2,1);
+    // let arr2 = user.my_projects;
+    // let idd2 = arr.indexOf(tender1);
+    // arr2.splice(idd2,1);
+    let arr2 = [];
+    for(let i=0;i<user.my_projects.length;i++)
+    {
+      if(user.my_projects[i]._id == tender1._id){}
+      else 
+      {
+        arr2.push(user.my_projects[i]);
+      }
+    }
     let user2 = await User.findOneAndUpdate(
       { _id: req.body.contractor_id },
       {

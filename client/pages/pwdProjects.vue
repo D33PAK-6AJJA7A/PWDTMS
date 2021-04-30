@@ -5,9 +5,7 @@
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
         align="right"
         height="50px"
-        ><div class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click="logoutfunc">
-          LogOut
-        </div></v-card
+        ><v-card class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click = "logoutfunc">LogOut</v-card></v-card
       >
       <v-navigation-drawer
         app
@@ -350,7 +348,7 @@
                                 v-else
                               >Not sent for approval
                                 <v-icon color="blue-grey"
-                                  >mdi-close-bold</v-icon
+                                  >mdi-close</v-icon
                                 >
                               </div>
                               </div>
@@ -448,7 +446,7 @@
                       {{ material }}
                     </p></v-col
                   >
-                  <v-col cols="4"
+                  <v-col v-if="status==1" cols="4"
                     ><v-btn color="blue-grey" @click="dialog1 = true"
                       >Lock<v-icon>mdi-lock</v-icon></v-btn
                     ></v-col
@@ -707,18 +705,28 @@ export default {
       this.link = this.projects[this.projects.indexOf(item)].link;
       this.tenders = this.projects[this.projects.indexOf(item)].tenders;
       this.status = this.projects[this.projects.indexOf(item)].status;
-      this.final_tender_id = this.projects[this.projects.indexOf(item)].final_tender._id;
-      if(this.status == 2 || this.status == 3)
+      console.log(this.status);
+      if(this.projects[this.projects.indexOf(item)].final_tender != null)
       {
-        for(let i =0; i<this.tenders.length;i++)
+        this.final_tender_id = this.projects[this.projects.indexOf(item)].final_tender._id;
+      }
+      console.log(this.tenders);
+      if(this.tenders === null){
+        this.tenders = [];
+      }
+      else{
+        if(this.status == 2 || this.status == 3 )
         {
-          if(this.tenders[i]._id === this.final_tender_id)
+          //console.log("hhhhh");
+          for(let i =0; i<this.tenders.length;i++)
           {
-            this.final_tender_index = i;
+            if(this.tenders[i]._id === this.final_tender_id)
+            {
+              this.final_tender_index = i;
+            }
           }
         }
-      }
-      
+    }
     },
     rowSelect1(idx) {
       this.selectedRow1 = idx;
@@ -770,7 +778,7 @@ export default {
     },
   },
   beforeMount() {
-    //this.verify();
+  this.verify();
   },
 };
 </script>

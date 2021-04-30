@@ -18,7 +18,7 @@ router.post("/projects", async (req, res) => {
     // project.approved = req.body.approved;
     project.tenders = [];
     project.final_tender = null;
-    project.status = req.body.status;
+    project.status = 0;
     console.log(project);
     await project.save();
 
@@ -111,9 +111,18 @@ router.delete("/projects/:id", async (req, res) => {
         let id = project.tenders[i]._id;
         let user_id = project.tenders[i].contractor_id;
         let user=  await User.findOne({_id: user_id});
-        let arr = user.my_projects;
-        let idd = arr.indexOf(project.tenders[i]);
-        arr.splice(idd,1);
+        // let arr = user.my_projects;
+        // let idd = arr.indexOf(project.tenders[i]);
+        // arr.splice(idd,1);
+        let arr = [];
+        for(let j=0;i<user.my_projects.length;i++)
+        {
+          if(user.my_projects[j]._id == project.tenders[i]._id){}
+          else 
+          {
+            arr.push(user.my_projects[j]);
+          }
+        }
         let userr = await User.findOneAndUpdate({_id:user_id},{
           $set: {
             my_projects: arr,
@@ -143,10 +152,15 @@ router.put("/projectapprove/", async (req, res) => {
     let tender = await Tender.findOne({_id : req.body.tender_id})
     // console.log(project);
     // console.log(tender);
-    let arr = project.tenders;
-    let idd = arr.indexOf(tender);
-    arr.splice(idd,1);
-    // console.log(arr);
+    let arr = [];
+    for(let i=0;i<project.tenders.length;i++)
+    {
+      if(project.tenders[i]._id == req.body.tender_id){}
+      else 
+      {
+        arr.push(project.tenders[i]);
+      }
+    }
     let updatetender = await Tender.findOneAndUpdate({_id : req.body.tender_id},
       {
         $set: {
@@ -155,9 +169,15 @@ router.put("/projectapprove/", async (req, res) => {
       },{ upsert: true });  
 
     let user = await User.findOne({_id: tender.contractor_id});
-    let arr2 = user.my_projects;
-    let idd2 = arr2.indexOf(tender);
-    arr2.splice(idd2,1);
+    let arr2 = [];
+    for(let i=0;i<user.my_projects.length;i++)
+    {
+      if(user.my_projects[i]._id == req.body.tender_id){}
+      else 
+      {
+        arr2.push(user.my_projects[i]);
+      }
+    }
     
     tender.approved = 1;
     arr.push(tender);
@@ -193,6 +213,7 @@ router.put("/projectapprove/", async (req, res) => {
       });
     }
   } catch (err) {
+    console.log(err.message)
     res.status(500).json({
       success: false,
       message: err.message,
@@ -207,9 +228,15 @@ router.put("/projectapprovegovt/", async (req, res) => {
     let tender = await Tender.findOne({_id : req.body.tender_id})
     // console.log(project);
     // console.log(tender);
-    let arr = project.tenders;
-    let idd = arr.indexOf(tender);
-    arr.splice(idd,1);
+    let arr = [];
+    for(let i=0;i<project.tenders.length;i++)
+    {
+      if(project.tenders[i]._id == req.body.tender_id){}
+      else 
+      {
+        arr.push(project.tenders[i]);
+      }
+    }
     // console.log(arr);
     let updatetender = await Tender.findOneAndUpdate({_id : req.body.tender_id},
       {
@@ -219,9 +246,15 @@ router.put("/projectapprovegovt/", async (req, res) => {
       },{ upsert: true });  
 
     let user = await User.findOne({_id: tender.contractor_id});
-    let arr2 = user.my_projects;
-    let idd2 = arr2.indexOf(tender);
-    arr2.splice(idd2,1);
+    let arr2 = [];
+    for(let i=0;i<user.my_projects.length;i++)
+    {
+      if(user.my_projects[i]._id == req.body.tender_id){}
+      else 
+      {
+        arr2.push(user.my_projects[i]);
+      }
+    }
     
     tender.approved = 2;
     arr.push(tender);
@@ -271,9 +304,15 @@ router.put("/projectdisapprovegovt/", async (req, res) => {
     let tender = await Tender.findOne({_id : req.body.tender_id})
     // console.log(project);
     // console.log(tender);
-    let arr = project.tenders;
-    let idd = arr.indexOf(tender);
-    arr.splice(idd,1);
+    let arr = [];
+    for(let i=0;i<project.tenders.length;i++)
+    {
+      if(project.tenders[i]._id == req.body.tender_id){}
+      else 
+      {
+        arr.push(project.tenders[i]);
+      }
+    }
     // console.log(arr);
     let updatetender = await Tender.findOneAndUpdate({_id : req.body.tender_id},
       {
@@ -283,10 +322,15 @@ router.put("/projectdisapprovegovt/", async (req, res) => {
       },{ upsert: true });  
 
     let user = await User.findOne({_id: tender.contractor_id});
-    let arr2 = user.my_projects;
-    let idd2 = arr2.indexOf(tender);
-    arr2.splice(idd2,1);
-    
+    let arr2 = [];
+    for(let i=0;i<user.my_projects.length;i++)
+    {
+      if(user.my_projects[i]._id == req.body.tender_id){}
+      else 
+      {
+        arr2.push(user.my_projects[i]);
+      }
+    }
     tender.approved = 0;
     arr.push(tender);
     arr2.push(tender);
