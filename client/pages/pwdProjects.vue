@@ -125,47 +125,40 @@
                             <td>{{ item.name }}</td>
                             <td>{{ item.tenderEndDate }}</td>
                             <td>{{ item.expBudget }}</td>
-                            <!-- <td>
+                             <td>
                               <div
                                 v-if="
-                                  tender_arr[projects_arr.indexOf(item)]
-                                    .approved == '0'
-                                "
-                              >
+                                  item.status == 0 "
+                              >Accepting Tenders
                                 <v-icon color="blue-grey"
-                                  >mdi-clock-outline</v-icon
+                                  >mdi-spin</v-icon
                                 >
                               </div>
                               <div
                                 v-if="
-                                  tender_arr[projects_arr.indexOf(item)]
-                                    .approved == '1'
+                                  item.status == 1
                                 "
                               >
+                              Approve 
                                 <v-icon color="blue-grey"
                                   >mdi-account-clock-outline</v-icon
                                 >
                               </div>
                               <div
-                                v-if="
-                                  tender_arr[projects_arr.indexOf(item)]
-                                    .approved == '2'
+                                v-if= " item.status == 2
                                 "
-                              >
-                                <v-icon color="green">mdi-check-bold</v-icon>
+                              >Approval by Govt
+                                <v-icon color="green">mdi-book-check-outline</v-icon>
                               </div>
                               <div
-                                v-if="
-                                  tender_arr[projects_arr.indexOf(item)]
-                                    .approved == '-1'
-                                "
-                              >
-                                <v-icon color="red">mdi-close-thick</v-icon>
+                                v-if= " item.status == 3">
+                                Accepted
+                                <v-icon color="red">mdi-check-bold</v-icon>
                               </div>
-                            </td> -->
+                            </td> 
                           </tr>
                         </tbody>
-                      </template>
+                      </template> 
                     </v-data-table>
                   </v-container>
                 </div>
@@ -173,16 +166,16 @@
             </v-container>
           </v-col>
 
-          <v-divider class="mt-10 blue-grey" vertical></v-divider>
+          <v-divider class="mt-10 blue-grey" vertical></v-divider> 
           <v-col v-if="maximise!=12" :cols=12-maximise>
             <p class="text-center blue-grey text-h4">View Project</p>
             <v-card light elevation="0" class="grey lighten-2 ma-10">
               <v-row>
                 <v-col cols="4"
-                  ><v-btn color="success" x-large @click= "openProject">Open Project</v-btn></v-col
+                  ><v-btn v-if="status==1" color="success" x-large @click= "openProject">Open Project</v-btn></v-col
                 >
                 <v-col cols="4"
-                  ><v-btn color="red" x-large @click= "closeProject">Close Project</v-btn></v-col
+                  ><v-btn color="red" v-if="status==0" x-large @click= "closeProject">Close Project</v-btn></v-col
                 >
                 <v-col cols="4"></v-col>
                 <v-col cols="2"
@@ -267,7 +260,12 @@
                 <v-col cols="12 "
                   ><div class="black--text">{{ link }}</div></v-col
                 >
-                <v-col cols="12"
+                <v-col v-if="status==2" cols="12"
+                  ><div class="blue-grey--text text-subtitle-1">
+                    Tender send for Approval :
+                  </div></v-col
+                >
+                <v-col v-if="status==3" cols="12"
                   ><div class="blue-grey--text text-subtitle-1">
                     Approved Tender :
                   </div></v-col
@@ -295,20 +293,7 @@
                 </v-toolbar>
 
                 <v-container class="grey lighten-2">
-                  <!-- <v-data-table
-                    light
-                    :headers="headers1"
-                    :items="tenders"
-                    :search="search"
-                    hide-actions
-                    class="grey lighten-2"
-                  >
-                    <template #item.edit="{ item }">
-                      <v-icon x-large color="blue" @click="expItem1(item)">
-                        mdi-account-box
-                      </v-icon>
-                    </template>
-                  </v-data-table> -->
+                
                   <v-data-table
                     light
                     :headers="headers1"
@@ -329,6 +314,72 @@
                           <td>{{ item.Budget }}</td>
                           <td>{{ item.timelineStart }}</td>
                           <td>{{ item.timelineEnd }}</td>
+                          <td>
+                            <div
+                                v-if="
+                                  status == 0
+                                "
+                              >Accepting Tenders
+                                <v-icon color="blue-grey"
+                                  >mdi-clock-outline</v-icon
+                                >
+                              </div>
+                              <div
+                                v-if="
+                                  status == 1
+                                "
+                              >Waiting to select
+                                <v-icon color="blue-grey"
+                                  >mdi-clock-outline</v-icon
+                                >
+                              </div>
+                               <div
+                                v-if="
+                                  status == 2
+                                "
+                              >
+                                <div
+                                v-if= " final_tender_index == key "
+                              >
+                              Sent For Approval 
+                                <v-icon color="blue-grey"
+                                  >mdi-clock-outline</v-icon
+                                >
+                              </div>
+                              <div
+                                v-else
+                              >Not sent for approval
+                                <v-icon color="blue-grey"
+                                  >mdi-close-bold</v-icon
+                                >
+                              </div>
+                              </div>
+                              <div
+                                v-if="
+                                  status == 3
+                                "
+                              >
+                                <div
+                                v-if= " final_tender_index == key "
+                              >
+                              Approved
+                                <v-icon color="green"
+                                  >mdi-check-bold</v-icon
+                                >
+                              </div>
+                              <div
+                                v-else
+                              >Denied
+                                <v-icon color="red"
+                                  >mdi-close-bold</v-icon
+                                >
+                              </div>
+                              </div>
+
+
+                              
+                            
+                          </td>
                         </tr>
                       </tbody>
                     </template>
@@ -469,6 +520,7 @@ export default {
     }
   },
   data: () => ({
+    stat: 0,
     selectedRow: -1,
     selectedRow1: -1,
     maximise: 12,
@@ -484,17 +536,22 @@ export default {
     link: "NA",
     project_id: "",
     contractor_id: "",
+    selectedTender: -1,
     Budget: "",
     timelineStart: "",
     timelineEnd: "",
     material: "",
     approved: 0,
+    status: 0,
+    final_tender: [],
     tender_id: "",
     tenders: [],
     contractor_name: "",
     past_projects: "",
     annual_report: "",
+    final_tender_id: "",
     drawer: true,
+    final_tender_index: -1,
     propDocs: [{ link: "www.google.com" }, { link: "www.facebook.com" }],
     pastPro: [{ text: "Park" }, { text: "Ground" }, { text: "Building" }],
     items12: [
@@ -529,6 +586,7 @@ export default {
       },
       { text: "Tender End Date", value: "tenderEndDate" },
       { text: "Budget", value: "expBudget" },
+      { text: "Status", value: "st" },
     ],
     headers1: [
       {
@@ -539,6 +597,7 @@ export default {
       },
       { text: "Start Date", value: "timelineStart" },
       { text: "End Date", value: "timelineEnd" },
+      {text: "Status", value: "stat"},
     ],
   }),
   methods: {
@@ -599,35 +658,32 @@ export default {
     async tenderLocked(){
       try{
         let data = {
-            name : this.name,
-            prjStartDate : this.prjStartDate,
-            prjEndDate : this.prjEndDate,
-            tenderStartDate : this.tenderStartDate,
-            tenderEndDate : this.tenderEndDate,
-            expBudget : this.expBudget,
-            location : this.location,
-            details : this.details,
-            link : this.link,
-            tenders : this.tenders,
-            status : 2,
-        };
-        let data1 = {
             project_id : this.project_id,
-            contractor_id : this.contractor_id, 
-            Budget : this.Budget, 
-            timelineStart : this.timelineStart,
-            timelineEnd : this.timelineEnd,
-            material : this.material,
-            approved: 1,
+            tender_id : this.tender_id, 
+        };
+        let response = await this.$axios.$put(
+          `http://localhost:3000/api/projectapprove/`,
+          data 
+        );
+        if(response.success)
+        {
+          this.$router.push('/pwdProjects');
+          
+        //   let response1 = await this.$axios.$get(
+        //   `http://localhost:3000/api/projects/${this.project_id}`
+        // );
+        //   if(response1.success){
+        //     this.final_tender = response1.final_tender;
+        //     this.status = response1.status;
+        //   }
+        //   let response2 = await this.$axios.$get(
+        //   `http://localhost:3000/api/tenders/${this.tender_id}`
+        // );
+        //   if(response2.success){
+        //     this.approved = response2.approved;
+        //   }
+
         }
-        let response = this.$axios.$put(
-          `http://localhost:3000/api/projects/${this.project_id}`,
-          data
-        );
-        let response1 = this.$axios.$put(
-          `http://localhost:3000/api/tenders/${this.tender_id}`,
-          data1
-        );
       }catch(err){
         console.log(err);
       }
@@ -650,6 +706,19 @@ export default {
       this.details = this.projects[this.projects.indexOf(item)].details;
       this.link = this.projects[this.projects.indexOf(item)].link;
       this.tenders = this.projects[this.projects.indexOf(item)].tenders;
+      this.status = this.projects[this.projects.indexOf(item)].status;
+      this.final_tender_id = this.projects[this.projects.indexOf(item)].final_tender._id;
+      if(this.status == 2 || this.status == 3)
+      {
+        for(let i =0; i<this.tenders.length;i++)
+        {
+          if(this.tenders[i]._id === this.final_tender_id)
+          {
+            this.final_tender_index = i;
+          }
+        }
+      }
+      
     },
     rowSelect1(idx) {
       this.selectedRow1 = idx;

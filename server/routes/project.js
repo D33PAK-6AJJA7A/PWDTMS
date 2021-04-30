@@ -74,7 +74,7 @@ router.put("/projects/:id", async (req, res) => {
       { _id: req.params.id },
       {
         $set: {
-           name : req.body.name,
+            name : req.body.name,
             prjStartDate : req.body.prjStartDate,
             prjEndDate : req.body.prjEndDate,
             tenderStartDate : req.body.tenderStartDate,
@@ -83,7 +83,7 @@ router.put("/projects/:id", async (req, res) => {
             location : req.body.location,
             details : req.body.details,
             link : req.body.link,
-            tenders : req.body.tenders,
+            tenders: req.body.tenders,
             status : req.body.status,
             final_tender : req.body.final_tender,
         },
@@ -127,6 +127,197 @@ router.delete("/projects/:id", async (req, res) => {
       res.json({
         status: true,
         message: "Successfuly deleted!",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
+
+router.put("/projectapprove/", async (req, res) => {
+  try {
+    let project = await Project.findOne({_id: req.body.project_id });
+    let tender = await Tender.findOne({_id : req.body.tender_id})
+    // console.log(project);
+    // console.log(tender);
+    let arr = project.tenders;
+    let idd = arr.indexOf(tender);
+    arr.splice(idd,1);
+    // console.log(arr);
+    let updatetender = await Tender.findOneAndUpdate({_id : req.body.tender_id},
+      {
+        $set: {
+          approved : 1
+        }
+      },{ upsert: true });  
+
+    let user = await User.findOne({_id: tender.contractor_id});
+    let arr2 = user.my_projects;
+    let idd2 = arr2.indexOf(tender);
+    arr2.splice(idd2,1);
+    
+    tender.approved = 1;
+    arr.push(tender);
+    arr2.push(tender);
+    //console.log(arr);
+    let updateProject = await Project.findOneAndUpdate({_id : req.body.project_id},
+      {
+        $set: {
+          status : 2,
+          tenders: arr,
+          final_tender: tender,
+        }
+      },{ upsert: true });
+      
+      let updateTender = await Tender.findOneAndUpdate({_id : req.body.tender_id},
+        {
+          $set: {
+            approved : 1
+          }
+        },{ upsert: true });
+      
+        let updateUser = await User.findOneAndUpdate({_id : tender.contractor_id},
+          {
+            $set: {
+              my_projects : arr2
+            }
+          },{ upsert: true });
+      
+    if (updateProject) {
+      res.json({
+        status: true,
+        message: "Successfuly updated!",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
+
+
+router.put("/projectapprovegovt/", async (req, res) => {
+  try {
+    let project = await Project.findOne({_id: req.body.project_id });
+    let tender = await Tender.findOne({_id : req.body.tender_id})
+    // console.log(project);
+    // console.log(tender);
+    let arr = project.tenders;
+    let idd = arr.indexOf(tender);
+    arr.splice(idd,1);
+    // console.log(arr);
+    let updatetender = await Tender.findOneAndUpdate({_id : req.body.tender_id},
+      {
+        $set: {
+          approved : 2
+        }
+      },{ upsert: true });  
+
+    let user = await User.findOne({_id: tender.contractor_id});
+    let arr2 = user.my_projects;
+    let idd2 = arr2.indexOf(tender);
+    arr2.splice(idd2,1);
+    
+    tender.approved = 2;
+    arr.push(tender);
+    arr2.push(tender);
+    //console.log(arr);
+    let updateProject = await Project.findOneAndUpdate({_id : req.body.project_id},
+      {
+        $set: {
+          status : 3,
+          tenders: arr,
+          
+        }
+      },{ upsert: true });
+      
+      let updateTender = await Tender.findOneAndUpdate({_id : req.body.tender_id},
+        {
+          $set: {
+            approved : 2
+          }
+        },{ upsert: true });
+      
+        let updateUser = await User.findOneAndUpdate({_id : tender.contractor_id},
+          {
+            $set: {
+              my_projects : arr2
+            }
+          },{ upsert: true });
+      
+    if (updateProject) {
+      res.json({
+        status: true,
+        message: "Successfuly updated!",
+      });
+    }
+  } catch (err) {
+    console.log(err.message); 
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+});
+
+router.put("/projectdisapprovegovt/", async (req, res) => {
+  try {
+    let project = await Project.findOne({_id: req.body.project_id });
+    let tender = await Tender.findOne({_id : req.body.tender_id})
+    // console.log(project);
+    // console.log(tender);
+    let arr = project.tenders;
+    let idd = arr.indexOf(tender);
+    arr.splice(idd,1);
+    // console.log(arr);
+    let updatetender = await Tender.findOneAndUpdate({_id : req.body.tender_id},
+      {
+        $set: {
+          approved : 0
+        }
+      },{ upsert: true });  
+
+    let user = await User.findOne({_id: tender.contractor_id});
+    let arr2 = user.my_projects;
+    let idd2 = arr2.indexOf(tender);
+    arr2.splice(idd2,1);
+    
+    tender.approved = 0;
+    arr.push(tender);
+    arr2.push(tender);
+    //console.log(arr);
+    let updateProject = await Project.findOneAndUpdate({_id : req.body.project_id},
+      {
+        $set: {
+          status : 1,
+          tenders: arr,
+          final_tender : null,
+        }
+      },{ upsert: true });
+      
+      let updateTender = await Tender.findOneAndUpdate({_id : req.body.tender_id},
+        {
+          $set: {
+            approved : 0
+          }
+        },{ upsert: true });
+      
+        let updateUser = await User.findOneAndUpdate({_id : tender.contractor_id},
+          {
+            $set: {
+              my_projects : arr2
+            }
+          },{ upsert: true });
+      
+    if (updateProject) {
+      res.json({
+        status: true,
+        message: "Successfuly updated!",
       });
     }
   } catch (err) {

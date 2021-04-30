@@ -241,6 +241,7 @@
                                   item.status == 0
                                 "
                               >
+                              Accepting Tender
                                 <v-icon color="blue-grey"
                                   >mdi-clock-outline</v-icon
                                 >
@@ -250,6 +251,7 @@
                                   item.status == 1
                                 "
                               >
+                              Waiting for PWD to select
                                 <v-icon color="blue-grey"
                                   >mdi-account-clock-outline</v-icon
                                 >
@@ -259,14 +261,15 @@
                                   item.status == 2
                                 "
                               >
+                              My Approval Pending 
                                 <v-icon color="green">mdi-account-question-outline</v-icon>
                               </div>
                               <div
                                 v-if="
                                   item.status == 3
                                 "
-                              >
-                                <v-icon color="red">mdi-check-bold</v-icon>
+                              >Done
+                                <v-icon color="green">mdi-check-bold</v-icon>
                               </div>
                        
                        </td>
@@ -495,7 +498,7 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
             
-                  <v-btn color="blue-grey" flat  @click="dialog1 = false" >Yes, Lock it <v-icon>mdi-lock</v-icon></v-btn
+                  <v-btn color="blue-grey" flat  @click= "tenderLocked(); dialog1 = false;" >Yes, Lock it <v-icon>mdi-lock</v-icon></v-btn
                   >
                   <v-btn color="blue-grey" flat @click="dialog1 = false"
                     >No, take me back
@@ -528,7 +531,7 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
             
-                  <v-btn color="blue-grey" flat  @click="dialog2 = false" >Yes,I want to deny. </v-btn
+                  <v-btn color="blue-grey" flat  @click= "tenderDenied(); dialog2 = false" >Yes,I want to deny. </v-btn
                   >
                   <v-btn color="blue-grey" flat @click="dialog2 = false"
                     >No, take me back
@@ -595,6 +598,18 @@ export default {
     drawer: true,
     approved : 0,
     status : 0,
+
+    Budget: "",
+    timelineStart: "",
+    timelineEnd: "",
+    material: "",
+    tender_id: "",
+    project_id: "",
+    contractor_id: "",
+    contractor_name: "",
+    past_projects: "",
+    annual_report: "",
+    selectedRow1: -1,
     selectedRow: -1,
     maximise: 12,
     items12: [
@@ -676,71 +691,35 @@ export default {
     async tenderLocked(){
       try{
         let data = {
-            name : this.name,
-            prjStartDate : this.prjStartDate,
-            prjEndDate : this.prjEndDate,
-            tenderStartDate : this.tenderStartDate,
-            tenderEndDate : this.tenderEndDate,
-            expBudget : this.expBudget,
-            location : this.location,
-            details : this.details,
-            link : this.link,
-            tenders : this.tenders,
-            status : 3,
-        };
-        let data1 = {
             project_id : this.project_id,
-            contractor_id : this.contractor_id, 
-            Budget : this.Budget, 
-            timelineStart : this.timelineStart,
-            timelineEnd : this.timelineEnd,
-            material : this.material,
-            approved: 2,
-        }
-        let response = this.$axios.$put(
-          `http://localhost:3000/api/projects/${this.project_id}`,
-          data
+            tender_id : this.tender_id, 
+        };
+        console.log(data);
+        let response = await this.$axios.$put(
+          `http://localhost:3000/api/projectapprovegovt/`,
+          data 
         );
-        let response1 = this.$axios.$put(
-          `http://localhost:3000/api/tenders/${this.tender_id}`,
-          data1
-        );
+        console.log(response);
+        if(response.success){
+              this.$router.push('/govtProjects');
+         }
       }catch(err){
         console.log(err);
       }
     },
-    async tenderRejected(){
+    async tenderDenied(){
       try{
         let data = {
-            name : this.name,
-            prjStartDate : this.prjStartDate,
-            prjEndDate : this.prjEndDate,
-            tenderStartDate : this.tenderStartDate,
-            tenderEndDate : this.tenderEndDate,
-            expBudget : this.expBudget,
-            location : this.location,
-            details : this.details,
-            link : this.link,
-            tenders : this.tenders,
-            status : 1,
-        };
-        let data1 = {
             project_id : this.project_id,
-            contractor_id : this.contractor_id, 
-            Budget : this.Budget, 
-            timelineStart : this.timelineStart,
-            timelineEnd : this.timelineEnd,
-            material : this.material,
-            approved: -1,
-        }
-        let response = this.$axios.$put(
-          `http://localhost:3000/api/projects/${this.project_id}`,
-          data
+            tender_id : this.tender_id, 
+        };
+        let response = await this.$axios.$put(
+          `http://localhost:3000/api/projectdisapprovegovt/`,
+          data 
         );
-        let response1 = this.$axios.$put(
-          `http://localhost:3000/api/tenders/${this.tender_id}`,
-          data1
-        );
+        // if(response.success){
+          
+        // }
       }catch(err){
         console.log(err);
       }
@@ -751,7 +730,7 @@ export default {
       this.selectedRow = idx;
       this.expItem(this.projects[this.selectedRow]);
     },
-    expItem(item) {
+    async expItem(item) {
       this.name = this.projects[this.projects.indexOf(item)].name;
       this.prjStartDate = this.projects[
         this.projects.indexOf(item)
@@ -768,6 +747,23 @@ export default {
       this.details = this.projects[this.projects.indexOf(item)].details;
       this.link = this.projects[this.projects.indexOf(item)].link;
       this.status = this.projects[this.projects.indexOf(item)].status;
+      this.project_id = this.projects[this.projects.indexOf(item)].final_tender.project_id;
+      this.contractor_id = this.projects[this.projects.indexOf(item)].final_tender.contractor_id;
+      this.Budget = this.projects[this.projects.indexOf(item)].final_tender.Budget;
+      this.timelineStart = this.projects[this.projects.indexOf(item)].final_tender.timelineStart;
+      this.timelineEnd = this.projects[this.projects.indexOf(item)].final_tender.timelineEnd;
+      this.material = this.projects[this.projects.indexOf(item)].final_tender.material;
+      this.approved = this.projects[this.projects.indexOf(item)].final_tender.approved;
+      this.tender_id = this.projects[this.projects.indexOf(item)].final_tender._id;
+
+      let response = await this.$axios.$get(
+        `http://localhost:3000/api/users/${this.contractor_id}`
+      );
+      if (response) {
+        this.contractor_name = response.user.name;
+        this.past_projects = response.user.past_projects;
+        this.annual_report = response.user.annual_report;
+      }
     },
     async deleteItem(id,item){
       try{

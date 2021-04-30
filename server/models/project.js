@@ -11,7 +11,7 @@ const ProjectSchema = new Schema({
     expBudget: String, //display
     location: String,  
     details: String,
-    link: String,  
+    link: String,   
     final_tender: {type: tender}, 
     tenders: [{type: tender}],
     status: Number, //0 - project is active(contractor,all, nobody can lock)  
