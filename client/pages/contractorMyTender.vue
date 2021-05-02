@@ -136,7 +136,7 @@
                                   tender_arr[projects_arr.indexOf(item)]
                                     .approved == '0'
                                 "
-                              >
+                              >Project Accepting Tenders
                                 <v-icon color="blue-grey"
                                   >mdi-clock-outline</v-icon
                                 >
@@ -146,7 +146,7 @@
                                   tender_arr[projects_arr.indexOf(item)]
                                     .approved == '1'
                                 "
-                              >
+                              >Waiting for PWD Approval
                                 <v-icon color="blue-grey"
                                   >mdi-account-clock-outline</v-icon
                                 >
@@ -156,7 +156,7 @@
                                   tender_arr[projects_arr.indexOf(item)]
                                     .approved == '2'
                                 "
-                              >
+                              >Waiting for Govt Approval
                                 <v-icon color="green">mdi-check-bold</v-icon>
                               </div>
                               <div
@@ -164,7 +164,7 @@
                                   tender_arr[projects_arr.indexOf(item)]
                                     .approved == '-1'
                                 "
-                              >
+                              >Rejected
                                 <v-icon color="red">mdi-close-thick</v-icon>
                               </div>
                             </td>

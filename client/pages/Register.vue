@@ -247,8 +247,8 @@ export default {
       fixed: false,
       email: "",
       password: "",
-      role: "",
-      item1: ["contractor", "pwd", "govt"],
+      role: "Contractor",
+      item1: ["contractor"],
 
       itemsss: [
         {

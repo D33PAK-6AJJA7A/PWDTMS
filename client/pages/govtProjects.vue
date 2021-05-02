@@ -93,17 +93,17 @@
                     >
                       <v-card tile>
                         <div>
-                          <v-toolbar
+                          <v-toolbar 
                             dark
                             extended
-                            extension-height="50"
-                            src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+                            extension-height="100"
+                            src="http://uppwd.gov.in/site/writereaddata/HomePage/Header/H_201904121208521886.jpg"
                           >
                             <v-btn icon dark @click="dialog = false">
                               <v-icon x-large>mdi-close</v-icon>
                             </v-btn>
-                            <v-toolbar-title class="text-h3"
-                              >Create New Project</v-toolbar-title
+                            <v-toolbar-title class="mt-5 ml-5"
+                              ><v-card class="rounded-lg elevation-2 font-weight-bold semi-transparent-white text-h2 ">Create New Project</v-card></v-toolbar-title
                             >
                             <v-spacer></v-spacer>
                           </v-toolbar>
@@ -253,7 +253,7 @@
             <td>{{ item.name }}</td>
             <td>{{ item.tenderEndDate }}</td>
             <td>{{ item.expBudget }}</td>
-            <td>Show status
+            <td>
 
                         <div
                                 v-if="
@@ -313,10 +313,10 @@
             <v-card light elevation="0" class="grey lighten-2 ma-10">
               <v-row>
                  
-                <v-col v-if="selectedRow!=-1" cols="4"
+                <v-col v-if="selectedRow!=-1 && status==1" cols="4"
                   ><v-btn color="success" x-large @click= "openProject">Open Project</v-btn></v-col
                 >
-                <v-col v-if="selectedRow!=-1" cols="4"
+                <v-col v-if="selectedRow!=-1 && status==0" cols="4"
                   ><v-btn color="red" x-large @click= "closeProject">Close Project</v-btn></v-col
                 >
                 <v-col v-if="selectedRow!=-1" cols="4">
@@ -680,6 +680,9 @@ export default {
           `http://localhost:3000/api/projects/${this.project_id}`,
           data
         );
+        if(response.success){
+          this.$router.push('/govtProjects');
+        }
       }catch(err){
         console.log(err);
       }
@@ -703,6 +706,9 @@ export default {
           `http://localhost:3000/api/projects/${this.project_id}`,
           data
         );
+        if(response.success){
+          this.$router.push('/govtProjects');
+        }
       }catch(err){
         console.log(err);
       }
@@ -720,7 +726,7 @@ export default {
         );
         console.log(response);
         if(response.success){
-              this.$router.push('/govtProjects');
+            this.$router.push('/govtProjects');
          }
       }catch(err){
         console.log(err);
@@ -736,9 +742,9 @@ export default {
           `http://localhost:3000/api/projectdisapprovegovt/`,
           data 
         );
-        // if(response.success){
-          
-        // }
+        if(response.success){
+          this.$router.push('/govtProjects');
+        }
       }catch(err){
         console.log(err);
       }
@@ -789,6 +795,9 @@ export default {
         let response = await this.$axios.$delete(
           `http://localhost:3000/api/projects/${id}`
         );
+        if(response.success){
+          this.$router.push('/govtProjects');
+        }
 
       }catch(err){
         console.log(err);
@@ -833,7 +842,7 @@ export default {
        let response = await this.$axios.$post(
          `http://localhost:3000/api/projects/`,
           data);
-        if(response){
+        if(response.success){
           
           this.name1 = "";
           this.prjStartDate1 = "";
@@ -845,6 +854,7 @@ export default {
           this.details1 = "";
           this.link1 = "";
           this.projects.push(data);
+
       }
       }catch(err){
       console.log(err);

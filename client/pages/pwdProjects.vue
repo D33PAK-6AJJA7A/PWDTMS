@@ -164,7 +164,7 @@
             </v-container>
           </v-col>
 
-          <v-divider class="mt-10 blue-grey" vertical></v-divider> 
+          <v-divider class="mt-10 blue-grey" vertical></v-divider>  
           <v-col v-if="maximise!=12" :cols=12-maximise>
             <p class="text-center blue-grey text-h4">View Project</p>
             <v-card light elevation="0" class="grey lighten-2 ma-10">
@@ -550,7 +550,6 @@ export default {
     final_tender_id: "",
     drawer: true,
     final_tender_index: -1,
-    propDocs: [{ link: "www.google.com" }, { link: "www.facebook.com" }],
     pastPro: [{ text: "Park" }, { text: "Ground" }, { text: "Building" }],
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/pwdDashboard" },
@@ -626,6 +625,10 @@ export default {
           `http://localhost:3000/api/projects/${this.project_id}`,
           data
         );
+        if(response.success){
+          this.$router.push('/pwdProjects');
+        }
+        
       }catch(err){
         console.log(err);
       }
@@ -649,6 +652,10 @@ export default {
           `http://localhost:3000/api/projects/${this.project_id}`,
           data
         );
+
+       if(response.success){
+          this.$router.push('/pwdProjects');
+        }
       }catch(err){
         console.log(err);
       }

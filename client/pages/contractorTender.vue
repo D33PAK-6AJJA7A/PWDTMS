@@ -151,6 +151,27 @@
               <v-row>
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
+                    Status 
+                  </div></v-col
+                >
+                <v-col cols="10"
+                  ><div class="text--black">
+                    
+                    <div v-if="status==0">Open for tender<v-icon color="green"
+                                  >mdi-folder-open</v-icon
+                                ></div>
+                    <div v-if="status==1">PWD Tender Approval Pending<v-icon color="blue-grey"
+                                  >mdi-account-clock-outline</v-icon
+                                ></div>
+                    <div v-if="status==2">Govt Tender Approval Pending <v-icon color="blue-grey"
+                                  >mdi-account-clock-outline</v-icon
+                                ></div>
+                    <div v-if="status==3">Tender Approved. Closed<v-icon color="green">mdi-lock</v-icon></div>
+                    </div></v-col
+                >
+                
+                <v-col cols="2"
+                  ><div class="blue-grey--text text-subtitle-1">
                     Name
                   </div></v-col
                 >
@@ -255,17 +276,17 @@
                     >
                       <v-card tile>
                         <div>
-                          <v-toolbar
+                          <v-toolbar 
                             dark
                             extended
-                            extension-height="50"
-                            src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+                            extension-height="100"
+                            src="http://uppwd.gov.in/site/writereaddata/HomePage/Header/H_201904121208521886.jpg"
                           >
                             <v-btn icon dark @click="dialog = false">
                               <v-icon x-large>mdi-close</v-icon>
                             </v-btn>
-                            <v-toolbar-title class="text-h3"
-                              >Apply to {{ name }}</v-toolbar-title
+                            <v-toolbar-title class="mt-5 ml-5"
+                              ><v-card class="rounded-lg elevation-2 font-weight-bold semi-transparent-white text-h2 ">Apply to {{ name }}</v-card></v-toolbar-title
                             >
                             <v-spacer></v-spacer>
                           </v-toolbar>
@@ -326,17 +347,15 @@
                             </v-col>
 
                             <v-col cols="4">
-                              Baad maii dekhte hai , all projects mai se isko jo
-                              mil gaye hai voo print kar dete hai
-                              <ul>
-                                <li v-for="item in past_projects" :key="i">
-                                  {{ item }}
-                                </li>
-                              </ul>
+                              <v-card class="transparent pa-2 " elevation="0">Past Projects</v-card>
+                              <v-textarea
+                                    outlined
+                                    v-model="past_projects"
+                                    color="blue-grey"
+                                    disabled
+                                  >
+                                  </v-textarea>
                             </v-col>
-
-                            <!-- <a href="annual_report_url">
-  <v-btn  class="ma=5"><v-icon>mdi-download</v-icon>Annual Report</v-btn></a> -->
                           </v-row>
                         </v-list>
                         <v-divider></v-divider>
@@ -483,6 +502,14 @@
 .custom-highlight-row{
   background-color: rgb(249, 255, 192)
 }
+
+
+
+.semi-transparent-white {
+  background-color: #eeeeee;
+  opacity: 0.75;
+  color: black;
+}
 </style>
 
 <script>
@@ -530,7 +557,7 @@ export default {
     material: "",
     my_projects: [],
     success: true,
-
+    status: -1,
     confirmed: 0,
     drawer: true,
     dialog: false,
@@ -676,6 +703,7 @@ export default {
       this.location = this.projects[this.projects.indexOf(item)].location;
       this.details = this.projects[this.projects.indexOf(item)].details;
       this.link = this.projects[this.projects.indexOf(item)].link;
+      this.status = this.projects[this.projects.indexOf(item)].status;
     },
     async verify() {
       try {

@@ -388,7 +388,6 @@ export default {
     ],
     mini: false,
     news: [
-      { src: "www.google.com", title: "Google announced " },
       {
         src:
           "https://mib.gov.in/sites/default/files/Tender%20Invite%20for%20maintenance%20%26%20enhancements%20of%20CBFCs%20Application%20Portal%2C%20Website%20%26%20development%20of%20Mobile%20App%20%E2%80%93%20Request%20for%20uploading%20RFP%20on%20Ministry%E2%80%99s%20website.pdf",
