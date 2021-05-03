@@ -5,7 +5,9 @@
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
         align="right"
         height="50px"
-        ><v-card class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click = "logoutfunc">LogOut</v-card></v-card
+        ><v-card class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click="logoutfunc"
+          >LogOut</v-card
+        ></v-card
       >
       <v-navigation-drawer
         app
@@ -83,9 +85,89 @@
         <v-row>
           <v-col :cols="maximise">
             <v-container class="grey lighten-2">
-                 <v-btn v-if="maximise==12" color='blue-grey' @click="maximise=5"> Minimise</v-btn>
-                   <v-btn v-if="maximise==5" color='blue-grey' @click="maximise=12"> Maximise</v-btn>
-                
+              <v-btn
+                v-if="maximise == 12"
+                color="blue-grey"
+                @click="maximise = 5"
+              >
+                Minimise</v-btn
+              >
+              <v-btn
+                v-if="maximise == 5"
+                color="blue-grey"
+                @click="maximise = 12"
+              >
+                Maximise</v-btn
+              >
+              <v-dialog v-model="dialog3" max-width="500px" light>
+                <v-card>
+                  <v-card-title>
+                    <span class="green--text">SUCCESS!!</span>
+                    <v-spacer></v-spacer>
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-btn color="primary" text @click="dialog3 = false">
+                      Close
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+              <v-dialog
+                light
+                transition="dialog-top-transition"
+                max-width="600"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn color="blue-grey" v-bind="attrs" v-on="on"
+                    >Create New GOVT. Account<v-icon color="white"
+                      >mdi-plus</v-icon
+                    ></v-btn
+                  >
+                </template>
+                <template v-slot:default="dialog">
+                  <v-card class="pa-4">
+                    <v-card class="pa-5 blue-grey text-h3" dark
+                      >New GOVT. Account</v-card
+                    >
+                    <v-card-text class="pa-5">
+                      <v-text-field
+                        outlined
+                        label="Username"
+                        prepend-icon="mdi-account"
+                      ></v-text-field>
+                      <v-text-field
+                        outlined
+                        label="Email"
+                        prepend-icon="mdi-email"
+                      ></v-text-field>
+                      <v-text-field
+                        light
+                        outlined
+                        label="Password"
+                        color="blue-grey"
+                        v-model="password"
+                        prepend-icon="mdi-lock-outline"
+                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="show1 ? 'text' : 'password'"
+                        name="input-10-1"
+                        @click:append="show1 = !show1"
+                      ></v-text-field>
+                    </v-card-text>
+                    <v-card-actions class="justify-end">
+                      <v-btn
+                        class="blue-grey"
+                        x-large
+                        text
+                        @click="
+                          dialog.value = false;
+                          dialog3 = true;
+                        "
+                        >ADD
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </template>
+              </v-dialog>
               <v-card class="grey lighten-2 rounded-ls" elevation="0">
                 <div>
                   <div>
@@ -101,11 +183,8 @@
                   </div>
                   <v-spacer></v-spacer>
 
-            
                   <v-container class="grey lighten-2">
-                    
-
-                      <v-data-table
+                    <v-data-table
                       light
                       :headers="headers"
                       :items="users"
@@ -126,23 +205,23 @@
                             <td>{{ item.name }}</td>
                             <td>{{ item.email }}</td>
                             <td>
-
-
-                        <v-icon
-                          large
-                          color="red"
-                          @click="
-                            deleteItem(users[users.indexOf(item)]._id, item)"
-                        >
-                          mdi-delete
-                        </v-icon>
-
+                              <v-icon
+                                large
+                                color="red"
+                                @click="
+                                  deleteItem(
+                                    users[users.indexOf(item)]._id,
+                                    item
+                                  )
+                                "
+                              >
+                                mdi-delete
+                              </v-icon>
                             </td>
-                            
                           </tr>
                         </tbody>
                       </template>
-                    </v-data-table> 
+                    </v-data-table>
                   </v-container>
                 </div>
               </v-card>
@@ -150,7 +229,7 @@
           </v-col>
           <v-divider vertical class="blue-grey mt-10 mb-10"></v-divider>
 
-          <v-col v-if= "maximise!=12" :cols="12-maximise">
+          <v-col v-if="maximise != 12" :cols="12 - maximise">
             <v-card class="grey lighten-2 mt-5" light elevation="0">
               <v-card class="transparent" flat>
                 <v-container fluid>
@@ -338,9 +417,12 @@ export default {
     try {
       let response = await $axios.$get("http://localhost:3000/api/users");
       // console.log(response.users);
-      let users1 = []
-      for(let i=0;i<response.users.length;i++ ){
-        if(response.users[i].confirmed === 2 && response.users[i].role === "contractor"){
+      let users1 = [];
+      for (let i = 0; i < response.users.length; i++) {
+        if (
+          response.users[i].confirmed === 2 &&
+          response.users[i].role === "contractor"
+        ) {
           users1.push(response.users[i]);
         }
       }
@@ -351,7 +433,7 @@ export default {
   },
   data: () => ({
     maximise: 12,
-     selectedRow: -1,
+    selectedRow: -1,
     profile_url: "",
     annual_report_url: "",
     id: "",
@@ -369,6 +451,8 @@ export default {
     role: "",
     confirmed: 0,
     drawer: true,
+    show1: false,
+    dialog3: false,
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/govtDashboard" },
       {
@@ -399,26 +483,28 @@ export default {
     logoutfunc() {
       this.$router.push("/Logout");
     },
-     rowSelect(idx) {
-       this.maximise=5;
+    rowSelect(idx) {
+      this.maximise = 5;
       this.selectedRow = idx;
       this.expItem(this.users[this.selectedRow]);
     },
     expItem(item) {
       try {
         // let id = this.users[this.users.indexOf(item)]._id;
-        
+
         // let response = await this.$axios.$post(
         //   `http://localhost:3000/api/users/${id}`
         // );
-        this.id = this.users[this.users.indexOf(item)]._id; 
+        this.id = this.users[this.users.indexOf(item)]._id;
         this.name = this.users[this.users.indexOf(item)].name;
         this.email = this.users[this.users.indexOf(item)].email;
         this.company = this.users[this.users.indexOf(item)].company;
         this.industry = this.users[this.users.indexOf(item)].industry;
         this.contact_info = this.users[this.users.indexOf(item)].contact_info;
         this.past_projects = this.users[this.users.indexOf(item)].past_projects;
-        this.branch_addr_line = this.users[this.users.indexOf(item)].branch_addr_line;
+        this.branch_addr_line = this.users[
+          this.users.indexOf(item)
+        ].branch_addr_line;
         this.city = this.users[this.users.indexOf(item)].city;
         this.state = this.users[this.users.indexOf(item)].state;
         this.country = this.users[this.users.indexOf(item)].country;
@@ -426,7 +512,9 @@ export default {
         this.password = this.users[this.users.indexOf(item)].password;
         this.role = this.users[this.users.indexOf(item)].role;
         this.confirmed = this.users[this.users.indexOf(item)].confirmed;
-        this.annual_report_url = this.users[this.users.indexOf(item)].annual_report;
+        this.annual_report_url = this.users[
+          this.users.indexOf(item)
+        ].annual_report;
         console.log(this.annual_report_url);
       } catch (err) {
         console.log(err);
@@ -439,7 +527,7 @@ export default {
           this.$router.push("/Login");
         }
         let data = {
-          cookie: cookie, 
+          cookie: cookie,
         };
         let verify_response = await this.$axios.$post(
           `http://localhost:3000/api/verify/govt`,
@@ -453,7 +541,6 @@ export default {
         console.log(err);
       }
     },
-
   },
   beforeMount() {
     this.verify();
