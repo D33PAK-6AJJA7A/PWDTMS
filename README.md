@@ -21,5 +21,3 @@ Then to start frontend on localhost type npm run dev.
 
 Open localhost:8080  
 ```
-
-## License
