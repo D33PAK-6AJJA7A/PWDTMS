@@ -1,19 +1,19 @@
-# PWD Tender System
+# PWD TENDER MANAGEMENT SYSTEM
 
-#TODO
-1. applying me upar image change  - Tez & Akshat
+## Installation
 
-2. remove text at all status symbols - Tez
+```
+Clone project repo and place the separately provided env file in the server folder.
 
-3. add legit contractors, teders, projects and announcements - Akshat
+In the terminal goto server folder and type npm install.
 
-4. convert mongodb database into sql tables - Deepak
+Then to start server type command node server.js.
 
-5. draw er diagram - Krishna Then me edit
+Open another terminal window to start the frontend.
 
-6. remove link attribute or add links - Dheka jayega 
+To install dependencies in the client folder use command npm install.
 
-7. remove govt and pwd roles in signup - Tez 
+Then to start frontend on localhost type npm run dev.
 
-8. background image change on home and signup and login pages  - Tez & Akshat 
-
+Open localhost:8080  
+```
