@@ -333,6 +333,7 @@
                         </v-icon>
                         </v-btn>
                         </v-col>
+                        <v-col cols="8"></v-col>
                         
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
@@ -388,16 +389,17 @@
                     {{ expBudget }}
                   </div></v-col
                 >
-                <v-col cols="12"
+                <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
                     Location :
                   </div></v-col
                 >
-                <v-col cols="12"
+                <v-col cols="8"
                   ><p class="black--text">
                     {{ location }}
                   </p></v-col
                 >
+                <v-col cols="2"></v-col>
                 <v-col cols="12"
                   ><div class="blue-grey--text text-subtitle-1">
                     Details :
@@ -406,13 +408,32 @@
                 <v-col cols="12 "
                   ><div class="black--text">{{ details }}</div></v-col
                 >
-                <v-col cols="12"
+                <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
                     Link :
                   </div></v-col
                 >
-                <v-col cols="12 "
-                  ><div class="black--text">{{ link }}</div></v-col
+                   <v-col cols="10">
+                   <v-tooltip bottom>
+      <template v-slot:activator="{ on, attrs }">
+        
+        <v-card
+                    elevation="0"
+                    color="transparent"
+                    :href="link"
+                    class="black--text pl-5"
+                    v-bind="attrs"
+                     target="_blank" 
+          v-on="on"
+                    ><div><v-btn color="success">Visit Site</v-btn></div></v-card
+                  >
+        
+        
+      </template>
+      <span>{{link}}</span>
+    </v-tooltip>
+                   
+                  </v-col
                 >
                 
                 <v-col cols=12>

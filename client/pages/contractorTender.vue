@@ -226,12 +226,12 @@
                     {{ expBudget }}
                   </div></v-col
                 >
-                <v-col cols="4"
+                <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
                     Location :
                   </div></v-col
                 >
-                <v-col cols="4"
+                <v-col cols="6"
                   ><p class="black--text">
                     {{ location }}
                   </p></v-col
@@ -244,15 +244,36 @@
                 <v-col cols="12 "
                   ><div class="black--text">{{ details }}</div></v-col
                 >
-                <v-col cols="4"
+                <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
                     Link :
-                  </div></v-col
+                  </div>
+                  </v-col
                 >
-                <v-col cols="4"
-                  ><div class="black--text">{{ link }}</div></v-col
+                  
+                <v-col cols="8">
+                   <v-tooltip bottom>
+      <template v-slot:activator="{ on, attrs }">
+        
+        <v-card
+                    elevation="0"
+                    color="transparent"
+                    :href="link"
+                    class="black--text pl-5"
+                    v-bind="attrs"
+                     target="_blank" 
+          v-on="on"
+                    ><div><v-btn color="success">Visit Site</v-btn></div></v-card
+                  >
+        
+        
+      </template>
+      <span>{{link}}</span>
+    </v-tooltip>
+                   
+                  </v-col
                 >
-                <v-col cols="4"></v-col>
+                <v-col cols="2"></v-col>
 
                 <div>
                   <v-row justify="center">
@@ -265,7 +286,7 @@
                     >
                       Apply
                     </v-btn>
-
+                     
                     <v-dialog
                       light
                       v-model="dialog"
@@ -484,7 +505,7 @@
                <v-btn
                 color="primary"
                 text
-                @click="dialog3 = false"
+                @click="dialog3 = false; Reload();"
 
               >
                 Close
@@ -597,6 +618,9 @@ export default {
     ],
   }),
   methods: {
+    Reload(){
+      this.$router.push("/contractorTender");
+    },
     logoutfunc() {
       this.$router.push("/Logout");
     },
@@ -613,14 +637,17 @@ export default {
         }
         console.log(data);
       let response = await this.$axios.$post(`http://localhost:3000/api/tenders/`,data);
-      if(response){
+      if(response.success){
         this.success = true;
         this.project_id =  "";
         this.contractor_id = "";
         this.Budget = "";
         this.timelineStart = "";
-        this.timelineEnd = "";
+        this.timelineEnd = ""; 
         this.material = "";
+        this.$router.push("/contractorTender");
+        location.reload();
+        //this.$router.go();
       }
     }catch (err) {
         console.log(err);

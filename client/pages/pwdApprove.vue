@@ -135,11 +135,13 @@
                           <v-text-field
                             outlined
                             label="Username"
+                            v-model= "pwd_name"
                             prepend-icon="mdi-account"
                           ></v-text-field>
                           <v-text-field
                             outlined
                             label="Email"
+                            v-model= "pwd_email"
                             prepend-icon="mdi-email"
                           ></v-text-field>
                           <v-text-field
@@ -147,7 +149,7 @@
                             outlined
                             label="Password"
                             color="blue-grey"
-                            v-model="password"
+                            v-model= "pwd_password"
                             prepend-icon="mdi-lock-outline"
                             :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                             :type="show1 ? 'text' : 'password'"
@@ -163,6 +165,7 @@
                             @click="
                               dialog.value = false;
                               dialog3 = true;
+                              addPwd();
                             "
                             >ADD
                           </v-btn>
@@ -460,6 +463,9 @@ export default {
     role: "",
     confirmed: 0,
     selectedRow: -1,
+    pwd_name: "",
+    pwd_email: "",
+    pwd_password: "",
     drawer: true,
     dialog3: false,
     items12: [
@@ -499,6 +505,27 @@ export default {
     ],
   }),
   methods: {
+    addPwd(){
+      try {
+        let data = {
+          name: this.pwd_name,
+          email: this.pwd_email,
+          password: this.pwd_password,
+          role: "pwd",
+        };
+        let response = this.$axios.$post(
+          `http://localhost:3000/api/users/`,
+          data
+        );
+        if (response) {
+          this.pwd_name = "";
+          this.pwd_email = "";
+          this.pwd_password = "";
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
     logoutfunc() {
       this.$router.push("/Logout");
     },
@@ -558,7 +585,7 @@ export default {
           `http://localhost:3000/api/users/${this.id}`,
           data
         );
-        if (response) {
+        if (response.success) {
           this.users.splice(this.selectedRow, 1);
           this.company = "NA";
           this.industry = "NA";

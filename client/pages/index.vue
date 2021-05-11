@@ -32,7 +32,7 @@
                   >
                     PWD PORTAL
                     <p class="text-h2 success--text font-weight-light">
-                      tender management portal
+                      Tender Management Portal
                     </p>
                   </v-card-text>
                 </v-card>

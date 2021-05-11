@@ -257,15 +257,15 @@
                 <v-col cols="12 "
                   ><div class="black--text">{{ details }}</div></v-col
                 >
-                <v-col cols="4"
+                <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
                     Link :
                   </div></v-col
                 >
-                <v-col cols="4"
+                <v-col cols="8"
                   ><div class="black--text">{{ link }}</div></v-col
                 >
-                <v-col cols="4"></v-col>
+                <v-col cols="2"></v-col>
 
                 <v-card class="pa-5 transparent" light elevation="0">
                   <div class="pa-2 mb-4 blue-grey text-h5 white--text">
@@ -277,18 +277,19 @@
                         <v-col cols="2">
                           <v-subheader>Proposable Budget</v-subheader>
                         </v-col>
-                        <v-col cols="2">
+                        <v-col cols="4">
                           <v-text-field
                             outlined
                             disabled
                             v-model="Budget"
                           ></v-text-field>
                         </v-col>
+                        <v-col cols="6"></v-col>
 
                         <v-col cols="2">
                           <v-subheader>Start Timeline </v-subheader>
                         </v-col>
-                        <v-col cols="2">
+                        <v-col cols="4">
                           <v-text-field
                             outlined
                             disabled
@@ -299,7 +300,7 @@
                         <v-col cols="2">
                           <v-subheader>End Timeline</v-subheader>
                         </v-col>
-                        <v-col cols="2">
+                        <v-col cols="4">
                           <v-text-field
                             v-if="approved == '2'"
                             outlined

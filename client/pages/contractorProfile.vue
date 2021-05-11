@@ -281,7 +281,7 @@
                             <v-col cols="2">
                               <v-subheader>Company</v-subheader>
                             </v-col>
-                            <v-col cols="2">
+                            <v-col cols="4">
                               <v-text-field
                                 outlined
                                 v-model="company"
@@ -291,7 +291,7 @@
                             <v-col cols="2">
                               <v-subheader>Industry</v-subheader>
                             </v-col>
-                            <v-col cols="2">
+                            <v-col cols="4">
                               <v-text-field
                                 outlined
                                 v-model="industry"
@@ -301,7 +301,7 @@
                             <v-col cols="2">
                               <v-subheader>Phone</v-subheader>
                             </v-col>
-                            <v-col cols="2">
+                            <v-col cols="4">
                               <v-text-field
                                 outlined
                                 v-model="contact_info"

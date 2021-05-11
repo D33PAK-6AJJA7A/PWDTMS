@@ -8,11 +8,13 @@ router.post("/users", async (req, res) => {
     let user = new User();
     user.name = req.body.name;
     user.email = req.body.email;
+    user.password = req.body.password;
+    user.role = req.body.role;
 
     await user.save();
 
     res.json({
-      status: true,
+      success: true,
       message: "Successfully saved",
     });
   } catch (err) {

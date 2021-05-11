@@ -99,75 +99,79 @@
               >
                 Maximise</v-btn
               >
-              <v-dialog v-model="dialog3" max-width="500px" light>
-                <v-card>
-                  <v-card-title>
-                    <span class="green--text">SUCCESS!!</span>
-                    <v-spacer></v-spacer>
-                  </v-card-title>
-                  <v-card-actions>
-                    <v-btn color="primary" text @click="dialog3 = false">
-                      Close
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+
+               <v-dialog v-model="dialog3" max-width="500px" light>
+                    <v-card>
+                      <v-card-title>
+                        <span class="green--text">SUCCESS!!</span>
+                        <v-spacer></v-spacer>
+                      </v-card-title>
+                      <v-card-actions>
+                        <v-btn color="primary" text @click="dialog3 = false">
+                          Close
+                        </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
               <v-dialog
-                light
-                transition="dialog-top-transition"
-                max-width="600"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn color="blue-grey" v-bind="attrs" v-on="on"
-                    >Create New GOVT. Account<v-icon color="white"
-                      >mdi-plus</v-icon
-                    ></v-btn
+                    light
+                    transition="dialog-top-transition"
+                    max-width="600"
                   >
-                </template>
-                <template v-slot:default="dialog">
-                  <v-card class="pa-4">
-                    <v-card class="pa-5 blue-grey text-h3" dark
-                      >New GOVT. Account</v-card
-                    >
-                    <v-card-text class="pa-5">
-                      <v-text-field
-                        outlined
-                        label="Username"
-                        prepend-icon="mdi-account"
-                      ></v-text-field>
-                      <v-text-field
-                        outlined
-                        label="Email"
-                        prepend-icon="mdi-email"
-                      ></v-text-field>
-                      <v-text-field
-                        light
-                        outlined
-                        label="Password"
-                        color="blue-grey"
-                        v-model="password"
-                        prepend-icon="mdi-lock-outline"
-                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                        :type="show1 ? 'text' : 'password'"
-                        name="input-10-1"
-                        @click:append="show1 = !show1"
-                      ></v-text-field>
-                    </v-card-text>
-                    <v-card-actions class="justify-end">
-                      <v-btn
-                        class="blue-grey"
-                        x-large
-                        text
-                        @click="
-                          dialog.value = false;
-                          dialog3 = true;
-                        "
-                        >ADD
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </template>
-              </v-dialog>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn color="blue-grey" v-bind="attrs" v-on="on"
+                        >Create New GOVT. Account<v-icon color="white"
+                          >mdi-plus</v-icon
+                        ></v-btn
+                      >
+                    </template>
+                    <template v-slot:default="dialog">
+                      <v-card class="pa-4">
+                        <v-card class="pa-5 blue-grey text-h3" dark
+                          >New GOVT. Account</v-card
+                        >
+                        <v-card-text class="pa-5">
+                          <v-text-field
+                            outlined
+                            label="Username"
+                            v-model= "govt_name"
+                            prepend-icon="mdi-account"
+                          ></v-text-field>
+                          <v-text-field
+                            outlined
+                            label="Email"
+                            v-model= "govt_email"
+                            prepend-icon="mdi-email"
+                          ></v-text-field>
+                          <v-text-field
+                            light
+                            outlined
+                            label="Password"
+                            color="blue-grey"
+                            v-model= "govt_password"
+                            prepend-icon="mdi-lock-outline"
+                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                            :type="show1 ? 'text' : 'password'"
+                            name="input-10-1"
+                            @click:append="show1 = !show1"
+                          ></v-text-field>
+                        </v-card-text>
+                        <v-card-actions class="justify-end">
+                          <v-btn
+                            class="blue-grey"
+                            x-large
+                            text
+                            @click="
+                              dialog.value = false;
+                              dialog3 = true;
+                              addGovt();
+                            "
+                            >ADD
+                          </v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </template>
+                  </v-dialog>
               <v-card class="grey lighten-2 rounded-ls" elevation="0">
                 <div>
                   <div>
@@ -453,6 +457,9 @@ export default {
     drawer: true,
     show1: false,
     dialog3: false,
+    govt_name: "",
+    govt_email: "",
+    govt_password: "",
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/govtDashboard" },
       {
@@ -480,6 +487,27 @@ export default {
     ],
   }),
   methods: {
+    addGovt(){
+      try {
+        let data = {
+          name: this.govt_name,
+          email: this.govt_email,
+          password: this.govt_password,
+          role: "govt",
+        };
+        let response = this.$axios.$post(
+          `http://localhost:3000/api/users/`,
+          data
+        );
+        if (response) {
+          this.govt_name = "";
+          this.govt_email = "";
+          this.govt_password = "";
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
     logoutfunc() {
       this.$router.push("/Logout");
     },

@@ -232,16 +232,17 @@
                     {{ expBudget }}
                   </div></v-col
                 >
-                <v-col cols="12"
+                <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
                     Location :
                   </div></v-col
                 >
-                <v-col cols="12"
+                <v-col cols="8"
                   ><p class="black--text">
                     {{ location }}
                   </p></v-col
                 >
+                <v-col cols="2"></v-col>
                 <v-col cols="12"
                   ><div class="blue-grey--text text-subtitle-1">
                     Details :

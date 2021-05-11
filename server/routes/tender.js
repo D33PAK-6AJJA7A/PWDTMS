@@ -67,6 +67,7 @@ router.post("/tenders", async (req, res) => {
     await user.save(); 
     res.json({
       status: true,
+      success: true,
       message: "Successfully saved",
     });
   } catch (err) {
