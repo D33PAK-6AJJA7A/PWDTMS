@@ -3,11 +3,7 @@
 ## Installation
 
 ```
-Download pwdtms zip-file.
-
-Extract it at any specific location.
-
-Open project in any code editor, say vs-code or clone from the git link : https://github.com/D33PAK-6AJJA7A/PWDTMS.git.
+Clone project repo and place the separately provided env file in the server folder.
 
 In the terminal goto server folder and type npm install.
 
