@@ -21,7 +21,7 @@
           >
             <v-img
               color=""
-              src="https://rasput1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
+              src="https://ra5put1n.blob.core.windows.net/internship-portal/pwd.png"
             ></v-img>
           </div>
           <div></div>
@@ -93,7 +93,7 @@
                     >
                       <v-card tile>
                         <div>
-                          <v-toolbar 
+                          <v-toolbar
                             dark
                             extended
                             extension-height="100"
@@ -109,7 +109,7 @@
                           </v-toolbar>
                         </div>
 
-                       
+
 
                         <v-card class="pa-5" light elevation="0">
                           <div class="pa-2 mb-4 blue-grey text-h5 white--text">
@@ -183,7 +183,7 @@
                                 </v-col>
                                 <v-col cols="6">
                                 </v-col>
-                                
+
 
                                 <v-col cols="12">
                                   <v-subheader>Details</v-subheader>
@@ -194,23 +194,23 @@
                                   >
                                   </v-textarea>
                                 </v-col>
-                                 
+
                                  <v-col cols="12">
                                   <v-subheader>Attach Documents</v-subheader>
                                   <v-file-input
     multiple
-   
+
 
   ></v-file-input>
                                 </v-col>
                                 <v-col cols="12">
                                     <v-btn @click= "newProject(); dialog = !dialog;" color="blue-grey" x-large>Create </v-btn>
-                                   
+
                                 </v-col>
 
                               </v-row>
                             </v-container>
-                          </v-card> 
+                          </v-card>
                         </v-card>
 
                         <div style="flex: 1 1 auto"></div>
@@ -223,7 +223,7 @@
                    <v-btn v-if="maximise==4" color='blue-grey' @click="maximise=12"> Maximise</v-btn>
                   <v-toolbar flat color="grey lighten-2">
                     <v-divider class="mx-2" inset vertical></v-divider>
-                    
+
                     <v-text-field
                       light
                       color="blue-grey"
@@ -233,11 +233,11 @@
                       single-line
                       hide-details
                     ></v-text-field>
-                    
+
                   </v-toolbar>
 
                   <v-container class="grey lighten-2">
-                 
+
                     <v-data-table
                       light
 
@@ -280,7 +280,7 @@
                                   item.status == 2
                                 "
                               >
-                              My Approval Pending 
+                              My Approval Pending
                                 <v-icon color="green">mdi-account-question-outline</v-icon>
                               </div>
                               <div
@@ -290,9 +290,9 @@
                               >Done
                                 <v-icon color="green">mdi-check-bold</v-icon>
                               </div>
-                       
+
                        </td>
-                       
+
 
 
 
@@ -300,7 +300,7 @@
           </tr>
         </tbody>
       </template>
-    </v-data-table> 
+    </v-data-table>
                   </v-container>
                 </div>
               </v-card>
@@ -312,7 +312,7 @@
             <p class="text-center blue-grey text-h4">View Project</p>
             <v-card light elevation="0" class="grey lighten-2 ma-10">
               <v-row>
-                 
+
                 <v-col v-if="selectedRow!=-1 && status==1" cols="4"
                   ><v-btn color="success" x-large @click= "openProject">Open Project</v-btn></v-col
                 >
@@ -334,7 +334,7 @@
                         </v-btn>
                         </v-col>
                         <v-col cols="8"></v-col>
-                        
+
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
                     Name
@@ -416,26 +416,26 @@
                    <v-col cols="10">
                    <v-tooltip bottom>
       <template v-slot:activator="{ on, attrs }">
-        
+
         <v-card
                     elevation="0"
                     color="transparent"
                     :href="link"
                     class="black--text pl-5"
                     v-bind="attrs"
-                     target="_blank" 
+                     target="_blank"
           v-on="on"
                     ><div><v-btn color="success">Visit Site</v-btn></div></v-card
                   >
-        
-        
+
+
       </template>
       <span>{{link}}</span>
     </v-tooltip>
-                   
+
                   </v-col
                 >
-                
+
                 <v-col cols=12>
 
 <div v-if="status==2 || status==3">
@@ -450,7 +450,7 @@
                   <v-col cols="4"
                     ><div class="text--black">{{ contractor_name }}</div></v-col
                   >
-                   
+
                   <v-col cols="2"
                     ><div class="blue-grey--text text-subtitle-1">
                       Budget :
@@ -459,7 +459,7 @@
                   <v-col cols="4"
                     ><div class="text--black">{{ Budget }}</div></v-col
                   >
-                  
+
                   <v-col cols="2"
                     ><div class="blue-grey--text text-subtitle-1">
                       TimeLine Start:
@@ -468,7 +468,7 @@
                   <v-col cols="4"
                     ><div class="black--text">{{ timelineStart }}</div>
                   </v-col>
-                   
+
                   <v-col cols="2"
                     ><div class="blue-grey--text text-subtitle-1">
                       TimeLine End:
@@ -477,9 +477,9 @@
                   <v-col cols="4"
                     ><div class="black--text">{{ timelineEnd }}</div></v-col
                   >
-                  
 
-                 
+
+
                   <v-col cols="2"
                     ><div class="blue-grey--text text-subtitle-1">
                       Past Projects :
@@ -537,7 +537,7 @@
 
                 <v-card-actions>
                   <v-spacer></v-spacer>
-            
+
                   <v-btn color="blue-grey" flat  @click= "tenderLocked(); dialog1 = false;" >Yes, Lock it <v-icon>mdi-lock</v-icon></v-btn
                   >
                   <v-btn color="blue-grey" flat @click="dialog1 = false"
@@ -570,7 +570,7 @@
 
                 <v-card-actions>
                   <v-spacer></v-spacer>
-            
+
                   <v-btn color="blue-grey" flat  @click= "tenderDenied(); dialog2 = false" >Yes,I want to deny. </v-btn
                   >
                   <v-btn color="blue-grey" flat @click="dialog2 = false"
@@ -586,8 +586,8 @@
             </v-col
                   >
 
-    
-          
+
+
         </v-row>
       </v-main>
     </v-app>
@@ -673,7 +673,7 @@ export default {
       { text: "Budget", value: "expBudget" },
 
       { text: "Status", value: "status" },
-      
+
     ],
   }),
   methods: {
@@ -738,12 +738,12 @@ export default {
       try{
         let data = {
             project_id : this.project_id,
-            tender_id : this.tender_id, 
+            tender_id : this.tender_id,
         };
         console.log(data);
         let response = await this.$axios.$put(
           `http://localhost:3000/api/projectapprovegovt/`,
-          data 
+          data
         );
         console.log(response);
         if(response.success){
@@ -757,11 +757,11 @@ export default {
       try{
         let data = {
             project_id : this.project_id,
-            tender_id : this.tender_id, 
+            tender_id : this.tender_id,
         };
         let response = await this.$axios.$put(
           `http://localhost:3000/api/projectdisapprovegovt/`,
-          data 
+          data
         );
         if(response.success){
           this.$router.push('/govtProjects');
@@ -786,7 +786,7 @@ export default {
         this.projects.indexOf(item)
       ].tenderStartDate;
       this.tenderEndDate = this.projects[
-        this.projects.indexOf(item) 
+        this.projects.indexOf(item)
       ].tenderEndDate;
       this.expBudget = this.projects[this.projects.indexOf(item)].expBudget;
       this.location = this.projects[this.projects.indexOf(item)].location;
@@ -824,7 +824,7 @@ export default {
         console.log(err);
       }
     },
-    
+
     async verify() {
       try {
         let cookie = this.$cookies.get("jwt");
@@ -864,7 +864,7 @@ export default {
          `http://localhost:3000/api/projects/`,
           data);
         if(response.success){
-          
+
           this.name1 = "";
           this.prjStartDate1 = "";
           this.prjEndDate1 = "";

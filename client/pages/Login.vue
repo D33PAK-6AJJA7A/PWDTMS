@@ -176,7 +176,7 @@
   top: 75px;
 }
 .back {
-  background-image: url("https://rasput1n.blob.core.windows.net/internship-portal/website-images/cc3_2.jpg");
+  background-image: url("https://ra5put1n.blob.core.windows.net/internship-portal/website-images/cc3_2.jpg");
   background-position-y: center;
   background-attachment: fixed;
   height: 100%;
@@ -244,7 +244,7 @@ export default {
           this.$cookies.set("jwt", response.token);
 
           this.error = "";
-          if (response.role === "pwd") 
+          if (response.role === "pwd")
             this.$router.push("/pwdDashboard");
           else if (response.role === "contractor")
             this.$router.push("/contractorDashboard");

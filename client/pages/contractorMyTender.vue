@@ -24,7 +24,7 @@
           >
             <v-img
               color=""
-              src="https://rasput1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
+              src="https://ra5put1n.blob.core.windows.net/internship-portal/pwd.png"
             ></v-img>
           </div>
           <div></div>
@@ -86,15 +86,15 @@
         <v-row>
           <v-col :cols=maximise>
              <p class="text-center blue-grey text-h4">Applied Project</p>
-             
+
             <v-container class="grey lighten-2">
               <v-card class="grey lighten-2 pa-4 rounded-ls" elevation="0">
-                
-            
+
+
                 <div>
                   <v-btn v-if="maximise==12" color='blue-grey' @click="maximise=5"> Minimise</v-btn>
                    <v-btn v-if="maximise==5" color='blue-grey' @click="maximise=12"> Maximise</v-btn>
-           
+
                   <div>
                     <v-text-field
                       light

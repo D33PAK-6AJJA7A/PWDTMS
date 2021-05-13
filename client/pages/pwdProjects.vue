@@ -21,7 +21,7 @@
           >
             <v-img
               color=""
-              src="https://rasput1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
+              src="https://ra5put1n.blob.core.windows.net/internship-portal/pwd.png"
             ></v-img>
           </div>
           <div></div>
@@ -88,7 +88,7 @@
               <v-card class="grey lighten-2 pa-4 rounded-ls" elevation="0">
                  <v-btn v-if="maximise==12" color='blue-grey' @click="maximise=4"> Minimise</v-btn>
                    <v-btn v-if="maximise==4" color='blue-grey' @click="maximise=12"> Maximise</v-btn>
-             
+
                 <div>
                   <v-toolbar flat color="grey lighten-2">
                     <v-text-field
@@ -97,7 +97,7 @@
                       v-model="search"
                       append-icon="mdi-magnify"
                       label="Search"
-                      single-line 
+                      single-line
                       hide-details
                     ></v-text-field>
                   </v-toolbar>
@@ -137,7 +137,7 @@
                                   item.status == 1
                                 "
                               >
-                              Approve 
+                              Approve
                                 <v-icon color="blue-grey"
                                   >mdi-account-clock-outline</v-icon
                                 >
@@ -153,10 +153,10 @@
                                 Accepted
                                 <v-icon color="red">mdi-check-bold</v-icon>
                               </div>
-                            </td> 
+                            </td>
                           </tr>
                         </tbody>
-                      </template> 
+                      </template>
                     </v-data-table>
                   </v-container>
                 </div>
@@ -164,7 +164,7 @@
             </v-container>
           </v-col>
 
-          <v-divider class="mt-10 blue-grey" vertical></v-divider>  
+          <v-divider class="mt-10 blue-grey" vertical></v-divider>
           <v-col v-if="maximise!=12" :cols=12-maximise>
             <p class="text-center blue-grey text-h4">View Project</p>
             <v-card light elevation="0" class="grey lighten-2 ma-10">
@@ -292,7 +292,7 @@
                 </v-toolbar>
 
                 <v-container class="grey lighten-2">
-                
+
                   <v-data-table
                     light
                     :headers="headers1"
@@ -340,7 +340,7 @@
                                 <div
                                 v-if= " final_tender_index == key "
                               >
-                              Sent For Approval 
+                              Sent For Approval
                                 <v-icon color="blue-grey"
                                   >mdi-clock-outline</v-icon
                                 >
@@ -376,8 +376,8 @@
                               </div>
 
 
-                              
-                            
+
+
                           </td>
                         </tr>
                       </tbody>
@@ -398,7 +398,7 @@
                   <v-col cols="4"
                     ><div class="text--black">{{ contractor_name }}</div></v-col
                   >
-                   
+
                   <v-col cols="2"
                     ><div class="blue-grey--text text-subtitle-1">
                       Budget :
@@ -407,7 +407,7 @@
                   <v-col cols="4"
                     ><div class="text--black">{{ Budget }}</div></v-col
                   >
-                  
+
                   <v-col cols="2"
                     ><div class="blue-grey--text text-subtitle-1">
                       TimeLine Start:
@@ -416,7 +416,7 @@
                   <v-col cols="4"
                     ><div class="black--text">{{ timelineStart }}</div>
                   </v-col>
-                   
+
                   <v-col cols="2"
                     ><div class="blue-grey--text text-subtitle-1">
                       TimeLine End:
@@ -425,9 +425,9 @@
                   <v-col cols="4"
                     ><div class="black--text">{{ timelineEnd }}</div></v-col
                   >
-                  
 
-                 
+
+
                   <v-col cols="2"
                     ><div class="blue-grey--text text-subtitle-1">
                       Past Projects :
@@ -629,7 +629,7 @@ export default {
         if(response.success){
           this.$router.push('/pwdProjects');
         }
-        
+
       }catch(err){
         console.log(err);
       }
@@ -665,16 +665,16 @@ export default {
       try{
         let data = {
             project_id : this.project_id,
-            tender_id : this.tender_id, 
+            tender_id : this.tender_id,
         };
         let response = await this.$axios.$put(
           `http://localhost:3000/api/projectapprove/`,
-          data 
+          data
         );
         if(response.success)
         {
           this.$router.push('/pwdProjects');
-          
+
         //   let response1 = await this.$axios.$get(
         //   `http://localhost:3000/api/projects/${this.project_id}`
         // );
@@ -695,7 +695,7 @@ export default {
       }
     },
     expItem(item) {
-      this.project_id = this.projects[this.projects.indexOf(item)]._id; 
+      this.project_id = this.projects[this.projects.indexOf(item)]._id;
       this.name = this.projects[this.projects.indexOf(item)].name;
       this.prjStartDate = this.projects[
         this.projects.indexOf(item)

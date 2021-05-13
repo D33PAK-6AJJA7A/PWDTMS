@@ -21,7 +21,7 @@
           >
             <v-img
               color=""
-              src="https://rasput1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
+              src="https://ra5put1n.blob.core.windows.net/internship-portal/pwd.png"
             ></v-img>
           </div>
           <div></div>
@@ -92,7 +92,7 @@
               flat
             >
               <div v-for="(item, i) in news" :key="i" class="pl-5 pr-5">
-                <v-card class="transparent" elevation="0" light> 
+                <v-card class="transparent" elevation="0" light>
                   <v-card
                     elevation="0"
                     color="transparent"
@@ -102,7 +102,7 @@
                   >
                 </v-card>
                 <v-card class="blue-grey mt-5 mb-5" height="2px"></v-card>
-                  
+
               </div>
             </v-card>
           </v-col>
