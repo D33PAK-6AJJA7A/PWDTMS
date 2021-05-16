@@ -428,7 +428,6 @@ export default {
   async asyncData({ $axios }) {
     try {
       let response = await $axios.$get("http://localhost:3000/api/users");
-      // console.log(response.users);
       let users1 = [];
       for (let i = 0; i < response.users.length; i++) {
         if (
