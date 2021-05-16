@@ -21,7 +21,7 @@
           >
             <v-img
               color=""
-              src="https://rasput1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
+              src="https://ra5put1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
             ></v-img>
           </div>
           <div></div>
@@ -81,13 +81,13 @@
         </div>
         <v-card class="blue-grey" width="100%" height="10px"></v-card>
         <v-row>
-                  
+
           <v-col :cols=maximise>
             <v-container class="grey lighten-2">
               <v-card class="grey lighten-2 pa-4 rounded-ls" elevation="0">
                 <v-btn v-if="maximise==12" color='blue-grey' @click="maximise=5"> Minimise</v-btn>
                    <v-btn v-if="maximise==5" color='blue-grey' @click="maximise=12"> Maximise</v-btn>
-           
+
                 <div>
                   <div>
                     <v-text-field
@@ -102,9 +102,9 @@
                   </div>
                   <v-spacer></v-spacer>
 
-            
+
                   <v-container class="grey lighten-2">
-                    
+
 
                       <v-data-table
                       light
@@ -139,11 +139,11 @@
                         </v-icon>
 
                             </td>
-                            
+
                           </tr>
                         </tbody>
                       </template>
-                    </v-data-table> 
+                    </v-data-table>
                   </v-container>
                 </div>
               </v-card>
@@ -418,11 +418,11 @@ export default {
     expItem(item) {
       try {
         // let id = this.users[this.users.indexOf(item)]._id;
-        
+
         // let response = await this.$axios.$post(
         //   `http://localhost:3000/api/users/${id}`
         // );
-        this.id = this.users[this.users.indexOf(item)]._id; 
+        this.id = this.users[this.users.indexOf(item)]._id;
         this.name = this.users[this.users.indexOf(item)].name;
         this.email = this.users[this.users.indexOf(item)].email;
         this.company = this.users[this.users.indexOf(item)].company;
@@ -450,7 +450,7 @@ export default {
           this.$router.push("/Login");
         }
         let data = {
-          cookie: cookie, 
+          cookie: cookie,
         };
         let verify_response = await this.$axios.$post(
           `http://localhost:3000/api/verify/pwd`,

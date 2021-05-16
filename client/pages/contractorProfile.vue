@@ -26,7 +26,7 @@
                 >
                   <v-img
                     color=""
-                    src="https://rasput1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
+                    src="https://ra5put1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
                   ></v-img>
                 </div>
                 <div></div>
@@ -593,9 +593,9 @@ export default {
           // console.log(res)
         });
       this.getURL();
-      this.$router.push("/contractorProfile");
-      // this.$router.go();
+      this.$router.push("/contractorProfile"); 
     },
+
     async onSaveProfile() {
       try {
         //let cookie = this.$cookies.get("jwt");
@@ -627,7 +627,7 @@ export default {
         if (cookie == null) {
           this.$router.push("/login");
         }
-        let data = { 
+        let data = {
           cookie: cookie,
         };
         let response = await this.$axios.$post(

@@ -35,7 +35,7 @@ router.post('/auth/signup',async(req,res) => {
                 transporter.sendMail({
                   to: newUser.email,
                   subject: 'Confirm Email',
-                  html: `Please click this email to confirm your account: <a href="${url}">${url}</a>`,
+                  html: `Please click this link to login to your account:   <a href="${url}">${url}</a>`,
                 });
               },
             );

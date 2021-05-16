@@ -196,7 +196,7 @@ body {
   top: 75px;
 }
 .back {
-  background-image: url("https://rasput1n.blob.core.windows.net/internship-portal/website-images/admin.jpg");
+  background-image: url("https://ra5put1n.blob.core.windows.net/internship-portal/website-images/admin.jpg");
   background-position-y: center;
   background-attachment: fixed;
   height: 100%;
@@ -244,7 +244,6 @@ export default {
     ],
 
     news: [
-      { src: "www.google.com", title: "Google announced " },
       {
         src:
           "https://mib.gov.in/sites/default/files/Tender%20Invite%20for%20maintenance%20%26%20enhancements%20of%20CBFCs%20Application%20Portal%2C%20Website%20%26%20development%20of%20Mobile%20App%20%E2%80%93%20Request%20for%20uploading%20RFP%20on%20Ministry%E2%80%99s%20website.pdf",

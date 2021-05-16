@@ -3,7 +3,7 @@
     <v-app>
       <v-card
         class="blue-grey darken-3 elevation-5 text-right d-flex justify-end"
-        align="right" 
+        align="right"
         height="50px"
         ><v-card class="pa-2 mr-4 yellow darken-3 mt-1 mb-1" @click = "logoutfunc">LogOut</v-card></v-card
       >
@@ -21,7 +21,7 @@
           >
             <v-img
               color=""
-              src="https://rasput1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
+              src="https://ra5put1n.blob.core.windows.net/internship-portal/website-images/pwd.png"
             ></v-img>
           </div>
           <div></div>
@@ -86,7 +86,7 @@
               <v-card class="grey lighten-2 pa-4 rounded-ls" elevation="0">
                    <v-btn v-if="maximise==12" color='blue-grey' @click="maximise=5"> Minimise</v-btn>
                    <v-btn v-if="maximise==5" color='blue-grey' @click="maximise=12"> Maximise</v-btn>
-                
+
                 <div>
                   <v-toolbar flat color="grey lighten-2">
                     <v-divider class="mx-2" inset vertical></v-divider>
@@ -138,7 +138,7 @@
           </tr>
         </tbody>
       </template>
-    </v-data-table> 
+    </v-data-table>
                   </v-container>
                 </div>
               </v-card>
@@ -151,12 +151,12 @@
               <v-row>
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
-                    Status 
+                    Status
                   </div></v-col
                 >
                 <v-col cols="10"
                   ><div class="text--black">
-                    
+
                     <div v-if="status==0">Open for tender<v-icon color="green"
                                   >mdi-folder-open</v-icon
                                 ></div>
@@ -169,7 +169,7 @@
                     <div v-if="status==3">Tender Approved. Closed<v-icon color="green">mdi-lock</v-icon></div>
                     </div></v-col
                 >
-                
+
                 <v-col cols="2"
                   ><div class="blue-grey--text text-subtitle-1">
                     Name
@@ -250,27 +250,27 @@
                   </div>
                   </v-col
                 >
-                  
+
                 <v-col cols="8">
                    <v-tooltip bottom>
       <template v-slot:activator="{ on, attrs }">
-        
+
         <v-card
                     elevation="0"
                     color="transparent"
                     :href="link"
                     class="black--text pl-5"
                     v-bind="attrs"
-                     target="_blank" 
+                     target="_blank"
           v-on="on"
                     ><div><v-btn color="success">Visit Site</v-btn></div></v-card
                   >
-        
-        
+
+
       </template>
       <span>{{link}}</span>
     </v-tooltip>
-                   
+
                   </v-col
                 >
                 <v-col cols="2"></v-col>
@@ -286,7 +286,7 @@
                     >
                       Apply
                     </v-btn>
-                     
+
                     <v-dialog
                       light
                       v-model="dialog"
@@ -297,7 +297,7 @@
                     >
                       <v-card tile>
                         <div>
-                          <v-toolbar 
+                          <v-toolbar
                             dark
                             extended
                             extension-height="100"
@@ -588,7 +588,7 @@ export default {
     sound: true,
     widgets: false,
     applyBtn: true,
-    
+
     items12: [
       { title: "Dashboard", icon: "mdi-home-city", to: "/contractorDashboard" },
       {
@@ -614,7 +614,7 @@ export default {
       },
       { text: "Tender End Date", value: "tenderEndDate" },
       { text: "Budget", value: "expBudget" },
-      
+
     ],
   }),
   methods: {
@@ -627,7 +627,7 @@ export default {
     async confirmTender() {
       try {
         let data = {
-          project_id: this.project_id, 
+          project_id: this.project_id,
           contractor_id: this.id,
           Budget: this.Budget,
           timelineStart: this.timelineStart,
@@ -643,7 +643,7 @@ export default {
         this.contractor_id = "";
         this.Budget = "";
         this.timelineStart = "";
-        this.timelineEnd = ""; 
+        this.timelineEnd = "";
         this.material = "";
         this.$router.push("/contractorTender");
         location.reload();
